@@ -77,7 +77,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':  'shopping',
-        'USER': 'myprojectuser',
+        'USER': 'user',
 	    'PASSWORD': 'password',
 	    'HOST': 'localhost',
 	    'PORT': '',
