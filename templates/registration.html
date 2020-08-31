@@ -1,4 +1,4 @@
-{% load static from staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
@@ -46,7 +46,7 @@
                   <!-- RD Navbar Toggle-->
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark" src="images/logo-default-187x45.png" alt="" width="187" height="45"/></a></div>
+                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark" src="{% static 'images/logo-default-187x45.png'%}" alt="" width="187" height="45"/></a></div>
                 </div>
                 <div class="rd-navbar-main-element">
                   <div class="rd-navbar-nav-wrap">
@@ -131,7 +131,7 @@
       </header>
       <!-- Breadcrumbs -->
       <section class="bg-gray-7">
-        <div class="breadcrumbs-custom bg-image" style="background-image: url(images/bg-breadcrumbs.jpg);">
+        <div class="breadcrumbs-custom bg-image" style="background-image: url({% static 'images/bg-breadcrumbs.jpg'%});">
           <div class="container">
             <h1 class="breadcrumbs-custom-title">Sign Up</h1>
             <div class="breadcrumbs-custom-decor"></div>
@@ -212,7 +212,7 @@
                   <!-- Post Minimal-->
                   <article class="post post-minimal post-minimal-2">
                     <div class="unit unit-spacing-2 align-items-center flex-column text-center flex-sm-row text-sm-left">
-                      <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img src="images/post-1-115x89.jpg" alt="" width="115" height="89"/></a></div>
+                      <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img src="{% static 'images/post-1-115x89.jpg'%}" alt="" width="115" height="89"/></a></div>
                       <div class="unit-body">
                         <p class="post-minimal-title"><a href="blog-post.html">Top 10 Library Events to Visit This Month</a></p>
                         <div class="post-minimal-time">
@@ -226,7 +226,7 @@
                   <!-- Post Minimal-->
                   <article class="post post-minimal post-minimal-2">
                     <div class="unit unit-spacing-2 align-items-center flex-column text-center flex-sm-row text-sm-left">
-                      <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img src="images/post-2-115x89.jpg" alt="" width="115" height="89"/></a></div>
+                      <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img src="{% static 'images/post-2-115x89.jpg'%}" alt="" width="115" height="89"/></a></div>
                       <div class="unit-body">
                         <p class="post-minimal-title"><a href="blog-post.html">Best Books for Your Children</a></p>
                         <div class="post-minimal-time">
@@ -251,7 +251,7 @@
             </div>
             <div class="col-sm-10 col-md-12 col-lg-3 col-xl-3">
               <div class="oh-desktop">
-                <div class="inset-left-xl-20 wow slideInLeft"><a class="brand" href="index.html"><img src="images/logo-inverse-187x45.png" alt="" width="187" height="45"/></a>
+                <div class="inset-left-xl-20 wow slideInLeft"><a class="brand" href="index.html"><img src="{% static 'images/logo-inverse-187x45.png'%}" alt="" width="187" height="45"/></a>
                   <p>Providing access to the best books for children and adults.</p>
                   <ul class="footer-creative-list d-inline-block d-sm-block">
                     <li><a href="about-us.html">About us</a></li>
