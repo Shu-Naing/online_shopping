@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
@@ -6,12 +7,12 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:100,300,300i,400,500,600,700,900%7CRaleway:500%7CAbril+Fatface">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/fonts.css">
-    <link rel="stylesheet" href="css/style.css" id="main-styles-link">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
+    <link rel="stylesheet" href="{% static 'css/fonts.css'%}">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}" id="main-styles-link">
     <!--[if lt IE 10]>
     <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
     <script src="js/html5shiv.min.js"></script>
@@ -45,7 +46,7 @@
                   <!-- RD Navbar Toggle-->
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark" src="images/logo-default-187x45.png" alt="" width="187" height="45"/></a></div>
+                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark" src="{% static 'images/logo-default-187x45.png'%}" alt="" width="187" height="45"/></a></div>
                 </div>
                 <div class="rd-navbar-main-element">
                   <div class="rd-navbar-nav-wrap">
@@ -130,22 +131,23 @@
       </header>
       <!-- Breadcrumbs -->
       <section class="bg-gray-7">
-        <div class="breadcrumbs-custom bg-image" style="background-image: url(images/bg-breadcrumbs.jpg);">
+        <div class="breadcrumbs-custom bg-image" style="background-image: url({% static 'images/bg-breadcrumbs.jpg'%});">
           <div class="container">
-            <h1 class="breadcrumbs-custom-title">Forms</h1>
+            <h1 class="breadcrumbs-custom-title">Login</h1>
             <div class="breadcrumbs-custom-decor"></div>
           </div>
         </div>
         <div class="container">
           <ul class="breadcrumbs-custom-path">
             <li><a href="index.html">Home</a></li>
-            <li><a href="#">Pages</a></li>
-            <li class="active">Forms</li>
+            <li class="active">Login</li>
           </ul>
         </div>
       </section>
       <!-- Forms-->
       <section class="section section-lg bg-default text-md">
+        <div class="container">
+          <div class="row row-50 justify-content-center justify-content-xl-between">
             <div class="col-md-10 col-lg-6">
               <div class="box-width-xl-520">
                 <h2>Login form</h2>
@@ -168,12 +170,14 @@
                       <div class="col-sm-6 col-lg-5 col-xl-6">
                         <button class="button button-block button-primary button-winona" type="submit">Login</button>
                       </div>
-                      <div class="col-sm-6 col-lg-7 col-xl-6"><a class="button button-block button-outline button-default-outline button-winona" href="#">Create an account</a></div>
+                      <div class="col-sm-6 col-lg-7 col-xl-6"><a class="button button-block button-outline button-default-outline button-winona" href="/registration">Create an account</a></div>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
 
       </section>
 
@@ -210,7 +214,7 @@
                   <!-- Post Minimal-->
                   <article class="post post-minimal post-minimal-2">
                     <div class="unit unit-spacing-2 align-items-center flex-column text-center flex-sm-row text-sm-left">
-                      <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img src="images/post-1-115x89.jpg" alt="" width="115" height="89"/></a></div>
+                      <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img src="{% static 'images/post-1-115x89.jpg'%}" alt="" width="115" height="89"/></a></div>
                       <div class="unit-body">
                         <p class="post-minimal-title"><a href="blog-post.html">Top 10 Library Events to Visit This Month</a></p>
                         <div class="post-minimal-time">
@@ -224,7 +228,7 @@
                   <!-- Post Minimal-->
                   <article class="post post-minimal post-minimal-2">
                     <div class="unit unit-spacing-2 align-items-center flex-column text-center flex-sm-row text-sm-left">
-                      <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img src="images/post-2-115x89.jpg" alt="" width="115" height="89"/></a></div>
+                      <div class="unit-left"><a class="post-minimal-figure" href="blog-post.html"><img src="{% static 'images/post-2-115x89.jpg'%}" alt="" width="115" height="89"/></a></div>
                       <div class="unit-body">
                         <p class="post-minimal-title"><a href="blog-post.html">Best Books for Your Children</a></p>
                         <div class="post-minimal-time">
@@ -249,7 +253,7 @@
             </div>
             <div class="col-sm-10 col-md-12 col-lg-3 col-xl-3">
               <div class="oh-desktop">
-                <div class="inset-left-xl-20 wow slideInLeft"><a class="brand" href="index.html"><img src="images/logo-inverse-187x45.png" alt="" width="187" height="45"/></a>
+                <div class="inset-left-xl-20 wow slideInLeft"><a class="brand" href="index.html"><img src="{% static 'images/logo-inverse-187x45.png'%}" alt="" width="187" height="45"/></a>
                   <p>Providing access to the best books for children and adults.</p>
                   <ul class="footer-creative-list d-inline-block d-sm-block">
                     <li><a href="about-us.html">About us</a></li>
@@ -274,7 +278,7 @@
     <!-- Global Mailform Output-->
     <div class="snackbars" id="form-output-global"></div>
     <!-- Javascript-->
-    <script src="js/core.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="{% static 'js/core.min.js'%}"></script>
+    <script src="{% static 'js/script.js'%}"></script>
   </body>
 </html>

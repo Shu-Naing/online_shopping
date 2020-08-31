@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
@@ -15,6 +15,11 @@ def registration(request):
             customer_password = request.POST['password'],
         )
         customer.save()
-        return render(request, 'index.html')
+        return redirect('/login')
+
+@csrf_protect
+def login(request):
+    if request.method == "GET":
+        return render(request, "login.html")
 
 # Create your views here.
