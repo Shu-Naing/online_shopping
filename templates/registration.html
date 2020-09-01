@@ -154,26 +154,24 @@
                 <div class="form-login">
                   <form class="rd-form rd-form-center rd-mailform" action = "/registration/" method="POST" enctype="multipart/form-data" >
                     {% csrf_token %}
-                    <div class="form-wrap">
-                      <label class="form-label" for="login-name">Your Name*</label>
-                      <input class="form-input" id="login-name" type="text" name="username" data-constraints="@Required">
-                    </div>
-                    <div class="form-wrap">
-                      <label class="form-label" for="login-email">Email</label>
-                      <input class="form-input" id="login-email" type="email" name="email" data-constraints="@Required">
-                    </div>
-                    <div class="form-wrap">
-                      <label class="form-label" for="login-password">Password</label>
-                      <input class="form-input" id="login-password" type="password" name="password" data-constraints="@Required">
-                    </div>
-                    {% comment %} <label class="checkbox-inline">
-                      <input name="input-checkbox-1" value="checkbox-1" type="checkbox">Remember Me
-                    </label> {% endcomment %}
+                    {% for field in form %}
+                      <div class="form-wrap">
+                        {{field.label_tag}}
+                        {{field}}
+                      </div>
+                    {% endfor %}
                     <div class="row row-14 gutters-14">
                       <div class="col-sm-5 col-lg-7 col-xl-6">
-                        <button class="button button-block button-primary button-winona" type="submit">Create</button>
+                        <button class="button button-block button-primary button-winona" type="submit" onclick="location.href='/login/'">Create</button>
                       </div>
                     </div>
+                  {% if messages %}
+                  <ul class="messages">
+                      {% for message in messages %}
+                      <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
                   </form>
                 </div>
               </div>

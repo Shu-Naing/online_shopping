@@ -351,6 +351,42 @@ ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations
 
 
 --
+-- Name: django_redirect; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.django_redirect (
+    id integer NOT NULL,
+    site_id integer NOT NULL,
+    old_path character varying(200) NOT NULL,
+    new_path character varying(200) NOT NULL
+);
+
+
+ALTER TABLE public.django_redirect OWNER TO myprojectuser;
+
+--
+-- Name: django_redirect_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.django_redirect_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_redirect_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: django_redirect_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.django_redirect_id_seq OWNED BY public.django_redirect.id;
+
+
+--
 -- Name: django_session; Type: TABLE; Schema: public; Owner: myprojectuser
 --
 
@@ -362,6 +398,79 @@ CREATE TABLE public.django_session (
 
 
 ALTER TABLE public.django_session OWNER TO myprojectuser;
+
+--
+-- Name: django_site; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.django_site (
+    id integer NOT NULL,
+    domain character varying(100) NOT NULL,
+    name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.django_site OWNER TO myprojectuser;
+
+--
+-- Name: django_site_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.django_site_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_site_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: django_site_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.django_site_id_seq OWNED BY public.django_site.id;
+
+
+--
+-- Name: main_customer; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_customer (
+    id integer NOT NULL,
+    customer_username character varying(80) NOT NULL,
+    customer_firstname character varying(20) NOT NULL,
+    customer_lastname character varying(20) NOT NULL,
+    customer_email character varying(254) NOT NULL,
+    customer_password character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.main_customer OWNER TO myprojectuser;
+
+--
+-- Name: main_customer_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_customer_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_customer_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_customer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_customer_id_seq OWNED BY public.main_customer.id;
+
 
 --
 -- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: myprojectuser
@@ -427,6 +536,27 @@ ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: django_redirect id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.django_redirect ALTER COLUMN id SET DEFAULT nextval('public.django_redirect_id_seq'::regclass);
+
+
+--
+-- Name: django_site id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.django_site ALTER COLUMN id SET DEFAULT nextval('public.django_site_id_seq'::regclass);
+
+
+--
+-- Name: main_customer id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_customer ALTER COLUMN id SET DEFAULT nextval('public.main_customer_id_seq'::regclass);
+
+
+--
 -- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: myprojectuser
 --
 
@@ -471,6 +601,18 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 22	Can change session	6	change_session
 23	Can delete session	6	delete_session
 24	Can view session	6	view_session
+25	Can add customer	7	add_customer
+26	Can change customer	7	change_customer
+27	Can delete customer	7	delete_customer
+28	Can view customer	7	view_customer
+29	Can add site	8	add_site
+30	Can change site	8	change_site
+31	Can delete site	8	delete_site
+32	Can view site	8	view_site
+33	Can add redirect	9	add_redirect
+34	Can change redirect	9	change_redirect
+35	Can delete redirect	9	delete_redirect
+36	Can view redirect	9	view_redirect
 \.
 
 
@@ -517,6 +659,9 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 4	auth	user
 5	contenttypes	contenttype
 6	sessions	session
+7	main	customer
+8	sites	site
+9	redirects	redirect
 \.
 
 
@@ -525,24 +670,36 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2020-08-31 11:20:38.950208+06:30
-2	auth	0001_initial	2020-08-31 11:20:39.033261+06:30
-3	admin	0001_initial	2020-08-31 11:20:39.159189+06:30
-4	admin	0002_logentry_remove_auto_add	2020-08-31 11:20:39.201233+06:30
-5	admin	0003_logentry_add_action_flag_choices	2020-08-31 11:20:39.21477+06:30
-6	contenttypes	0002_remove_content_type_name	2020-08-31 11:20:39.230538+06:30
-7	auth	0002_alter_permission_name_max_length	2020-08-31 11:20:39.239252+06:30
-8	auth	0003_alter_user_email_max_length	2020-08-31 11:20:39.246552+06:30
-9	auth	0004_alter_user_username_opts	2020-08-31 11:20:39.253781+06:30
-10	auth	0005_alter_user_last_login_null	2020-08-31 11:20:39.26109+06:30
-11	auth	0006_require_contenttypes_0002	2020-08-31 11:20:39.26345+06:30
-12	auth	0007_alter_validators_add_error_messages	2020-08-31 11:20:39.270598+06:30
-13	auth	0008_alter_user_username_max_length	2020-08-31 11:20:39.282142+06:30
-14	auth	0009_alter_user_last_name_max_length	2020-08-31 11:20:39.289774+06:30
-15	auth	0010_alter_group_name_max_length	2020-08-31 11:20:39.298+06:30
-16	auth	0011_update_proxy_permissions	2020-08-31 11:20:39.306621+06:30
-17	auth	0012_alter_user_first_name_max_length	2020-08-31 11:20:39.313969+06:30
-18	sessions	0001_initial	2020-08-31 11:20:39.325561+06:30
+1	contenttypes	0001_initial	2020-09-01 14:41:55.368419+06:30
+2	auth	0001_initial	2020-09-01 14:41:55.418116+06:30
+3	admin	0001_initial	2020-09-01 14:41:55.500496+06:30
+4	admin	0002_logentry_remove_auto_add	2020-09-01 14:41:55.515747+06:30
+5	admin	0003_logentry_add_action_flag_choices	2020-09-01 14:41:55.523164+06:30
+6	contenttypes	0002_remove_content_type_name	2020-09-01 14:41:55.538556+06:30
+7	auth	0002_alter_permission_name_max_length	2020-09-01 14:41:55.54592+06:30
+8	auth	0003_alter_user_email_max_length	2020-09-01 14:41:55.553013+06:30
+9	auth	0004_alter_user_username_opts	2020-09-01 14:41:55.561246+06:30
+10	auth	0005_alter_user_last_login_null	2020-09-01 14:41:55.56881+06:30
+11	auth	0006_require_contenttypes_0002	2020-09-01 14:41:55.571047+06:30
+12	auth	0007_alter_validators_add_error_messages	2020-09-01 14:41:55.57977+06:30
+13	auth	0008_alter_user_username_max_length	2020-09-01 14:41:55.591047+06:30
+14	auth	0009_alter_user_last_name_max_length	2020-09-01 14:41:55.598945+06:30
+15	auth	0010_alter_group_name_max_length	2020-09-01 14:41:55.608327+06:30
+16	auth	0011_update_proxy_permissions	2020-09-01 14:41:55.616471+06:30
+17	auth	0012_alter_user_first_name_max_length	2020-09-01 14:41:55.623896+06:30
+18	sessions	0001_initial	2020-09-01 14:41:55.636385+06:30
+19	main	0001_initial	2020-09-01 14:43:37.266122+06:30
+20	sites	0001_initial	2020-09-01 16:08:56.70487+06:30
+21	redirects	0001_initial	2020-09-01 16:08:56.714365+06:30
+22	sites	0002_alter_domain_unique	2020-09-01 16:08:56.744542+06:30
+\.
+
+
+--
+-- Data for Name: django_redirect; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.django_redirect (id, site_id, old_path, new_path) FROM stdin;
 \.
 
 
@@ -551,6 +708,23 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+\.
+
+
+--
+-- Data for Name: django_site; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.django_site (id, domain, name) FROM stdin;
+1	example.com	example.com
+\.
+
+
+--
+-- Data for Name: main_customer; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_email, customer_password) FROM stdin;
 \.
 
 
@@ -572,7 +746,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 24, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 36, true);
 
 
 --
@@ -607,14 +781,35 @@ SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 6, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 9, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 18, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 22, true);
+
+
+--
+-- Name: django_redirect_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.django_redirect_id_seq', 1, false);
+
+
+--
+-- Name: django_site_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
+
+
+--
+-- Name: main_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_customer_id_seq', 20, true);
 
 
 --
@@ -746,11 +941,51 @@ ALTER TABLE ONLY public.django_migrations
 
 
 --
+-- Name: django_redirect django_redirect_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.django_redirect
+    ADD CONSTRAINT django_redirect_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_redirect django_redirect_site_id_old_path_ac5dd16b_uniq; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.django_redirect
+    ADD CONSTRAINT django_redirect_site_id_old_path_ac5dd16b_uniq UNIQUE (site_id, old_path);
+
+
+--
 -- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
 --
 
 ALTER TABLE ONLY public.django_session
     ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: django_site django_site_domain_a2e37b91_uniq; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.django_site
+    ADD CONSTRAINT django_site_domain_a2e37b91_uniq UNIQUE (domain);
+
+
+--
+-- Name: django_site django_site_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.django_site
+    ADD CONSTRAINT django_site_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: main_customer main_customer_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_customer
+    ADD CONSTRAINT main_customer_pkey PRIMARY KEY (id);
 
 
 --
@@ -831,6 +1066,27 @@ CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING 
 
 
 --
+-- Name: django_redirect_old_path_c6cc94d3; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX django_redirect_old_path_c6cc94d3 ON public.django_redirect USING btree (old_path);
+
+
+--
+-- Name: django_redirect_old_path_c6cc94d3_like; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX django_redirect_old_path_c6cc94d3_like ON public.django_redirect USING btree (old_path varchar_pattern_ops);
+
+
+--
+-- Name: django_redirect_site_id_c3e37341; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX django_redirect_site_id_c3e37341 ON public.django_redirect USING btree (site_id);
+
+
+--
 -- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: myprojectuser
 --
 
@@ -842,6 +1098,13 @@ CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING 
 --
 
 CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: django_site_domain_a2e37b91_like; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX django_site_domain_a2e37b91_like ON public.django_site USING btree (domain varchar_pattern_ops);
 
 
 --
@@ -914,6 +1177,14 @@ ALTER TABLE ONLY public.django_admin_log
 
 ALTER TABLE ONLY public.django_admin_log
     ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_redirect django_redirect_site_id_c3e37341_fk_django_site_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.django_redirect
+    ADD CONSTRAINT django_redirect_site_id_c3e37341_fk_django_site_id FOREIGN KEY (site_id) REFERENCES public.django_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
