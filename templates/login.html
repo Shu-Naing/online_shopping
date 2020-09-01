@@ -154,18 +154,19 @@
                 <div class="form-login">
                   <div class="button-social"><a class="button button-sm button-icon button-icon-left button-facebook button-winona" href="#"><span class="icon fa fa-facebook"></span><span>Facebook</span></a><a class="button button-sm button-icon button-icon-left button-twitter button-winona" href="#"><span class="icon fa fa-twitter"></span><span>Twitter</span></a><a class="button button-sm button-icon button-icon-left button-google button-winona" href="#"><span class="icon fa fa-google-plus"></span><span>Google+</span></a></div>
                   <p class="text-divider">or</p>
-                  <form class="rd-form rd-form-center rd-mailform">
-                    <div class="form-wrap">
-                      <label class="form-label" for="login-name">Your Name*</label>
-                      <input class="form-input" id="login-name" type="text" name="form-input" data-constraints="@Required">
+                    <form class="rd-form rd-form-center rd-mailform" action = "/login/" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                     <div class="form-wrap">
+                      <label class="form-label" for="login-email">Email</label>
+                      <input class="form-input" id="login-email" type="email" name="email" data-constraints="@Required">
                     </div>
                     <div class="form-wrap">
                       <label class="form-label" for="login-password">Password</label>
                       <input class="form-input" id="login-password" type="password" name="password" data-constraints="@Required">
                     </div>
-                    <label class="checkbox-inline">
+                    {% comment %} <label class="checkbox-inline">
                       <input name="input-checkbox-1" value="checkbox-1" type="checkbox">Remember Me
-                    </label>
+                    </label> {% endcomment %}
                     <div class="row row-14 gutters-14">
                       <div class="col-sm-6 col-lg-5 col-xl-6">
                         <button class="button button-block button-primary button-winona" type="submit">Login</button>
