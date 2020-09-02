@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, loader, reverse
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import hashers
 from .forms import RegistrationForm, LoginForm
@@ -24,17 +24,20 @@ def registration(request):
                     customer_password = hashed_password,
                 )
                 # customer.save()
-                return redirect('/login')
+                return HttpResponseRedirect('/login/')
             else:
-                messages.warning(request, 'Email already taken!!')
+                messages.warning(request, "Email already taken!!")
+                return redirect("main:registration")
     return render(request, 'registration.html', {'form': form})
 
 @csrf_protect
 def login(request):
-    if request.method == "GET":
-        form = LoginForm()
+    form = LoginForm()
 
     return render(request, 'login.html', {'form': form})
-    
 
-# Create your views here.
+
+def home(request):
+    if request.method == "GET":
+        return render(request, 'index.html')
+    

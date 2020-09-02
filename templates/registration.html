@@ -152,7 +152,7 @@
               <div class="box-width-xl-520">
                 <h2>Register Here</h2>
                 <div class="form-login">
-                  <form class="rd-form rd-form-center rd-mailform" action = "{% url 'registration' %}" method="POST" enctype="multipart/form-data" >
+                  <form class="rd-form rd-form-center rd-mailform" action = "{% url 'main:registration' %}" method="POST" enctype="multipart/form-data" >
                     {% csrf_token %}
                     {% for field in form %}
                       <div class="form-wrap">

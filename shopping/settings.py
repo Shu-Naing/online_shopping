@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.redirects',
-    'main',
+    'main.apps.MainConfig',
 ]
 
 MIDDLEWARE = [
