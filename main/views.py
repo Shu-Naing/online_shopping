@@ -6,6 +6,7 @@ from .forms import RegistrationForm, LoginForm
 from django.template import RequestContext
 from django.contrib import messages
 from .models import Customer
+from django.contrib.auth import authenticate
 
 @csrf_protect
 def registration(request):
@@ -33,6 +34,31 @@ def registration(request):
 def login(request):
     if request.method == "GET":
         form = LoginForm()
+    elif request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cust = authenticate(
+                request,
+                customer_email=form.cleaned_data.get('customer_email'),
+                customer_password=form.cleaned_data.get('customer_password'),
+            )
+
+            if cust is None:
+                return render(
+                    request,
+                    'login.html',
+                    { 'form': form, 'invalid_creds': True }
+                )
+
+            try:
+                form.confirm_login_allowed(cust)
+            except ValidationError:
+                return render(
+                    request,
+                    'login.html',
+                    { 'form': form, 'invalid_creds': True }
+                )
+            login(request, cust)
 
     return render(request, 'login.html', {'form': form})
     
