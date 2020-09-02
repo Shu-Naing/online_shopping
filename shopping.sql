@@ -444,7 +444,7 @@ CREATE TABLE public.main_customer (
     customer_firstname character varying(20) NOT NULL,
     customer_lastname character varying(20) NOT NULL,
     customer_email character varying(254) NOT NULL,
-    customer_password character varying(50) NOT NULL
+    customer_password character varying(150) NOT NULL
 );
 
 
@@ -692,6 +692,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 20	sites	0001_initial	2020-09-01 16:08:56.70487+06:30
 21	redirects	0001_initial	2020-09-01 16:08:56.714365+06:30
 22	sites	0002_alter_domain_unique	2020-09-01 16:08:56.744542+06:30
+23	main	0002_auto_20200902_0418	2020-09-02 10:48:56.973609+06:30
 \.
 
 
@@ -788,7 +789,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 9, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 22, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 23, true);
 
 
 --
@@ -809,7 +810,7 @@ SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
 -- Name: main_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.main_customer_id_seq', 20, true);
+SELECT pg_catalog.setval('public.main_customer_id_seq', 23, true);
 
 
 --
