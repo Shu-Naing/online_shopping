@@ -20,8 +20,6 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('registration/', )
-    url(r'^registration/$', views.registration, name = "registration"),
-    # url(r'^login/$', views.login, name = 'login'),
-    path('login/', views.login, name = 'login')
+    path('login/', views.login, name = "login"),
+    path('registration/', views.registration, name = "registrationj")
 ]

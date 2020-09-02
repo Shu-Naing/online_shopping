@@ -65,3 +65,32 @@ class RegistrationForm(forms.Form):
     class Meta:
         model = Customer
         fields = ('customer_username', 'customer_firstname', 'customer_lastname', 'customer_email', 'customer_password', )
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(
+        max_length = 80,
+        label = "Your Email",
+        required = True,
+        widget = forms.TextInput(
+            attrs = {
+                'class': 'form-input',
+                'id': 'login-email',
+                'type': 'email',
+                'data-constraints': '@Required',
+
+            }
+        )
+    )
+    password = forms.CharField(
+        max_length = 40, 
+        required = True,
+        label = "Password",
+        widget = forms.TextInput(
+            attrs = {
+                'class': 'form-input',
+                'id': 'login-password',
+                'data-constraints': '@Required',
+                'type': 'password'
+            }
+        )
+    )

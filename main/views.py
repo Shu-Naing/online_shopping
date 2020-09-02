@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect, loader, rev
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import hashers
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from django.template import RequestContext
 from django.contrib import messages
 from .models import Customer
@@ -23,17 +23,18 @@ def registration(request):
                     customer_email = form.cleaned_data['customer_email'],
                     customer_password = hashed_password,
                 )
-                customer.save()
-                return redirect(login)
+                # customer.save()
+                return redirect('/login')
             else:
-                messages.add_message(request, messages.WARNING, 'Email already taken!!')
+                messages.warning(request, 'Email already taken!!')
     return render(request, 'registration.html', {'form': form})
 
 @csrf_protect
 def login(request):
     if request.method == "GET":
-        return render(request, 'login.html')
-    # elif request.method == "POST":
-    #     return redirect(reverse('login'))
+        form = LoginForm()
+
+    return render(request, 'login.html', {'form': form})
+    
 
 # Create your views here.
