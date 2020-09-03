@@ -23,7 +23,7 @@ def registration(request):
                     customer_email=form.cleaned_data['customer_email'],
                     customer_password=hashed_password,
                 )
-                # customer.save()
+                customer.save()
                 return redirect("main:login")
             else:
                 messages.warning(request, "Email already taken!!")
@@ -50,7 +50,6 @@ def login(request):
                 if matchcheck:
                     messages.info(request, f"You are now logged in as")
                     return redirect('main:home')
-    print(form)
     return render(request, 'login.html', {'form': form})
 
 def home(request):
