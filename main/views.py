@@ -26,7 +26,7 @@ def registration(request):
                     customer_email=form.cleaned_data['customer_email'],
                     customer_password=hashed_password,
                 )
-                # customer.save()
+                customer.save()
                 return redirect("main:login")
             else:
                 messages.warning(request, "Email already taken!!")
@@ -45,18 +45,14 @@ def login(request):
             email_exists = Customer.objects.filter(customer_email=form.cleaned_data['customer_email']).exists()
             if not email_exists:
                 messages.error(request, "Invalid email")
-                return redirect('/login')
-            elif email_exists:
+                return redirect('main:login')
+            else:
                 query = Customer.objects.get(customer_email=email)
                 cust_pass = getattr(query, 'customer_password')
                 matchcheck = hashers.check_password(password, cust_pass)
                 if matchcheck:
                     messages.info(request, f"You are now logged in as")
-                    return redirect('/registration')
-            else:
-                messages.error(request, "Invalid username or password.")
-        else:
-            messages.error(request, "Invalid username or password.")
+                    return redirect('main:home')
     return render(request, 'login.html', {'form': form})
 
 def home(request):
