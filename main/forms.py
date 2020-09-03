@@ -64,7 +64,7 @@ class RegistrationForm(forms.Form):
 
     class Meta:
         model = Customer
-        fields = ('customer_username', 'customer_firstname', 'customer_lastname', 'customer_email', 'customer_password',)
+        fields = ('customer_username', 'customer_firstname', 'customer_lastname', 'customer_email', 'customer_password', )
 
 class LoginForm(forms.Form):
     customer_email = forms.EmailField(
@@ -85,7 +85,7 @@ class LoginForm(forms.Form):
         max_length = 40, 
         required = True,
         label = "Password",
-        widget = forms.HiddenInput(
+        widget = forms.TextInput(
             attrs = {
                 'class': 'form-input',
                 'id': 'login-password',
@@ -94,8 +94,3 @@ class LoginForm(forms.Form):
             }
         )
     )
-
-    class Meta:
-        model = Customer
-        fields = ('customer_email', 'customer_password',)
-        widgets = {'customer_password': forms.HiddenInput()}
