@@ -67,7 +67,7 @@ class RegistrationForm(forms.Form):
         fields = ('customer_username', 'customer_firstname', 'customer_lastname', 'customer_email', 'customer_password', )
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(
+    customer_email = forms.EmailField(
         max_length = 80,
         label = "Your Email",
         required = True,
@@ -81,7 +81,7 @@ class LoginForm(forms.Form):
             }
         )
     )
-    password = forms.CharField(
+    customer_password = forms.CharField(
         max_length = 40, 
         required = True,
         label = "Password",

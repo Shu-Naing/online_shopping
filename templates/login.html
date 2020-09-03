@@ -158,7 +158,7 @@
                     {% csrf_token %}
                     {% for field in form %}
                       <div class="form-wrap">
-                        <label class="form-label" for="login-name">{{field.label_tag}}*</label>
+                        {{field.label_tag}}*
                         {{field}}
                       </div>
                     {% endfor %}
