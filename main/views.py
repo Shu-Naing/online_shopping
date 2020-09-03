@@ -2,12 +2,9 @@ from django.shortcuts import render, redirect, HttpResponseRedirect, loader, rev
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import hashers
-# from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .forms import RegistrationForm, LoginForm
 from django.contrib import messages
 from .models import Customer
-from django.contrib.auth import authenticate, login
 
 
 @csrf_protect
@@ -26,7 +23,7 @@ def registration(request):
                     customer_email=form.cleaned_data['customer_email'],
                     customer_password=hashed_password,
                 )
-                customer.save()
+                # customer.save()
                 return redirect("main:login")
             else:
                 messages.warning(request, "Email already taken!!")
@@ -34,7 +31,7 @@ def registration(request):
     return render(request, 'registration.html', {'form': form})
 
 
-@csrf_protect
+# @csrf_protect
 def login(request):
     form = LoginForm()
     if request.method == "POST":
@@ -53,6 +50,7 @@ def login(request):
                 if matchcheck:
                     messages.info(request, f"You are now logged in as")
                     return redirect('main:home')
+    print(form)
     return render(request, 'login.html', {'form': form})
 
 def home(request):

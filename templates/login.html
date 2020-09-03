@@ -154,7 +154,7 @@
                 <div class="form-login">
                   <div class="button-social"><a class="button button-sm button-icon button-icon-left button-facebook button-winona" href="#"><span class="icon fa fa-facebook"></span><span>Facebook</span></a><a class="button button-sm button-icon button-icon-left button-twitter button-winona" href="#"><span class="icon fa fa-twitter"></span><span>Twitter</span></a><a class="button button-sm button-icon button-icon-left button-google button-winona" href="#"><span class="icon fa fa-google-plus"></span><span>Google+</span></a></div>
                   <p class="text-divider">or</p>
-                  <form class="rd-form rd-form-center rd-mailform" action = "{% url 'main:login' %}" method="POST" enctype="multipart/form-data" >
+                  <form action = "{% url 'main:login' %}" method="POST" enctype="multipart/form-data" >
                     {% csrf_token %}
                     {% for field in form %}
                       <div class="form-wrap">

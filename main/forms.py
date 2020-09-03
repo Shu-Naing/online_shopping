@@ -9,7 +9,7 @@ class RegistrationForm(forms.Form):
         widget = forms.TextInput(
             attrs = {
                 'class': 'form-input',
-                'id': 'login-name',
+                'id': 'login-username',
                 'data-constraints': '@Required'
             }
         )
