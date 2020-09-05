@@ -6,3 +6,4 @@ class Customer(models.Model):
     customer_lastname = models.CharField(max_length = 20, blank = True)
     customer_email = models.EmailField()
     customer_password = models.CharField(max_length = 150)
+    customer_lastlogin = models.DateTimeField()

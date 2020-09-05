@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+      <!-- Section Shop-->
+      <section class="section section-lg bg-default text-md-left">
+        <div class="container">
+          <div class="row row-60">
+            <div class="col-lg-4 col-xl-3">
+              <div class="aside row row-60">
+                <p>Hello {{customer.customer_firstname}} {{customer.customer_lastname}}..!</p>
+                <div class="aside-item col-sm-6 col-lg-12">
+                  <h5 class="aside-title">Manage Account</h5>
+                  <ul class="list-marked-2">
+                    <li><a href="#">Fiction</a></li>
+                    <li><a href="#">Mystery</a></li>
+                    <li><a href="#">Romance</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 col-xl-9">
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+{% endblock %}

@@ -5,5 +5,5 @@ from django.db import models
 # Register your models here.
 class CustomerAdminView(admin.ModelAdmin):
     model = Customer
-    fields = ('customer_username', 'customer_firstname', 'customer_lastname', 'customer_email',)
+    list_display = ['customer_username', 'customer_firstname', 'customer_lastname', 'customer_email',]
 admin.site.register(Customer, CustomerAdminView)
