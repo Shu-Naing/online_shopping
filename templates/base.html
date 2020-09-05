@@ -53,39 +53,20 @@
                     <ul class="rd-navbar-nav">
                       <li class="rd-nav-item active"><a class="rd-nav-link" href="/">Home</a>
                       </li>
-                      <li class="rd-nav-item"><a class="rd-nav-link" href="#">Pages</a>
+                        <li class="rd-nav-item"><a class="rd-nav-link" href="#">Shop</a>
                         <!-- RD Navbar Megamenu-->
                         <ul class="rd-menu rd-navbar-megamenu">
                           <li class="rd-megamenu-item">
-                            <h6 class="rd-megamenu-title">Services</h6>
+                            {% for a in context %}
+                            <h6 class="rd-megamenu-title">{{ a.Name }}</h6>
                             <ul class="rd-megamenu-list">
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Services</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Single service</a></li>
+                              {% for i in a.Sub_Name %}
+                                <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="services.html">{{ i.sub_category}}</a></li>
+                              {% endfor %}
                             </ul>
+
                           </li>
-                          <li class="rd-megamenu-item">
-                            <h6 class="rd-megamenu-title">Additional Pages</h6>
-                            <ul class="rd-megamenu-list">
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">404 page</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Coming soon</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Counters</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Search results</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Privacy policy</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#%} ">Contacts</a></li>
-                            </ul>
-                          </li>
-                          <li class="rd-megamenu-item">
-                            <h6 class="rd-megamenu-title">Elements</h6>
-                            <ul class="rd-megamenu-list">
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Typography</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Buttons</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Forms</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Tabs and accordions</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Progress bars</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Grid system</a></li>
-                              <li class="rd-megamenu-list-item"><a class="rd-megamenu-list-link" href="#">Tables</a></li>
-                            </ul>
-                          </li>
+                          {% endfor %}
                         </ul>
                       </li>
                       <li class="rd-nav-item"><a class="rd-nav-link" href="#">About us</a>

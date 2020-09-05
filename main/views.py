@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import hashers
 from .forms import RegistrationForm, LoginForm
 from django.contrib import messages
-from .models import Customer
+from .models import Customer, Category
 from datetime import datetime
 
 

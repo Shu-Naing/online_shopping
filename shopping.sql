@@ -435,6 +435,41 @@ ALTER SEQUENCE public.django_site_id_seq OWNED BY public.django_site.id;
 
 
 --
+-- Name: main_category; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_category (
+    id integer NOT NULL,
+    category_name character varying(80) NOT NULL,
+    sub_category character varying(80) NOT NULL
+);
+
+
+ALTER TABLE public.main_category OWNER TO myprojectuser;
+
+--
+-- Name: main_category_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_category_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_category_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_category_id_seq OWNED BY public.main_category.id;
+
+
+--
 -- Name: main_customer; Type: TABLE; Schema: public; Owner: myprojectuser
 --
 
@@ -444,7 +479,8 @@ CREATE TABLE public.main_customer (
     customer_firstname character varying(20) NOT NULL,
     customer_lastname character varying(20) NOT NULL,
     customer_email character varying(254) NOT NULL,
-    customer_password character varying(150) NOT NULL
+    customer_password character varying(150) NOT NULL,
+    customer_lastlogin timestamp without time zone NOT NULL
 );
 
 
@@ -550,6 +586,13 @@ ALTER TABLE ONLY public.django_site ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: main_category id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_category ALTER COLUMN id SET DEFAULT nextval('public.main_category_id_seq'::regclass);
+
+
+--
 -- Name: main_customer id; Type: DEFAULT; Schema: public; Owner: myprojectuser
 --
 
@@ -601,18 +644,18 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 22	Can change session	6	change_session
 23	Can delete session	6	delete_session
 24	Can view session	6	view_session
-25	Can add customer	7	add_customer
-26	Can change customer	7	change_customer
-27	Can delete customer	7	delete_customer
-28	Can view customer	7	view_customer
-29	Can add site	8	add_site
-30	Can change site	8	change_site
-31	Can delete site	8	delete_site
-32	Can view site	8	view_site
-33	Can add redirect	9	add_redirect
-34	Can change redirect	9	change_redirect
-35	Can delete redirect	9	delete_redirect
-36	Can view redirect	9	view_redirect
+25	Can add site	7	add_site
+26	Can change site	7	change_site
+27	Can delete site	7	delete_site
+28	Can view site	7	view_site
+29	Can add customer	8	add_customer
+30	Can change customer	8	change_customer
+31	Can delete customer	8	delete_customer
+32	Can view customer	8	view_customer
+33	Can add category	9	add_category
+34	Can change category	9	change_category
+35	Can delete category	9	delete_category
+36	Can view category	9	view_category
 \.
 
 
@@ -621,6 +664,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+1	pbkdf2_sha256$216000$FmAfHlhNVz49$0W2wWa3VXRSJ+8jTzc5dzCKbbbofJN/9hiv32rcxW+M=	2020-09-03 16:18:42.131053+06:30	t	admin			shunainghtet98@gmail.com	t	t	2020-09-03 15:32:09.563263+06:30
 \.
 
 
@@ -659,9 +703,9 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 4	auth	user
 5	contenttypes	contenttype
 6	sessions	session
-7	main	customer
-8	sites	site
-9	redirects	redirect
+7	sites	site
+8	main	customer
+9	main	category
 \.
 
 
@@ -670,29 +714,28 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2020-09-01 14:41:55.368419+06:30
-2	auth	0001_initial	2020-09-01 14:41:55.418116+06:30
-3	admin	0001_initial	2020-09-01 14:41:55.500496+06:30
-4	admin	0002_logentry_remove_auto_add	2020-09-01 14:41:55.515747+06:30
-5	admin	0003_logentry_add_action_flag_choices	2020-09-01 14:41:55.523164+06:30
-6	contenttypes	0002_remove_content_type_name	2020-09-01 14:41:55.538556+06:30
-7	auth	0002_alter_permission_name_max_length	2020-09-01 14:41:55.54592+06:30
-8	auth	0003_alter_user_email_max_length	2020-09-01 14:41:55.553013+06:30
-9	auth	0004_alter_user_username_opts	2020-09-01 14:41:55.561246+06:30
-10	auth	0005_alter_user_last_login_null	2020-09-01 14:41:55.56881+06:30
-11	auth	0006_require_contenttypes_0002	2020-09-01 14:41:55.571047+06:30
-12	auth	0007_alter_validators_add_error_messages	2020-09-01 14:41:55.57977+06:30
-13	auth	0008_alter_user_username_max_length	2020-09-01 14:41:55.591047+06:30
-14	auth	0009_alter_user_last_name_max_length	2020-09-01 14:41:55.598945+06:30
-15	auth	0010_alter_group_name_max_length	2020-09-01 14:41:55.608327+06:30
-16	auth	0011_update_proxy_permissions	2020-09-01 14:41:55.616471+06:30
-17	auth	0012_alter_user_first_name_max_length	2020-09-01 14:41:55.623896+06:30
-18	sessions	0001_initial	2020-09-01 14:41:55.636385+06:30
-19	main	0001_initial	2020-09-01 14:43:37.266122+06:30
-20	sites	0001_initial	2020-09-01 16:08:56.70487+06:30
-21	redirects	0001_initial	2020-09-01 16:08:56.714365+06:30
-22	sites	0002_alter_domain_unique	2020-09-01 16:08:56.744542+06:30
-23	main	0002_auto_20200902_0418	2020-09-02 10:48:56.973609+06:30
+1	contenttypes	0001_initial	2020-09-04 11:01:46.058836+06:30
+2	auth	0001_initial	2020-09-04 11:01:46.115902+06:30
+3	admin	0001_initial	2020-09-04 11:01:46.243787+06:30
+4	admin	0002_logentry_remove_auto_add	2020-09-04 11:01:46.28525+06:30
+5	admin	0003_logentry_add_action_flag_choices	2020-09-04 11:01:46.301304+06:30
+6	contenttypes	0002_remove_content_type_name	2020-09-04 11:01:46.319337+06:30
+7	auth	0002_alter_permission_name_max_length	2020-09-04 11:01:46.326832+06:30
+8	auth	0003_alter_user_email_max_length	2020-09-04 11:01:46.334496+06:30
+9	auth	0004_alter_user_username_opts	2020-09-04 11:01:46.34128+06:30
+10	auth	0005_alter_user_last_login_null	2020-09-04 11:01:46.349334+06:30
+11	auth	0006_require_contenttypes_0002	2020-09-04 11:01:46.35193+06:30
+12	auth	0007_alter_validators_add_error_messages	2020-09-04 11:01:46.359031+06:30
+13	auth	0008_alter_user_username_max_length	2020-09-04 11:01:46.372737+06:30
+14	auth	0009_alter_user_last_name_max_length	2020-09-04 11:01:46.388984+06:30
+15	auth	0010_alter_group_name_max_length	2020-09-04 11:01:46.398963+06:30
+16	auth	0011_update_proxy_permissions	2020-09-04 11:01:46.406932+06:30
+17	auth	0012_alter_user_first_name_max_length	2020-09-04 11:01:46.414634+06:30
+18	sessions	0001_initial	2020-09-04 11:01:46.436172+06:30
+19	sites	0001_initial	2020-09-04 11:01:46.467168+06:30
+20	sites	0002_alter_domain_unique	2020-09-04 11:01:46.483114+06:30
+21	main	0001_initial	2020-09-04 11:03:15.814753+06:30
+22	main	0002_category	2020-09-05 11:13:25.271974+06:30
 \.
 
 
@@ -709,6 +752,7 @@ COPY public.django_redirect (id, site_id, old_path, new_path) FROM stdin;
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+6eymo6zeblq8wtk1jv5e85z425y1jicf	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kDlrG:ajg3K_xPyylqmWYGRB5jDStqOsfiudBNPjahZkpsEv0	2020-09-17 16:18:42.13648+06:30
 \.
 
 
@@ -722,10 +766,33 @@ COPY public.django_site (id, domain, name) FROM stdin;
 
 
 --
+-- Data for Name: main_category; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_category (id, category_name, sub_category) FROM stdin;
+1	Electronic Devices	Mobiles
+2	Electronic Devices	Tablets
+3	Electronic Devices	Laptops
+4	Electronic Devices	Desktops
+5	Electronic Devices	Gaming Consoles
+6	Electronic Devices	Action/Video Cameras
+7	Electronic Devices	Security Cameras
+8	Electronic Devices	Digital Cameras
+9	Men's Fashion	Clothing
+10	Men's Fashion	Men's Bags
+11	Men's Fashion	Shoes
+12	Men's Fashion	Accessories
+13	Men's Fashion	Boy's Fashion
+14	Men's Fashion	Travel & Luggage
+\.
+
+
+--
 -- Data for Name: main_customer; Type: TABLE DATA; Schema: public; Owner: myprojectuser
 --
 
-COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_email, customer_password) FROM stdin;
+COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_email, customer_password, customer_lastlogin) FROM stdin;
+5	ach	Aye Chan	Han	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-09-05 11:19:43.810027
 \.
 
 
@@ -747,7 +814,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 36, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
 
 
 --
@@ -761,7 +828,7 @@ SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.auth_user_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auth_user_id_seq', 1, true);
 
 
 --
@@ -775,21 +842,21 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 16, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 9, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 10, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 23, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 25, true);
 
 
 --
@@ -807,10 +874,17 @@ SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
 
 
 --
+-- Name: main_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_category_id_seq', 14, true);
+
+
+--
 -- Name: main_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.main_customer_id_seq', 23, true);
+SELECT pg_catalog.setval('public.main_customer_id_seq', 27, true);
 
 
 --
@@ -979,6 +1053,14 @@ ALTER TABLE ONLY public.django_site
 
 ALTER TABLE ONLY public.django_site
     ADD CONSTRAINT django_site_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: main_category main_category_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_category
+    ADD CONSTRAINT main_category_pkey PRIMARY KEY (id);
 
 
 --

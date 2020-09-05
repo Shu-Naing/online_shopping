@@ -7,3 +7,8 @@ class Customer(models.Model):
     customer_email = models.EmailField()
     customer_password = models.CharField(max_length = 150)
     customer_lastlogin = models.DateTimeField()
+
+class Category(models.Model):
+    category_name = models.CharField(max_length = 80)
+    sub_category = models.CharField(max_length = 80)
+
