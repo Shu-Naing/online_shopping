@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import hashers
 from .forms import RegistrationForm, LoginForm
 from django.contrib import messages
-from .models import Customer
+from .models import Customer, Category
 
 
 @csrf_protect
@@ -52,7 +52,15 @@ def login(request):
                     return redirect('main:home')
     return render(request, 'login.html', {'form': form})
 
+
 def home(request):
     if request.method == "GET":
-        return render(request, 'index.html')
-    
+        query = Category.objects.distinct().values('category_name')
+        cat_list = list()
+        for category in query:
+            lop_list = list()
+            query1 = Category.objects.filter(category_name=category['category_name'])
+            for sub_cat in query1.values('sub_category'):
+                lop_list.append(sub_cat)
+            cat_list.append({"Name": category['category_name'], "Sub_Name": lop_list})
+        return render(request, 'index.html', {'context': cat_list})
