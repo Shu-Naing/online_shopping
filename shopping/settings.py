@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -70,10 +70,8 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'shopping.wsgi.application'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -81,15 +79,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':  'shopping',
+        'NAME': 'shopping',
         'USER': 'myprojectuser',
-	    'PASSWORD': 'password',
-	    'HOST': 'localhost',
-	    'PORT': '',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -128,7 +124,6 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -137,3 +132,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_root')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static', 'static_dirs'),
 )
+
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'featureImage')
+#
+# MEDIA_URL = '/featureImage/'

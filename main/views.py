@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import hashers
 from .forms import RegistrationForm, LoginForm
 from django.contrib import messages
-from .models import Customer, Category
+from .models import Customer, Brand, Product
 from datetime import datetime
 
 
@@ -18,12 +18,12 @@ def registration(request):
             if not Customer.objects.filter(customer_email=form.cleaned_data['customer_email']).exists():
                 hashed_password = hashers.make_password(form.cleaned_data['customer_password'])
                 customer = Customer(
-                    customer_username = form.cleaned_data['customer_username'],
-                    customer_firstname = form.cleaned_data['customer_firstname'],
-                    customer_lastname = form.cleaned_data['customer_lastname'],
-                    customer_email = form.cleaned_data['customer_email'],
-                    customer_password = hashed_password,
-                    customer_lastlogin = datetime.today()
+                    customer_username=form.cleaned_data['customer_username'],
+                    customer_firstname=form.cleaned_data['customer_firstname'],
+                    customer_lastname=form.cleaned_data['customer_lastname'],
+                    customer_email=form.cleaned_data['customer_email'],
+                    customer_password=hashed_password,
+                    customer_lastlogin=datetime.today()
                 )
                 customer.save()
                 return redirect("main:login")
@@ -72,10 +72,27 @@ def manageAccount(request):
     return render(request, 'manage_account.html')
 
 
+
 def logout(request):
     request.session.flush()
     return redirect("main:home")
 
+
 def home(request):
     if request.method == "GET":
         return render(request, 'index.html')
+
+
+def shop(request):
+    if request.method == "GET":
+        brand_list = list()
+        product_list = list()
+        brand_name = Brand.objects.all().values('brand_name')
+        product_shop = Product.objects.filter().values('product_name', 'product_price', 'product_featureImage')
+        for brand in brand_name:
+            brand_list.append({"b_name": brand['brand_name']})
+        for product in product_shop:
+            product_list.append({"p_name": product['product_name'], "p_price": product['product_price'],
+                                 "p_image": product['product_featureImage']})
+
+    return render(request, 'shop.html', {'brand': brand_list, 'product': product_list})
