@@ -7,22 +7,169 @@
           <div class="row row-60">
             <div class="col-lg-4 col-xl-3">
               <div class="aside row row-60">
-                <p>Hello {{customer.customer_firstname}} {{customer.customer_lastname}}..!</p>
+                  <p class = 'q'>Hello {{customer.customer_firstname}} {{customer.customer_lastname}}..!</p>
                 <div class="aside-item col-sm-6 col-lg-12">
-                  <h5 class="aside-title">Manage Account</h5>
+                  <h5 class="aside-title">Manage My Account</h5>
                   <ul class="list-marked-2">
-                    <li><a href="#">Fiction</a></li>
-                    <li><a href="#">Mystery</a></li>
-                    <li><a href="#">Romance</a></li>
+                    <li>My Profile</li>
                   </ul>
                 </div>
               </div>
             </div>
             <div class="col-lg-8 col-xl-9">
-              
+                <div class="row row-30 row-md-40 row-xl-60">
+                  <div class="col-sm-6 col-xl-4">
+                      <h6> Full name </h6>
+                      <p id = "fullname_{{customer.id}}">{{customer.customer_firstname}} {{customer.customer_lastname}}</p>
+                      <input type="text" id="firstname_{{customer.id}}" name="customer_firstname" value="{{customer.customer_firstname}}" style="display:none"/>
+                      <input type="text" id="lastname_{{customer.id}}" name="customer_lastname" value="{{customer.customer_lastname}}" style="display:none"/>
+                  </div>
+                  <div class="col-sm-6 col-xl-4">
+                      <h6> Email Address | <a href ="#">Change</a></h6>
+                      <p>{{customer.customer_email}}</p>
+                  </div>
+                  <div class="col-sm-6 col-xl-4">
+                      {% if customer.customer_mobile is None %}
+                        <h6> Mobile | <a href ="#">Add</a></h6>
+                        <p>Please enter your mobile </p>
+                      {% else %}
+                        <h6> Mobile | <a href ="#">Change</a></h6>
+                        <p>{{customer.customer_mobile}}</p>
+                      {% endif %}
+                  </div>
+                  <div class="col-sm-6 col-xl-4">
+                      <h6> Date of Birth </h6>
+                      {% if customer.customer_dob is None %}
+                        <p id = "dob_description">Please enter your birthday</p>
+                        <input type="date" id="dob_{{customer.id}}" name="dob" style="display:none"/>
+                      {% else %}
+                        <p id = "dob_description">{{customer.customer_dob}}</p>
+                        <input type="date" id="dob_{{customer.id}}" name="dob" value = '{{customer.customer_dob}}' style="display:none"/>
+                      {% endif %}
+                  </div>
+                  <div class="col-sm-6 col-xl-4">
+                      <h6> Gender </h6>
+                      {% if customer.customer_gender is None %}
+                        <p id = "gender_description">Please enter your gender</p>
+                      {% else %}
+                        <p id = "gender_description">{{customer.customer_gender}}</p>
+                      {% endif %}
+                      <select name="gender" id="gender_{{customer.id}}" style = "display:none">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+                      </select>
+                  </div>
+                  <div class="col-sm-6 col-xl-4"></div>
+                  <div class="col-sm-6 col-xl-4">
+                      <button id="update_button_{{customer.id}}" class="button button-sm button-primary button-winona" style="display:none" onclick = "updateField()">Update Profile</button>
+                      <button id="edit_button_{{customer.id}}" class="button button-sm button-primary button-winona" onclick = "showField()">Edit Profile</button>
+                  </div>
+                  <div class="col-sm-6 col-xl-4">
+                      <button id="cancel_button_{{customer.id}}" class="button button-sm button-primary button-winona" style="display:none" onclick = "Cancel()">Cancle</button>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
       </section>
+      <script type="text/javascript">
+          var $wk_jq = $.noConflict();
+          function showField()
+            {
+                var fullname = '#fullname_' + {{customer.id}};
+                var firstname='#firstname_'+ {{customer.id}};
+                var lastname='#lastname_'+ {{customer.id}};
+                var dob='#dob_'+ {{customer.id}};
+                var gender = '#gender_'+{{customer.id}};
+                var dob_des = '#dob_description'
+                var gender_des = '#gender_description'
+
+                var editProfile="#edit_button_"+ {{customer.id}};
+                var updateProfile = "#update_button_" + {{customer.id}}
+                var cancel = "#cancel_button_"+ {{customer.id}};
+                
+                //hidden elements
+                $wk_jq(fullname).hide();
+                $wk_jq(editProfile).hide();
+                $wk_jq(dob_des).hide();
+                $wk_jq(gender_des).hide();
+
+                //showing elements
+                $wk_jq(firstname).show();
+                $wk_jq(lastname).show();
+                $wk_jq(dob).show();
+                $wk_jq(gender).show();
+                $wk_jq(updateProfile).show();
+                $wk_jq(editProfile).prop('disabled', false);
+                $wk_jq(cancel).show()
+            }
+
+          function Cancel() {
+                var fullname = '#fullname_' + {{customer.id}};
+                var firstname='#firstname_'+ {{customer.id}};
+                var lastname='#lastname_'+ {{customer.id}};
+                var dob='#dob_'+ {{customer.id}};
+                var gender = '#gender_'+{{customer.id}};
+                var dob_des = '#dob_description'
+                var gender_des = '#gender_description'
+
+                var editProfile="#edit_button_"+ {{customer.id}};
+                var updateProfile = "#update_button_" + {{customer.id}}
+                var cancel = "#cancel_button_"+ {{customer.id}};
+
+                //showing elements
+                $wk_jq(fullname).show();
+                $wk_jq(editProfile).show();
+                $wk_jq(dob_des).show();
+                $wk_jq(gender_des).show();
+
+                //hidden elements
+                $wk_jq(firstname).hide();
+                $wk_jq(lastname).hide();
+                $wk_jq(dob).hide();
+                $wk_jq(gender).hide();
+                $wk_jq(updateProfile).hide();
+                $wk_jq(cancel).hide()
+            }
+
+          function updateField() {
+                var fullname = '#fullname_' + {{customer.id}};
+                var firstname='#firstname_'+ {{customer.id}};
+                var lastname='#lastname_'+ {{customer.id}};
+                var dob='#dob_'+ {{customer.id}};
+                var gender = '#gender_'+{{customer.id}};
+                var dob_des = '#dob_description'
+                var gender_des = '#gender_description'
+
+                var editProfile="#edit_button_"+ {{customer.id}};
+                var updateProfile = "#update_button_" + {{customer.id}}
+                var cancel = "#cancel_button_"+ {{customer.id}};
+
+                var data = {csrfmiddlewaretoken: '{{csrf_token}}', id: {{customer.id}}, firstname:$wk_jq(firstname).val(), lastname:$wk_jq(lastname).val(), dob:$wk_jq(dob).val(), gender: $wk_jq(gender).val()}
+                if ($wk_jq(dob).val() == "")
+                {
+                  dob = '{{customer.customer_dob}}';
+                  var d=new Date(dob.split("/").reverse().join("-"));
+                  var dd=d.getDate();
+                  var mm=d.getMonth()+1;
+                  var yy=d.getFullYear();
+                  dob = (yy+"-"+mm+"-"+dd);
+                  data = {csrfmiddlewaretoken: '{{csrf_token}}', id: {{customer.id}}, firstname:$wk_jq(firstname).val(), lastname:$wk_jq(lastname).val(), dob:dob, gender: $wk_jq(gender).val()}
+                }
+                //console.log('make ajax call to add:', data);
+                $.post({
+                  url:'{% url 'main:manage_account' %}', 
+                  type: 'POST',
+                  data: data, 
+                  success: function(){
+                    $wk_jq(fullname).text($wk_jq(firstname).val() + " " + $wk_jq(lastname).val());
+                    $wk_jq(dob_des).text($wk_jq(dob).val());
+                    $wk_jq(gender_des).text($wk_jq(gender).val());
+                    Cancel();
+                  },
+                });
+          }
+      </script>
 
 {% endblock %}

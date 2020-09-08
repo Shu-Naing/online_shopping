@@ -53,13 +53,24 @@ def login(request):
                     customer = get_object_or_404(Customer, customer_password = cust_pass, pk = cust_id)
                     customer.save(update_fields = ['customer_lastlogin'])
                     Customer.objects.filter(pk = customer.pk).update(customer_lastlogin = datetime.today())
+                    request.session.set_expiry(900)
                     request.session['customer'] = cust_id
                     return redirect('main:home')
     return render(request, 'login.html', {'form': form})
 
+@csrf_protect
 def manageAccount(request):
-    if request.method == "GET":
-        return render(request, 'manage_account.html')
+    if request.method == "POST":
+        customer_id = request.POST.get('id')
+        customer = get_object_or_404(Customer, pk = customer_id)
+        customer.save(update_fields = ['customer_firstname', 'customer_lastname', 'customer_dob', 'customer_gender'])
+        Customer.objects.filter(pk = customer.pk).update(customer_firstname = request.POST.get('firstname'), 
+        customer_lastname = request.POST.get('lastname'), 
+        customer_dob = datetime.strptime(request.POST.get('dob'), "%Y-%m-%d").date(),
+        customer_gender = request.POST.get('gender'))
+
+    return render(request, 'manage_account.html')
+
 
 def logout(request):
     request.session.flush()

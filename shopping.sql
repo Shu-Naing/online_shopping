@@ -469,44 +469,6 @@ ALTER TABLE public.main_category_id_seq OWNER TO myprojectuser;
 ALTER SEQUENCE public.main_category_id_seq OWNED BY public.main_category.id;
 
 
---
--- Name: main_customer; Type: TABLE; Schema: public; Owner: myprojectuser
---
-
-CREATE TABLE public.main_customer (
-    id integer NOT NULL,
-    customer_username character varying(80) NOT NULL,
-    customer_firstname character varying(20) NOT NULL,
-    customer_lastname character varying(20) NOT NULL,
-    customer_email character varying(254) NOT NULL,
-    customer_password character varying(150) NOT NULL,
-    customer_lastlogin timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.main_customer OWNER TO myprojectuser;
-
---
--- Name: main_customer_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
---
-
-CREATE SEQUENCE public.main_customer_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.main_customer_id_seq OWNER TO myprojectuser;
-
---
--- Name: main_customer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
---
-
-ALTER SEQUENCE public.main_customer_id_seq OWNED BY public.main_customer.id;
-
 
 --
 -- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: myprojectuser
@@ -592,11 +554,6 @@ ALTER TABLE ONLY public.django_site ALTER COLUMN id SET DEFAULT nextval('public.
 ALTER TABLE ONLY public.main_category ALTER COLUMN id SET DEFAULT nextval('public.main_category_id_seq'::regclass);
 
 
---
--- Name: main_customer id; Type: DEFAULT; Schema: public; Owner: myprojectuser
---
-
-ALTER TABLE ONLY public.main_customer ALTER COLUMN id SET DEFAULT nextval('public.main_customer_id_seq'::regclass);
 
 
 --
@@ -648,14 +605,10 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 26	Can change site	7	change_site
 27	Can delete site	7	delete_site
 28	Can view site	7	view_site
-29	Can add customer	8	add_customer
-30	Can change customer	8	change_customer
-31	Can delete customer	8	delete_customer
-32	Can view customer	8	view_customer
-33	Can add category	9	add_category
-34	Can change category	9	change_category
-35	Can delete category	9	delete_category
-36	Can view category	9	view_category
+33	Can add category	8	add_category
+34	Can change category	8	change_category
+35	Can delete category	8	delete_category
+36	Can view category	8	view_category
 \.
 
 
@@ -704,8 +657,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 5	contenttypes	contenttype
 6	sessions	session
 7	sites	site
-8	main	customer
-9	main	category
+8	main	category
 \.
 
 
@@ -787,13 +739,7 @@ COPY public.main_category (id, category_name, sub_category) FROM stdin;
 \.
 
 
---
--- Data for Name: main_customer; Type: TABLE DATA; Schema: public; Owner: myprojectuser
---
 
-COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_email, customer_password, customer_lastlogin) FROM stdin;
-5	ach	Aye Chan	Han	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-09-05 11:19:43.810027
-\.
 
 
 --
@@ -879,12 +825,6 @@ SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
 
 SELECT pg_catalog.setval('public.main_category_id_seq', 14, true);
 
-
---
--- Name: main_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
---
-
-SELECT pg_catalog.setval('public.main_customer_id_seq', 27, true);
 
 
 --
@@ -1062,13 +1002,6 @@ ALTER TABLE ONLY public.django_site
 ALTER TABLE ONLY public.main_category
     ADD CONSTRAINT main_category_pkey PRIMARY KEY (id);
 
-
---
--- Name: main_customer main_customer_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
---
-
-ALTER TABLE ONLY public.main_customer
-    ADD CONSTRAINT main_customer_pkey PRIMARY KEY (id);
 
 
 --
