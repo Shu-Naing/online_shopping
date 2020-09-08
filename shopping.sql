@@ -435,6 +435,40 @@ ALTER SEQUENCE public.django_site_id_seq OWNED BY public.django_site.id;
 
 
 --
+-- Name: main_brand; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_brand (
+    id integer NOT NULL,
+    brand_name character varying(30) NOT NULL
+);
+
+
+ALTER TABLE public.main_brand OWNER TO myprojectuser;
+
+--
+-- Name: main_brand_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_brand_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_brand_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_brand_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_brand_id_seq OWNED BY public.main_brand.id;
+
+
+--
 -- Name: main_category; Type: TABLE; Schema: public; Owner: myprojectuser
 --
 
@@ -468,6 +502,85 @@ ALTER TABLE public.main_category_id_seq OWNER TO myprojectuser;
 
 ALTER SEQUENCE public.main_category_id_seq OWNED BY public.main_category.id;
 
+
+--
+-- Name: main_customer; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_customer (
+    id integer NOT NULL,
+    customer_username character varying(80) NOT NULL,
+    customer_firstname character varying(20) NOT NULL,
+    customer_lastname character varying(20) NOT NULL,
+    customer_dob date,
+    customer_gender character varying(9),
+    customer_mobile bigint,
+    customer_email character varying(254) NOT NULL,
+    customer_password character varying(150) NOT NULL,
+    customer_lastlogin timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.main_customer OWNER TO myprojectuser;
+
+--
+-- Name: main_customer_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_customer_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_customer_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_customer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_customer_id_seq OWNED BY public.main_customer.id;
+
+
+--
+-- Name: main_product; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_product (
+    id integer NOT NULL,
+    product_name character varying(80) NOT NULL,
+    product_price numeric(5,2) NOT NULL,
+    "product_featureImage" character varying(100) NOT NULL,
+    brand_id_id integer NOT NULL,
+    category_id_id integer NOT NULL
+);
+
+
+ALTER TABLE public.main_product OWNER TO myprojectuser;
+
+--
+-- Name: main_product_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_product_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_product_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_product_id_seq OWNED BY public.main_product.id;
 
 
 --
@@ -548,12 +661,31 @@ ALTER TABLE ONLY public.django_site ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: main_brand id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_brand ALTER COLUMN id SET DEFAULT nextval('public.main_brand_id_seq'::regclass);
+
+
+--
 -- Name: main_category id; Type: DEFAULT; Schema: public; Owner: myprojectuser
 --
 
 ALTER TABLE ONLY public.main_category ALTER COLUMN id SET DEFAULT nextval('public.main_category_id_seq'::regclass);
 
 
+--
+-- Name: main_customer id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_customer ALTER COLUMN id SET DEFAULT nextval('public.main_customer_id_seq'::regclass);
+
+
+--
+-- Name: main_product id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_product ALTER COLUMN id SET DEFAULT nextval('public.main_product_id_seq'::regclass);
 
 
 --
@@ -605,10 +737,14 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 26	Can change site	7	change_site
 27	Can delete site	7	delete_site
 28	Can view site	7	view_site
-33	Can add category	8	add_category
-34	Can change category	8	change_category
-35	Can delete category	8	delete_category
-36	Can view category	8	view_category
+29	Can add category	8	add_category
+30	Can change category	8	change_category
+31	Can delete category	8	delete_category
+32	Can view category	8	view_category
+33	Can add customer	9	add_customer
+34	Can change customer	9	change_customer
+35	Can delete customer	9	delete_customer
+36	Can view customer	9	view_customer
 \.
 
 
@@ -658,6 +794,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 6	sessions	session
 7	sites	site
 8	main	category
+9	main	customer
 \.
 
 
@@ -666,28 +803,28 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2020-09-04 11:01:46.058836+06:30
-2	auth	0001_initial	2020-09-04 11:01:46.115902+06:30
-3	admin	0001_initial	2020-09-04 11:01:46.243787+06:30
-4	admin	0002_logentry_remove_auto_add	2020-09-04 11:01:46.28525+06:30
-5	admin	0003_logentry_add_action_flag_choices	2020-09-04 11:01:46.301304+06:30
-6	contenttypes	0002_remove_content_type_name	2020-09-04 11:01:46.319337+06:30
-7	auth	0002_alter_permission_name_max_length	2020-09-04 11:01:46.326832+06:30
-8	auth	0003_alter_user_email_max_length	2020-09-04 11:01:46.334496+06:30
-9	auth	0004_alter_user_username_opts	2020-09-04 11:01:46.34128+06:30
-10	auth	0005_alter_user_last_login_null	2020-09-04 11:01:46.349334+06:30
-11	auth	0006_require_contenttypes_0002	2020-09-04 11:01:46.35193+06:30
-12	auth	0007_alter_validators_add_error_messages	2020-09-04 11:01:46.359031+06:30
-13	auth	0008_alter_user_username_max_length	2020-09-04 11:01:46.372737+06:30
-14	auth	0009_alter_user_last_name_max_length	2020-09-04 11:01:46.388984+06:30
-15	auth	0010_alter_group_name_max_length	2020-09-04 11:01:46.398963+06:30
-16	auth	0011_update_proxy_permissions	2020-09-04 11:01:46.406932+06:30
-17	auth	0012_alter_user_first_name_max_length	2020-09-04 11:01:46.414634+06:30
-18	sessions	0001_initial	2020-09-04 11:01:46.436172+06:30
-19	sites	0001_initial	2020-09-04 11:01:46.467168+06:30
-20	sites	0002_alter_domain_unique	2020-09-04 11:01:46.483114+06:30
-21	main	0001_initial	2020-09-04 11:03:15.814753+06:30
-22	main	0002_category	2020-09-05 11:13:25.271974+06:30
+1	contenttypes	0001_initial	2020-09-07 10:50:15.915785+06:30
+2	auth	0001_initial	2020-09-07 10:50:15.986585+06:30
+3	admin	0001_initial	2020-09-07 10:50:16.097928+06:30
+4	admin	0002_logentry_remove_auto_add	2020-09-07 10:50:16.12138+06:30
+5	admin	0003_logentry_add_action_flag_choices	2020-09-07 10:50:16.135469+06:30
+6	contenttypes	0002_remove_content_type_name	2020-09-07 10:50:16.154714+06:30
+7	auth	0002_alter_permission_name_max_length	2020-09-07 10:50:16.162354+06:30
+8	auth	0003_alter_user_email_max_length	2020-09-07 10:50:16.170176+06:30
+9	auth	0004_alter_user_username_opts	2020-09-07 10:50:16.177392+06:30
+10	auth	0005_alter_user_last_login_null	2020-09-07 10:50:16.184584+06:30
+11	auth	0006_require_contenttypes_0002	2020-09-07 10:50:16.187385+06:30
+12	auth	0007_alter_validators_add_error_messages	2020-09-07 10:50:16.194463+06:30
+13	auth	0008_alter_user_username_max_length	2020-09-07 10:50:16.206129+06:30
+14	auth	0009_alter_user_last_name_max_length	2020-09-07 10:50:16.214845+06:30
+15	auth	0010_alter_group_name_max_length	2020-09-07 10:50:16.223744+06:30
+16	auth	0011_update_proxy_permissions	2020-09-07 10:50:16.23057+06:30
+17	auth	0012_alter_user_first_name_max_length	2020-09-07 10:50:16.238248+06:30
+18	main	0001_initial	2020-09-07 10:50:16.254236+06:30
+19	main	0002_auto_20200907_1048	2020-09-07 10:50:16.261295+06:30
+20	sessions	0001_initial	2020-09-07 10:50:16.271724+06:30
+21	sites	0001_initial	2020-09-07 10:50:16.285879+06:30
+22	sites	0002_alter_domain_unique	2020-09-07 10:50:16.299703+06:30
 \.
 
 
@@ -705,6 +842,27 @@ COPY public.django_redirect (id, site_id, old_path, new_path) FROM stdin;
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 6eymo6zeblq8wtk1jv5e85z425y1jicf	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kDlrG:ajg3K_xPyylqmWYGRB5jDStqOsfiudBNPjahZkpsEv0	2020-09-17 16:18:42.13648+06:30
+m73z0urldtuwk8hyh9gc46tsbwlm8535	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kF9Ls:ZgIERMVI6K35bwICVMqwUoaPCsW_JQa5KB_2E6BaHhg	2020-09-07 11:51:00.164634+06:30
+04xld6iah6al73hw8rf5vnnkiryt3e92	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFBJ2:CcEK3g9g2fKrI1b6ATS7hzRpSNltq94Qnr5COsxd0BQ	2020-09-07 13:56:12.10625+06:30
+jwr33h5sfdqfn1524cbitt246qox2z6x	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFBmi:wYNmh3VkfGOzOXCQQvsKu68GtJskrh71ar7rE-hDHx8	2020-09-07 14:26:52.850855+06:30
+isbrkr9uq3jemrf4rcpwli4zv7b00ngo	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFC3A:V9J6X4pbJ7fsJem0yj56p-w-a8yJRS4xh4GoJW3qgEg	2020-09-07 14:43:52.103762+06:30
+aunrt8tt2xky51aseh6pwvaxh733p4s2	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFCbi:hLM8zpPJN-ZgnGSa-a4ggyRMRB3Hc6KQrFoYVXep4Qc	2020-09-07 15:19:34.831669+06:30
+1d3cl2l9fgvjjrwmhcujs319ag079w05	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFCqp:41OHyIdT-e3Ao03t5zToqi9Pb4tl7viVrYiBTcQqcvM	2020-09-07 15:35:11.629654+06:30
+t111w8e3kx1ee6ueokp897qnsohjns39	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFDEE:IuMAb_D0vu4Yi5txoZgceH8zsQIn5HNDklNXvObQtmo	2020-09-07 15:59:22.763698+06:30
+5cz41j5hdyzgtib1ymv3qpzo5mv7x8dt	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFDVF:OtCd_2DTqrIwsAH-6ENw-9L4SOFF0OAVx0mBhzcajHY	2020-09-07 16:16:57.181358+06:30
+igoqp9a0edlklf1q9bz9zljox3ypoeqz	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFDn2:E6e3ejXf4LyOHFWm57JslGpJg7hAAMQVsiPT-UeVwRI	2020-09-07 16:35:20.239085+06:30
+ykn6yu4rh7nx6fn8khqidoiirkzb87p1	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFE3y:WqkrWF4BxekhOBno3dix8cgOEAGIoKdGal2Q45Q1DO4	2020-09-07 16:52:50.078553+06:30
+zjycgppgeu10ecbkyw0rs3qy2h86dyo2	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFEix:NZxOFtpZDlUik8BZWGbzfTnbDSY4PqK2Otx8SfY9wes	2020-09-07 17:35:11.92306+06:30
+mj8irc6fqo5dijtd6wcff30o9z3rzzj9	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFEzD:6mhZa3vY47OQzRa0vaLQBRT_zJ4ID7IcH93pjSnoTQM	2020-09-07 17:51:59.300414+06:30
+o7qwvi6eqxmrfk4d23h0tklwvv4aro7f	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFUJv:d-Q6rx1APufEiXu6YheBkqLUNjJW_QVl77JvHVCMr1s	2020-09-08 10:14:23.758868+06:30
+ob6lpcu2errbd6ev3vehkxsh36alhlnm	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFUhJ:vzd5P8H1PcmugEJfQS2d9s7UE4svFtdT1NLPOKBNc0Y	2020-09-08 10:38:33.671553+06:30
+lqd6j46vbyv6t9hcsf9edztdpu9pmrkf	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFVNJ:9j-u8RokZ8MlJz4Yea3bfjm6-nF9QQ4EA8wgQXeV4Jk	2020-09-08 11:21:57.511258+06:30
+g4xunbhgw1azm32kpjtlalrphvx7gxeo	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFVdi:AHHG-JflfJR4pur5ZzWZuL3BHia1JQKmf5JY8gDK8sQ	2020-09-08 11:38:54.770865+06:30
+r9sj4ztxbtpwi5x49jyrfnu6uvpah5jf	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFW6M:8_gecO_L6qy4aE-3iFSRCv1itg3ll_SmpQgM_ahhYK0	2020-09-08 12:08:30.841904+06:30
+0wsldfuuell6toz8yjtrpazr9werz75u	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXML:xsR2n_skRSKeq-jB5zBq5dkJcgOYq3AAJrgWb6YJc3I	2020-09-08 13:29:05.905505+06:30
+7l4eshmjo68npdt7dsu8994movoxxhqx	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXci:JCqQpT-UNEHa8OvCBolk7Jrq66bVuqGkn_ePlK8rmNc	2020-09-08 13:46:00.806679+06:30
+9i6k9x49d7o5nygyqadblqxvl8gosmsw	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXt0:mv5Sl46R8ajUSmHWrbu4L4QnsKtsIdWjdsDTieTvEZY	2020-09-08 14:02:50.696304+06:30
+jcjdjihc255yglt73wxws5l30p4umj9a	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFY8L:XLabD9hCs9KHU6oa65DHBHs6dTURlnPE1p-lFAZYU2E	2020-09-08 14:18:41.674936+06:30
 \.
 
 
@@ -714,6 +872,23 @@ COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 
 COPY public.django_site (id, domain, name) FROM stdin;
 1	example.com	example.com
+\.
+
+
+--
+-- Data for Name: main_brand; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_brand (id, brand_name) FROM stdin;
+1	Apple
+4	Huawei
+5	Mi
+2	Google
+6	Samsung
+7	OPPO
+8	Vivo
+9	Nokia
+10	LG
 \.
 
 
@@ -739,7 +914,30 @@ COPY public.main_category (id, category_name, sub_category) FROM stdin;
 \.
 
 
+--
+-- Data for Name: main_customer; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
 
+COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_dob, customer_gender, customer_mobile, customer_email, customer_password, customer_lastlogin) FROM stdin;
+1	ach	Aye Chan	Han	1999-04-11	Male	\N	ach@gmail.com	pbkdf2_sha256$216000$JOii6VTZ4mww$PT4X+FuV6zgnN7Xnbgs+dCvpexzIj+WQviL5uP3gog0=	2020-09-08 14:03:41.67226
+\.
+
+
+--
+-- Data for Name: main_product; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_product (id, product_name, product_price, "product_featureImage", brand_id_id, category_id_id) FROM stdin;
+1	iPhone XS	799.00	featureImage/MTFD2_AV1_GOLD_GEO_HK.jpeg	1	1
+2	HUAWEI P40 Pro	999.00	featureImage/huawei_p40_pro_8gb_256gb.jpg	4	1
+3	Samsung Note 20 Ultra	890.00	featureImage/samsungNote20Ultra.jpg	6	1
+4	OPPO Find X	468.00	featureImage/Oppo-Find-X-0.jpg	7	1
+5	Vivo V-19	512.00	featureImage/Vivo-V19-Pro.jpg	8	1
+6	Xiaomi Redmi K30 Pro	360.00	featureImage/Xiaomi_Redmi_K30_Pro.png	5	1
+9	LG v50 ThinQ	360.00	featureImage/lg50thinq.png	10	1
+8	Nokia 9 Pure	920.00	featureImage/nokia9.jpeg	9	1
+7	Google Pixel 4a	590.00	featureImage/Google-Pixel-4a-XL-render-leak-featured.jpg	2	1
+\.
 
 
 --
@@ -760,7 +958,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 48, true);
 
 
 --
@@ -788,21 +986,21 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 16, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 73, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 10, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 12, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 25, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 31, true);
 
 
 --
@@ -820,11 +1018,31 @@ SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
 
 
 --
+-- Name: main_brand_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_brand_id_seq', 10, true);
+
+
+--
 -- Name: main_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
 SELECT pg_catalog.setval('public.main_category_id_seq', 14, true);
 
+
+--
+-- Name: main_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_customer_id_seq', 1, true);
+
+
+--
+-- Name: main_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_product_id_seq', 9, true);
 
 
 --
@@ -996,12 +1214,35 @@ ALTER TABLE ONLY public.django_site
 
 
 --
+-- Name: main_brand main_brand_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_brand
+    ADD CONSTRAINT main_brand_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: main_category main_category_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
 --
 
 ALTER TABLE ONLY public.main_category
     ADD CONSTRAINT main_category_pkey PRIMARY KEY (id);
 
+
+--
+-- Name: main_customer main_customer_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_customer
+    ADD CONSTRAINT main_customer_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: main_product main_product_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_product
+    ADD CONSTRAINT main_product_pkey PRIMARY KEY (id);
 
 
 --
@@ -1124,6 +1365,20 @@ CREATE INDEX django_site_domain_a2e37b91_like ON public.django_site USING btree 
 
 
 --
+-- Name: main_product_brand_id_id_c56d84e2; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX main_product_brand_id_id_c56d84e2 ON public.main_product USING btree (brand_id_id);
+
+
+--
+-- Name: main_product_category_id_id_3e26f32a; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX main_product_category_id_id_3e26f32a ON public.main_product USING btree (category_id_id);
+
+
+--
 -- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
 --
 
@@ -1201,6 +1456,22 @@ ALTER TABLE ONLY public.django_admin_log
 
 ALTER TABLE ONLY public.django_redirect
     ADD CONSTRAINT django_redirect_site_id_c3e37341_fk_django_site_id FOREIGN KEY (site_id) REFERENCES public.django_site(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_product main_product_brand_id_id_c56d84e2_fk_main_brand_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_product
+    ADD CONSTRAINT main_product_brand_id_id_c56d84e2_fk_main_brand_id FOREIGN KEY (brand_id_id) REFERENCES public.main_brand(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_product main_product_category_id_id_3e26f32a_fk_main_category_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_product
+    ADD CONSTRAINT main_product_category_id_id_3e26f32a_fk_main_category_id FOREIGN KEY (category_id_id) REFERENCES public.main_category(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
