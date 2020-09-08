@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.4 (Ubuntu 12.4-0ubuntu0.20.04.1)
+-- Dumped from database version 12.4 (Ubuntu 12.4-1.pgdg20.04+1)
 -- Dumped by pg_dump version 12.4 (Ubuntu 12.4-0ubuntu0.20.04.1)
 
 SET statement_timeout = 0;
@@ -435,6 +435,40 @@ ALTER SEQUENCE public.django_site_id_seq OWNED BY public.django_site.id;
 
 
 --
+-- Name: main_brand; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_brand (
+    id integer NOT NULL,
+    brand_name character varying(30) NOT NULL
+);
+
+
+ALTER TABLE public.main_brand OWNER TO myprojectuser;
+
+--
+-- Name: main_brand_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_brand_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_brand_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_brand_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_brand_id_seq OWNED BY public.main_brand.id;
+
+
+--
 -- Name: main_category; Type: TABLE; Schema: public; Owner: myprojectuser
 --
 
@@ -506,6 +540,44 @@ ALTER TABLE public.main_customer_id_seq OWNER TO myprojectuser;
 --
 
 ALTER SEQUENCE public.main_customer_id_seq OWNED BY public.main_customer.id;
+
+
+--
+-- Name: main_product; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_product (
+    id integer NOT NULL,
+    product_name character varying(80) NOT NULL,
+    product_price numeric(5,2) NOT NULL,
+    "product_featureImage" character varying(100) NOT NULL,
+    brand_id_id integer NOT NULL,
+    category_id_id integer NOT NULL
+);
+
+
+ALTER TABLE public.main_product OWNER TO myprojectuser;
+
+--
+-- Name: main_product_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_product_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_product_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_product_id_seq OWNED BY public.main_product.id;
 
 
 --
@@ -586,6 +658,13 @@ ALTER TABLE ONLY public.django_site ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: main_brand id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_brand ALTER COLUMN id SET DEFAULT nextval('public.main_brand_id_seq'::regclass);
+
+
+--
 -- Name: main_category id; Type: DEFAULT; Schema: public; Owner: myprojectuser
 --
 
@@ -597,6 +676,13 @@ ALTER TABLE ONLY public.main_category ALTER COLUMN id SET DEFAULT nextval('publi
 --
 
 ALTER TABLE ONLY public.main_customer ALTER COLUMN id SET DEFAULT nextval('public.main_customer_id_seq'::regclass);
+
+
+--
+-- Name: main_product id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_product ALTER COLUMN id SET DEFAULT nextval('public.main_product_id_seq'::regclass);
 
 
 --
@@ -656,6 +742,14 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 34	Can change category	9	change_category
 35	Can delete category	9	delete_category
 36	Can view category	9	view_category
+41	Can add brand	11	add_brand
+42	Can change brand	11	change_brand
+43	Can delete brand	11	delete_brand
+44	Can view brand	11	view_brand
+45	Can add product	12	add_product
+46	Can change product	12	change_product
+47	Can delete product	12	delete_product
+48	Can view product	12	view_product
 \.
 
 
@@ -664,7 +758,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$216000$FmAfHlhNVz49$0W2wWa3VXRSJ+8jTzc5dzCKbbbofJN/9hiv32rcxW+M=	2020-09-03 16:18:42.131053+06:30	t	admin			shunainghtet98@gmail.com	t	t	2020-09-03 15:32:09.563263+06:30
+1	pbkdf2_sha256$216000$FmAfHlhNVz49$0W2wWa3VXRSJ+8jTzc5dzCKbbbofJN/9hiv32rcxW+M=	2020-09-07 10:30:59.804383+06:30	t	admin			shunainghtet98@gmail.com	t	t	2020-09-03 15:32:09.563263+06:30
 \.
 
 
@@ -689,6 +783,63 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+17	2020-09-05 14:06:22.896054+06:30	1	Brand object (1)	1	[{"added": {}}]	11	1
+18	2020-09-05 14:14:57.275379+06:30	2	Brand object (2)	1	[{"added": {}}]	11	1
+19	2020-09-05 14:15:12.654138+06:30	3	Brand object (3)	1	[{"added": {}}]	11	1
+20	2020-09-05 14:15:28.093851+06:30	4	Brand object (4)	1	[{"added": {}}]	11	1
+21	2020-09-05 14:15:40.916358+06:30	5	Brand object (5)	1	[{"added": {}}]	11	1
+22	2020-09-05 14:16:10.742325+06:30	3	Brand object (3)	3		11	1
+23	2020-09-07 10:40:26.109236+06:30	1	Product object (1)	1	[{"added": {}}]	12	1
+24	2020-09-07 10:47:31.228286+06:30	2	Product object (2)	1	[{"added": {}}]	12	1
+25	2020-09-07 10:56:14.797578+06:30	3	Product object (3)	1	[{"added": {}}]	12	1
+26	2020-09-07 11:03:46.250469+06:30	4	Product object (4)	1	[{"added": {}}]	12	1
+27	2020-09-07 16:56:11.498013+06:30	1	Product object (1)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+28	2020-09-07 16:56:18.861841+06:30	2	Product object (2)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+29	2020-09-07 16:56:27.904202+06:30	3	Product object (3)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+30	2020-09-07 16:56:34.841122+06:30	4	Product object (4)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+31	2020-09-07 17:24:55.189949+06:30	1	Product object (1)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+32	2020-09-07 17:25:09.340574+06:30	2	Product object (2)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+33	2020-09-07 17:25:27.931829+06:30	3	Product object (3)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+34	2020-09-07 17:26:11.738481+06:30	4	Product object (4)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+35	2020-09-07 17:26:16.071015+06:30	2	Product object (2)	2	[]	12	1
+36	2020-09-07 17:26:19.265028+06:30	1	Product object (1)	2	[]	12	1
+37	2020-09-07 17:28:39.444076+06:30	5	Product object (5)	1	[{"added": {}}]	12	1
+38	2020-09-07 17:39:21.408596+06:30	5	Product object (5)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+39	2020-09-08 10:14:50.991999+06:30	5	Product object (5)	3		12	1
+40	2020-09-08 10:14:56.25086+06:30	4	Product object (4)	3		12	1
+41	2020-09-08 10:14:59.459833+06:30	3	Product object (3)	3		12	1
+42	2020-09-08 10:15:04.222852+06:30	2	Product object (2)	3		12	1
+43	2020-09-08 10:15:07.234681+06:30	1	Product object (1)	3		12	1
+44	2020-09-08 10:18:43.185282+06:30	6	Product object (6)	1	[{"added": {}}]	12	1
+45	2020-09-08 10:18:59.445069+06:30	2	Brand object (2)	2	[]	11	1
+46	2020-09-08 10:19:10.511071+06:30	6	Brand object (6)	1	[{"added": {}}]	11	1
+47	2020-09-08 10:21:49.900431+06:30	7	Product object (7)	1	[{"added": {}}]	12	1
+48	2020-09-08 10:22:29.107724+06:30	8	Product object (8)	1	[{"added": {}}]	12	1
+49	2020-09-08 10:53:17.030617+06:30	6	Product object (6)	3		12	1
+50	2020-09-08 10:53:21.137007+06:30	7	Product object (7)	3		12	1
+51	2020-09-08 10:53:23.850221+06:30	8	Product object (8)	3		12	1
+52	2020-09-08 10:53:47.27156+06:30	9	Product object (9)	1	[{"added": {}}]	12	1
+53	2020-09-08 10:54:30.115244+06:30	10	Product object (10)	1	[{"added": {}}]	12	1
+54	2020-09-08 10:54:56.39277+06:30	11	Product object (11)	1	[{"added": {}}]	12	1
+55	2020-09-08 10:55:21.709378+06:30	9	Product object (9)	2	[{"changed": {"fields": ["Product name", "Product price", "Product featureImage"]}}]	12	1
+56	2020-09-08 11:17:48.099055+06:30	1	Product object (1)	1	[{"added": {}}]	12	1
+57	2020-09-08 11:18:18.494185+06:30	2	Product object (2)	1	[{"added": {}}]	12	1
+58	2020-09-08 11:18:43.287793+06:30	3	Product object (3)	1	[{"added": {}}]	12	1
+59	2020-09-08 11:28:22.805208+06:30	7	Brand object (7)	1	[{"added": {}}]	11	1
+60	2020-09-08 11:29:07.800705+06:30	4	Product object (4)	1	[{"added": {}}]	12	1
+61	2020-09-08 11:29:16.630829+06:30	8	Brand object (8)	1	[{"added": {}}]	11	1
+62	2020-09-08 11:30:14.462854+06:30	5	Product object (5)	1	[{"added": {}}]	12	1
+63	2020-09-08 11:31:36.308994+06:30	6	Product object (6)	1	[{"added": {}}]	12	1
+64	2020-09-08 11:36:22.082609+06:30	7	Product object (7)	1	[{"added": {}}]	12	1
+65	2020-09-08 11:38:51.853445+06:30	9	Brand object (9)	1	[{"added": {}}]	11	1
+66	2020-09-08 11:40:27.80839+06:30	8	Product object (8)	1	[{"added": {}}]	12	1
+67	2020-09-08 11:42:26.097161+06:30	10	Brand object (10)	1	[{"added": {}}]	11	1
+68	2020-09-08 11:44:08.471065+06:30	9	Product object (9)	1	[{"added": {}}]	12	1
+69	2020-09-08 11:44:35.057447+06:30	7	Product object (7)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+70	2020-09-08 11:45:21.741004+06:30	7	Product object (7)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+71	2020-09-08 11:46:30.119931+06:30	8	Product object (8)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+72	2020-09-08 11:47:39.032869+06:30	7	Product object (7)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
+73	2020-09-08 11:50:58.712558+06:30	7	Product object (7)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
 \.
 
 
@@ -706,6 +857,8 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 7	sites	site
 8	main	customer
 9	main	category
+11	main	brand
+12	main	product
 \.
 
 
@@ -736,6 +889,12 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 20	sites	0002_alter_domain_unique	2020-09-04 11:01:46.483114+06:30
 21	main	0001_initial	2020-09-04 11:03:15.814753+06:30
 22	main	0002_category	2020-09-05 11:13:25.271974+06:30
+26	main	0003_brand	2020-09-05 14:01:15.296753+06:30
+27	main	0004_product	2020-09-07 10:31:31.124988+06:30
+28	main	0005_auto_20200907_1655	2020-09-07 16:55:24.82428+06:30
+29	main	0006_auto_20200907_1740	2020-09-07 17:40:59.770733+06:30
+30	main	0007_delete_product	2020-09-08 11:13:55.528269+06:30
+31	main	0008_product	2020-09-08 11:14:38.281475+06:30
 \.
 
 
@@ -753,6 +912,8 @@ COPY public.django_redirect (id, site_id, old_path, new_path) FROM stdin;
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 6eymo6zeblq8wtk1jv5e85z425y1jicf	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kDlrG:ajg3K_xPyylqmWYGRB5jDStqOsfiudBNPjahZkpsEv0	2020-09-17 16:18:42.13648+06:30
+hlv4j521bzg3qdvkc58yv72875kkkk3g	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kESkA:iL72B7V5BnEIpxmhaZcUklXj6CznFJoD4Pvs_ZPxQII	2020-09-19 14:06:14.341041+06:30
+2q0y1dwhg0dzsrcxjinozz3k3k6orev2	.eJxVjDsOgzAQBe-ydWRl_QtLmT5nQMt6HcgHSxiqKHdPkGho38y8D8hal_LWGVrbnKDjdRm6tercjQlaQDhsPctTpw2kB0_3YqRMyzz2ZlPMTqu5laSv6-4eDgauw7-mYBtSVtt4rxIyKrpATJGjw4tkFMlkKRFnb52P3GNUzw45-LMmge8PDKQ8jQ:1kF8Kx:u26INjOZMjkBpxyaCyLIkAHoUuPIoIzsxP8Cn4m4_5o	2020-09-21 10:30:59.806522+06:30
 \.
 
 
@@ -762,6 +923,23 @@ COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 
 COPY public.django_site (id, domain, name) FROM stdin;
 1	example.com	example.com
+\.
+
+
+--
+-- Data for Name: main_brand; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_brand (id, brand_name) FROM stdin;
+1	Apple
+4	Huawei
+5	Mi
+2	Google
+6	Samsung
+7	OPPO
+8	Vivo
+9	Nokia
+10	LG
 \.
 
 
@@ -793,6 +971,24 @@ COPY public.main_category (id, category_name, sub_category) FROM stdin;
 
 COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_email, customer_password, customer_lastlogin) FROM stdin;
 5	ach	Aye Chan	Han	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-09-05 11:19:43.810027
+28	shu	shu	naing	shu@gmail.com	pbkdf2_sha256$216000$oM5m7zVegdWy$5DUdBMxIUGL2I3kb8Z9140M0ZTgTW5xXuM3wWc/Fon4=	2020-09-05 16:49:54.22182
+\.
+
+
+--
+-- Data for Name: main_product; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_product (id, product_name, product_price, "product_featureImage", brand_id_id, category_id_id) FROM stdin;
+1	iPhone XS	799.00	featureImage/MTFD2_AV1_GOLD_GEO_HK.jpeg	1	1
+2	HUAWEI P40 Pro	999.00	featureImage/huawei_p40_pro_8gb_256gb.jpg	4	1
+3	Samsung Note 20 Ultra	890.00	featureImage/samsungNote20Ultra.jpg	6	1
+4	OPPO Find X	468.00	featureImage/Oppo-Find-X-0.jpg	7	1
+5	Vivo V-19	512.00	featureImage/Vivo-V19-Pro.jpg	8	1
+6	Xiaomi Redmi K30 Pro	360.00	featureImage/Xiaomi_Redmi_K30_Pro.png	5	1
+9	LG v50 ThinQ	360.00	featureImage/lg50thinq.png	10	1
+8	Nokia 9 Pure	920.00	featureImage/nokia9.jpeg	9	1
+7	Google Pixel 4a	590.00	featureImage/Google-Pixel-4a-XL-render-leak-featured.jpg	2	1
 \.
 
 
@@ -814,7 +1010,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 48, true);
 
 
 --
@@ -842,21 +1038,21 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 16, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 73, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 10, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 12, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 25, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 31, true);
 
 
 --
@@ -874,6 +1070,13 @@ SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
 
 
 --
+-- Name: main_brand_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_brand_id_seq', 10, true);
+
+
+--
 -- Name: main_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
@@ -884,7 +1087,14 @@ SELECT pg_catalog.setval('public.main_category_id_seq', 14, true);
 -- Name: main_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.main_customer_id_seq', 27, true);
+SELECT pg_catalog.setval('public.main_customer_id_seq', 28, true);
+
+
+--
+-- Name: main_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_product_id_seq', 9, true);
 
 
 --
@@ -1056,6 +1266,14 @@ ALTER TABLE ONLY public.django_site
 
 
 --
+-- Name: main_brand main_brand_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_brand
+    ADD CONSTRAINT main_brand_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: main_category main_category_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
 --
 
@@ -1069,6 +1287,14 @@ ALTER TABLE ONLY public.main_category
 
 ALTER TABLE ONLY public.main_customer
     ADD CONSTRAINT main_customer_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: main_product main_product_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_product
+    ADD CONSTRAINT main_product_pkey PRIMARY KEY (id);
 
 
 --
@@ -1191,6 +1417,20 @@ CREATE INDEX django_site_domain_a2e37b91_like ON public.django_site USING btree 
 
 
 --
+-- Name: main_product_brand_id_id_c56d84e2; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX main_product_brand_id_id_c56d84e2 ON public.main_product USING btree (brand_id_id);
+
+
+--
+-- Name: main_product_category_id_id_3e26f32a; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX main_product_category_id_id_3e26f32a ON public.main_product USING btree (category_id_id);
+
+
+--
 -- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
 --
 
@@ -1268,6 +1508,22 @@ ALTER TABLE ONLY public.django_admin_log
 
 ALTER TABLE ONLY public.django_redirect
     ADD CONSTRAINT django_redirect_site_id_c3e37341_fk_django_site_id FOREIGN KEY (site_id) REFERENCES public.django_site(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_product main_product_brand_id_id_c56d84e2_fk_main_brand_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_product
+    ADD CONSTRAINT main_product_brand_id_id_c56d84e2_fk_main_brand_id FOREIGN KEY (brand_id_id) REFERENCES public.main_brand(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_product main_product_category_id_id_3e26f32a_fk_main_category_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_product
+    ADD CONSTRAINT main_product_category_id_id_3e26f32a_fk_main_category_id FOREIGN KEY (category_id_id) REFERENCES public.main_category(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
