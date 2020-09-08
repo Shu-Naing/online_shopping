@@ -25,6 +25,7 @@ SECRET_KEY = 'd-*5m#9sjtpdd%5^m(^)=8-$wh8fiq#u2xby-)l-^zdaa2&bnx'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# '192.168.100.117'
 
 # Application definition
 
@@ -108,6 +109,7 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 ]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

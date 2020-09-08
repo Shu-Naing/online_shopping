@@ -512,6 +512,9 @@ CREATE TABLE public.main_customer (
     customer_username character varying(80) NOT NULL,
     customer_firstname character varying(20) NOT NULL,
     customer_lastname character varying(20) NOT NULL,
+    customer_dob date,
+    customer_gender character varying(9),
+    customer_mobile bigint,
     customer_email character varying(254) NOT NULL,
     customer_password character varying(150) NOT NULL,
     customer_lastlogin timestamp without time zone NOT NULL
@@ -734,6 +737,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 26	Can change site	7	change_site
 27	Can delete site	7	delete_site
 28	Can view site	7	view_site
+<<<<<<< HEAD
 29	Can add customer	8	add_customer
 30	Can change customer	8	change_customer
 31	Can delete customer	8	delete_customer
@@ -750,6 +754,16 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 46	Can change product	12	change_product
 47	Can delete product	12	delete_product
 48	Can view product	12	view_product
+=======
+29	Can add category	8	add_category
+30	Can change category	8	change_category
+31	Can delete category	8	delete_category
+32	Can view category	8	view_category
+33	Can add customer	9	add_customer
+34	Can change customer	9	change_customer
+35	Can delete customer	9	delete_customer
+36	Can view customer	9	view_customer
+>>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -855,10 +869,15 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 5	contenttypes	contenttype
 6	sessions	session
 7	sites	site
+<<<<<<< HEAD
 8	main	customer
 9	main	category
 11	main	brand
 12	main	product
+=======
+8	main	category
+9	main	customer
+>>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -867,6 +886,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
+<<<<<<< HEAD
 1	contenttypes	0001_initial	2020-09-04 11:01:46.058836+06:30
 2	auth	0001_initial	2020-09-04 11:01:46.115902+06:30
 3	admin	0001_initial	2020-09-04 11:01:46.243787+06:30
@@ -895,6 +915,30 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 29	main	0006_auto_20200907_1740	2020-09-07 17:40:59.770733+06:30
 30	main	0007_delete_product	2020-09-08 11:13:55.528269+06:30
 31	main	0008_product	2020-09-08 11:14:38.281475+06:30
+=======
+1	contenttypes	0001_initial	2020-09-07 10:50:15.915785+06:30
+2	auth	0001_initial	2020-09-07 10:50:15.986585+06:30
+3	admin	0001_initial	2020-09-07 10:50:16.097928+06:30
+4	admin	0002_logentry_remove_auto_add	2020-09-07 10:50:16.12138+06:30
+5	admin	0003_logentry_add_action_flag_choices	2020-09-07 10:50:16.135469+06:30
+6	contenttypes	0002_remove_content_type_name	2020-09-07 10:50:16.154714+06:30
+7	auth	0002_alter_permission_name_max_length	2020-09-07 10:50:16.162354+06:30
+8	auth	0003_alter_user_email_max_length	2020-09-07 10:50:16.170176+06:30
+9	auth	0004_alter_user_username_opts	2020-09-07 10:50:16.177392+06:30
+10	auth	0005_alter_user_last_login_null	2020-09-07 10:50:16.184584+06:30
+11	auth	0006_require_contenttypes_0002	2020-09-07 10:50:16.187385+06:30
+12	auth	0007_alter_validators_add_error_messages	2020-09-07 10:50:16.194463+06:30
+13	auth	0008_alter_user_username_max_length	2020-09-07 10:50:16.206129+06:30
+14	auth	0009_alter_user_last_name_max_length	2020-09-07 10:50:16.214845+06:30
+15	auth	0010_alter_group_name_max_length	2020-09-07 10:50:16.223744+06:30
+16	auth	0011_update_proxy_permissions	2020-09-07 10:50:16.23057+06:30
+17	auth	0012_alter_user_first_name_max_length	2020-09-07 10:50:16.238248+06:30
+18	main	0001_initial	2020-09-07 10:50:16.254236+06:30
+19	main	0002_auto_20200907_1048	2020-09-07 10:50:16.261295+06:30
+20	sessions	0001_initial	2020-09-07 10:50:16.271724+06:30
+21	sites	0001_initial	2020-09-07 10:50:16.285879+06:30
+22	sites	0002_alter_domain_unique	2020-09-07 10:50:16.299703+06:30
+>>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -912,8 +956,32 @@ COPY public.django_redirect (id, site_id, old_path, new_path) FROM stdin;
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 6eymo6zeblq8wtk1jv5e85z425y1jicf	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kDlrG:ajg3K_xPyylqmWYGRB5jDStqOsfiudBNPjahZkpsEv0	2020-09-17 16:18:42.13648+06:30
+<<<<<<< HEAD
 hlv4j521bzg3qdvkc58yv72875kkkk3g	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kESkA:iL72B7V5BnEIpxmhaZcUklXj6CznFJoD4Pvs_ZPxQII	2020-09-19 14:06:14.341041+06:30
 2q0y1dwhg0dzsrcxjinozz3k3k6orev2	.eJxVjDsOgzAQBe-ydWRl_QtLmT5nQMt6HcgHSxiqKHdPkGho38y8D8hal_LWGVrbnKDjdRm6tercjQlaQDhsPctTpw2kB0_3YqRMyzz2ZlPMTqu5laSv6-4eDgauw7-mYBtSVtt4rxIyKrpATJGjw4tkFMlkKRFnb52P3GNUzw45-LMmge8PDKQ8jQ:1kF8Kx:u26INjOZMjkBpxyaCyLIkAHoUuPIoIzsxP8Cn4m4_5o	2020-09-21 10:30:59.806522+06:30
+=======
+m73z0urldtuwk8hyh9gc46tsbwlm8535	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kF9Ls:ZgIERMVI6K35bwICVMqwUoaPCsW_JQa5KB_2E6BaHhg	2020-09-07 11:51:00.164634+06:30
+04xld6iah6al73hw8rf5vnnkiryt3e92	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFBJ2:CcEK3g9g2fKrI1b6ATS7hzRpSNltq94Qnr5COsxd0BQ	2020-09-07 13:56:12.10625+06:30
+jwr33h5sfdqfn1524cbitt246qox2z6x	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFBmi:wYNmh3VkfGOzOXCQQvsKu68GtJskrh71ar7rE-hDHx8	2020-09-07 14:26:52.850855+06:30
+isbrkr9uq3jemrf4rcpwli4zv7b00ngo	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFC3A:V9J6X4pbJ7fsJem0yj56p-w-a8yJRS4xh4GoJW3qgEg	2020-09-07 14:43:52.103762+06:30
+aunrt8tt2xky51aseh6pwvaxh733p4s2	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFCbi:hLM8zpPJN-ZgnGSa-a4ggyRMRB3Hc6KQrFoYVXep4Qc	2020-09-07 15:19:34.831669+06:30
+1d3cl2l9fgvjjrwmhcujs319ag079w05	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFCqp:41OHyIdT-e3Ao03t5zToqi9Pb4tl7viVrYiBTcQqcvM	2020-09-07 15:35:11.629654+06:30
+t111w8e3kx1ee6ueokp897qnsohjns39	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFDEE:IuMAb_D0vu4Yi5txoZgceH8zsQIn5HNDklNXvObQtmo	2020-09-07 15:59:22.763698+06:30
+5cz41j5hdyzgtib1ymv3qpzo5mv7x8dt	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFDVF:OtCd_2DTqrIwsAH-6ENw-9L4SOFF0OAVx0mBhzcajHY	2020-09-07 16:16:57.181358+06:30
+igoqp9a0edlklf1q9bz9zljox3ypoeqz	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFDn2:E6e3ejXf4LyOHFWm57JslGpJg7hAAMQVsiPT-UeVwRI	2020-09-07 16:35:20.239085+06:30
+ykn6yu4rh7nx6fn8khqidoiirkzb87p1	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFE3y:WqkrWF4BxekhOBno3dix8cgOEAGIoKdGal2Q45Q1DO4	2020-09-07 16:52:50.078553+06:30
+zjycgppgeu10ecbkyw0rs3qy2h86dyo2	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFEix:NZxOFtpZDlUik8BZWGbzfTnbDSY4PqK2Otx8SfY9wes	2020-09-07 17:35:11.92306+06:30
+mj8irc6fqo5dijtd6wcff30o9z3rzzj9	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFEzD:6mhZa3vY47OQzRa0vaLQBRT_zJ4ID7IcH93pjSnoTQM	2020-09-07 17:51:59.300414+06:30
+o7qwvi6eqxmrfk4d23h0tklwvv4aro7f	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFUJv:d-Q6rx1APufEiXu6YheBkqLUNjJW_QVl77JvHVCMr1s	2020-09-08 10:14:23.758868+06:30
+ob6lpcu2errbd6ev3vehkxsh36alhlnm	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFUhJ:vzd5P8H1PcmugEJfQS2d9s7UE4svFtdT1NLPOKBNc0Y	2020-09-08 10:38:33.671553+06:30
+lqd6j46vbyv6t9hcsf9edztdpu9pmrkf	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFVNJ:9j-u8RokZ8MlJz4Yea3bfjm6-nF9QQ4EA8wgQXeV4Jk	2020-09-08 11:21:57.511258+06:30
+g4xunbhgw1azm32kpjtlalrphvx7gxeo	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFVdi:AHHG-JflfJR4pur5ZzWZuL3BHia1JQKmf5JY8gDK8sQ	2020-09-08 11:38:54.770865+06:30
+r9sj4ztxbtpwi5x49jyrfnu6uvpah5jf	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFW6M:8_gecO_L6qy4aE-3iFSRCv1itg3ll_SmpQgM_ahhYK0	2020-09-08 12:08:30.841904+06:30
+0wsldfuuell6toz8yjtrpazr9werz75u	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXML:xsR2n_skRSKeq-jB5zBq5dkJcgOYq3AAJrgWb6YJc3I	2020-09-08 13:29:05.905505+06:30
+7l4eshmjo68npdt7dsu8994movoxxhqx	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXci:JCqQpT-UNEHa8OvCBolk7Jrq66bVuqGkn_ePlK8rmNc	2020-09-08 13:46:00.806679+06:30
+9i6k9x49d7o5nygyqadblqxvl8gosmsw	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXt0:mv5Sl46R8ajUSmHWrbu4L4QnsKtsIdWjdsDTieTvEZY	2020-09-08 14:02:50.696304+06:30
+jcjdjihc255yglt73wxws5l30p4umj9a	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFY8L:XLabD9hCs9KHU6oa65DHBHs6dTURlnPE1p-lFAZYU2E	2020-09-08 14:18:41.674936+06:30
+>>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -969,9 +1037,14 @@ COPY public.main_category (id, category_name, sub_category) FROM stdin;
 -- Data for Name: main_customer; Type: TABLE DATA; Schema: public; Owner: myprojectuser
 --
 
+<<<<<<< HEAD
 COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_email, customer_password, customer_lastlogin) FROM stdin;
 5	ach	Aye Chan	Han	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-09-05 11:19:43.810027
 28	shu	shu	naing	shu@gmail.com	pbkdf2_sha256$216000$oM5m7zVegdWy$5DUdBMxIUGL2I3kb8Z9140M0ZTgTW5xXuM3wWc/Fon4=	2020-09-05 16:49:54.22182
+=======
+COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_dob, customer_gender, customer_mobile, customer_email, customer_password, customer_lastlogin) FROM stdin;
+1	ach	Aye Chan	Han	1999-04-11	Male	\N	ach@gmail.com	pbkdf2_sha256$216000$JOii6VTZ4mww$PT4X+FuV6zgnN7Xnbgs+dCvpexzIj+WQviL5uP3gog0=	2020-09-08 14:03:41.67226
+>>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -1087,7 +1160,11 @@ SELECT pg_catalog.setval('public.main_category_id_seq', 14, true);
 -- Name: main_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
+<<<<<<< HEAD
 SELECT pg_catalog.setval('public.main_customer_id_seq', 28, true);
+=======
+SELECT pg_catalog.setval('public.main_customer_id_seq', 1, true);
+>>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
 
 
 --

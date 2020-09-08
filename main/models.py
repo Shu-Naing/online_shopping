@@ -2,9 +2,12 @@ from django.db import models
 
 
 class Customer(models.Model):
-    customer_username = models.CharField(max_length=80)
-    customer_firstname = models.CharField(max_length=20, blank=True)
-    customer_lastname = models.CharField(max_length=20, blank=True)
+    customer_username = models.CharField(max_length = 80)
+    customer_firstname = models.CharField(max_length = 20, blank = True)
+    customer_lastname = models.CharField(max_length = 20, blank = True)
+    customer_dob = models.DateField(blank = True, null = True)
+    customer_gender = models.CharField(max_length=9, null = True)
+    customer_mobile = models.BigIntegerField(blank = True, null = True)
     customer_email = models.EmailField()
     customer_password = models.CharField(max_length=150)
     customer_lastlogin = models.DateTimeField()
