@@ -11,5 +11,5 @@ urlpatterns = [
                   path('', views.home, name="home"),
                   path('logout/', views.logout, name='logout'),
                   path('account/manageaccount', views.manageAccount, name="manage_account"),
-                  path('shop/', views.shop, name="shop"),
+                  path('shop/<sub__category>', views.shop, name="shop"),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

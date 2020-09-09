@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import hashers
 from .forms import RegistrationForm, LoginForm
 from django.contrib import messages
-from .models import Customer, Brand, Product
+from .models import Customer, Brand, Product, Category
 from datetime import datetime
 
 
@@ -83,16 +83,18 @@ def home(request):
         return render(request, 'index.html')
 
 
-def shop(request):
+def shop(request, sub__category):
     if request.method == "GET":
-        brand_list = list()
-        product_list = list()
-        brand_name = Brand.objects.all().values('brand_name')
-        product_shop = Product.objects.filter().values('product_name', 'product_price', 'product_featureImage')
-        for brand in brand_name:
-            brand_list.append({"b_name": brand['brand_name']})
-        for product in product_shop:
+        product_list = []
+        brand_names = []
+        category = Category.objects.filter(sub_category = sub__category).values_list('id', flat = True)
+        product = Product.objects.filter(category_id = category[0]).values('product_name', 'product_price', 'product_featureImage')
+        brand_list = Product.objects.filter(category_id = category[0]).values('brand_id')
+        for brand_id in brand_list:
+            brand = Brand.objects.filter(pk = brand_id['brand_id']).values_list('brand_name', flat = True)
+            brand_names.append({'brand_name': brand[0]})
+        brand_names = sorted(brand_names, key = lambda i: i['brand_name'])
+        for product in product:
             product_list.append({"p_name": product['product_name'], "p_price": product['product_price'],
                                  "p_image": product['product_featureImage']})
-
-    return render(request, 'shop.html', {'brand': brand_list, 'product': product_list})
+    return render(request, 'shop.html', {'product': product_list, 'brand': brand_names})
