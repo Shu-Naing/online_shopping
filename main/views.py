@@ -94,6 +94,7 @@ def shop(request, sub__category):
             brand = Brand.objects.filter(pk = brand_id['brand_id']).values_list('brand_name', flat = True)
             brand_names.append({'brand_name': brand[0]})
         brand_names = sorted(brand_names, key = lambda i: i['brand_name'])
+        brand_names = list({v['brand_name']:v for v in brand_names}.values())
         for product in product:
             product_list.append({"p_name": product['product_name'], "p_price": product['product_price'],
                                  "p_image": product['product_featureImage']})
