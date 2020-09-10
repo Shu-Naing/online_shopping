@@ -25,7 +25,7 @@
                       <input type="text" id="lastname_{{customer.id}}" name="customer_lastname" value="{{customer.customer_lastname}}" style="display:none"/>
                   </div>
                   <div class="col-sm-6 col-xl-4">
-                      <h6> Email Address | <a href ="#">Change</a></h6>
+                      <h6> Email Address | <a href ="{% url 'main:confirm_email'%}">Change</a></h6>
                       <p>{{customer.customer_email}}</p>
                   </div>
                   <div class="col-sm-6 col-xl-4">

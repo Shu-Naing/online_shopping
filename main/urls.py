@@ -12,4 +12,7 @@ urlpatterns = [
                   path('logout/', views.logout, name='logout'),
                   path('account/manageaccount', views.manageAccount, name="manage_account"),
                   path('shop/<sub__category>', views.shop, name="shop"),
+                  path('account/manageaccount/confirm_email/', views.confirm_email, name="confirm_email"),
+                  path('activate/<uidb64>/<token>/',views.activate, name='activate'),
+                  path('account/manageaccount/manage_by_email/', views.manage_by_email, name = "manage_by_email")
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

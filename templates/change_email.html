@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+      <!-- Section Mailchimp-->
+      <section class="section section-sm bg-default text-center">
+        <div class="container">
+            <h6>Thank you for your email confirmation. Now you can change your email..</h6>
+            <img src = "{% static 'images/email.png'%}" style = "width: 180px; height: 180px">
+          <!-- RD Mailform-->
+          <form class = "rd-form-inline rd-form-inline-centered" action = "{% url 'main:manage_by_email'%}" enctype="multipart/form-data" method="post">
+            <div class="form-wrap">
+              {% csrf_token %}
+              <label class="form-label" for="mailchimp-email">Enter your new e-mail address</label>
+              <input class="form-input" id="mailchimp-email" type="email" name="email" data-constraints="@Email @Required">
+              <button class="button button-sm button-primary button-winona" type="submit">Change</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+{% endblock %}

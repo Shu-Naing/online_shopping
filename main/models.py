@@ -9,8 +9,8 @@ class Customer(models.Model):
     customer_gender = models.CharField(max_length=9, null = True)
     customer_mobile = models.BigIntegerField(blank = True, null = True)
     customer_email = models.EmailField()
-    customer_password = models.CharField(max_length=150)
-    customer_lastlogin = models.DateTimeField()
+    password = models.CharField(max_length=150)
+    last_login = models.DateTimeField()
 
 
 class Category(models.Model):

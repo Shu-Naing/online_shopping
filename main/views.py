@@ -1,9 +1,15 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import hashers
-from .forms import RegistrationForm, LoginForm
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib import messages
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from .forms import RegistrationForm, LoginForm
 from .models import Customer, Brand, Product, Category
 from datetime import datetime
 
@@ -22,8 +28,8 @@ def registration(request):
                     customer_firstname=form.cleaned_data['customer_firstname'],
                     customer_lastname=form.cleaned_data['customer_lastname'],
                     customer_email=form.cleaned_data['customer_email'],
-                    customer_password=hashed_password,
-                    customer_lastlogin=datetime.today()
+                    password=hashed_password,
+                    last_login=datetime.today()
                 )
                 customer.save()
                 return redirect("main:login")
@@ -46,14 +52,14 @@ def login(request):
                 return redirect('main:login')
             else:
                 query = Customer.objects.get(customer_email=email)
-                cust_pass = getattr(query, 'customer_password')
+                cust_pass = getattr(query, 'password')
                 matchcheck = hashers.check_password(password, cust_pass)
                 if matchcheck:
                     cust_id = getattr(query, 'id')
-                    customer = get_object_or_404(Customer, customer_password = cust_pass, pk = cust_id)
-                    customer.save(update_fields = ['customer_lastlogin'])
-                    Customer.objects.filter(pk = customer.pk).update(customer_lastlogin = datetime.today())
-                    request.session.set_expiry(900)
+                    customer = get_object_or_404(Customer, password = cust_pass, pk = cust_id)
+                    customer.save(update_fields = ['last_login'])
+                    Customer.objects.filter(pk = customer.pk).update(last_login = datetime.today())
+                    request.session.set_expiry(1800)
                     request.session['customer'] = cust_id
                     return redirect('main:home')
     return render(request, 'login.html', {'form': form})
@@ -70,7 +76,6 @@ def manageAccount(request):
         customer_gender = request.POST.get('gender'))
 
     return render(request, 'manage_account.html')
-
 
 
 def logout(request):
@@ -99,3 +104,44 @@ def shop(request, sub__category):
             product_list.append({"p_name": product['product_name'], "p_price": product['product_price'],
                                  "p_image": product['product_featureImage']})
     return render(request, 'shop.html', {'product': product_list, 'brand': brand_names})
+
+
+def confirm_email(request):
+    if request.method == "POST":
+        customer = Customer.objects.get(pk = request.session['customer'])
+        email = Customer.objects.filter(pk = request.session['customer']).values_list('customer_email', flat = True)
+        if email[0] == request.POST.get('email'):
+            current_site = get_current_site(request)
+            email_subject = "Verify your email"
+            message = render_to_string("account_activate.html", {
+                'domain': '127.0.0.1:8000',
+                'uid': urlsafe_base64_encode(force_bytes(request.session['customer'])),
+                'token': PasswordResetTokenGenerator().make_token(customer),
+            })
+            to_email = email[0]
+            send_email = EmailMessage(email_subject, message, to = [to_email])
+            send_email.send()
+            return render(request, 'confirmation.html')
+        else:
+            return render(request, 'confirm_email.html', {"error": True})
+    return render(request, 'confirm_email.html', {})
+
+def activate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        customer = Customer.objects.get(pk = uid)
+    except(TypeError, ValueError, OverflowError, Customer.DoesNotExist):
+        customer = None
+    if customer is not None and PasswordResetTokenGenerator().check_token(customer, token):
+        return render(request, 'change_email.html', {"uid": uidb64, "token":token})
+    else:
+        return HttpResponse('Activation link is invalid!')
+
+def manage_by_email(request):
+    if request.method == "POST":
+        customer_id = request.session['customer']
+        customer = get_object_or_404(Customer, pk = customer_id)
+        customer.save(update_fields = ['customer_email'])
+        Customer.objects.filter(pk = customer.pk).update(customer_email = request.POST.get('email')) 
+        return redirect("main:manage_account")
+
