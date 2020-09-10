@@ -762,7 +762,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 34	Can change customer	9	change_customer
 35	Can delete customer	9	delete_customer
 36	Can view customer	9	view_customer
-e0a11c9ac11de06914c27965f36d508964292b89
+
 \.
 
 
@@ -876,7 +876,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 
 8	main	category
 9	main	customer
-e0a11c9ac11de06914c27965f36d508964292b89
+
 \.
 
 
@@ -936,7 +936,6 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 20	sessions	0001_initial	2020-09-07 10:50:16.271724+06:30
 21	sites	0001_initial	2020-09-07 10:50:16.285879+06:30
 22	sites	0002_alter_domain_unique	2020-09-07 10:50:16.299703+06:30
-e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -977,7 +976,6 @@ r9sj4ztxbtpwi5x49jyrfnu6uvpah5jf	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF
 7l4eshmjo68npdt7dsu8994movoxxhqx	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXci:JCqQpT-UNEHa8OvCBolk7Jrq66bVuqGkn_ePlK8rmNc	2020-09-08 13:46:00.806679+06:30
 9i6k9x49d7o5nygyqadblqxvl8gosmsw	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXt0:mv5Sl46R8ajUSmHWrbu4L4QnsKtsIdWjdsDTieTvEZY	2020-09-08 14:02:50.696304+06:30
 jcjdjihc255yglt73wxws5l30p4umj9a	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFY8L:XLabD9hCs9KHU6oa65DHBHs6dTURlnPE1p-lFAZYU2E	2020-09-08 14:18:41.674936+06:30
-e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -1038,7 +1036,6 @@ COPY public.main_customer (id, customer_username, customer_firstname, customer_l
 28	shu	shu	naing	shu@gmail.com	pbkdf2_sha256$216000$oM5m7zVegdWy$5DUdBMxIUGL2I3kb8Z9140M0ZTgTW5xXuM3wWc/Fon4=	2020-09-05 16:49:54.22182
 COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_dob, customer_gender, customer_mobile, customer_email, customer_password, customer_lastlogin) FROM stdin;
 1	ach	Aye Chan	Han	1999-04-11	Male	\N	ach@gmail.com	pbkdf2_sha256$216000$JOii6VTZ4mww$PT4X+FuV6zgnN7Xnbgs+dCvpexzIj+WQviL5uP3gog0=	2020-09-08 14:03:41.67226
-e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -1156,7 +1153,6 @@ SELECT pg_catalog.setval('public.main_category_id_seq', 14, true);
 
 SELECT pg_catalog.setval('public.main_customer_id_seq', 28, true);
 SELECT pg_catalog.setval('public.main_customer_id_seq', 1, true);
-e0a11c9ac11de06914c27965f36d508964292b89
 
 
 --
@@ -1598,4 +1594,3 @@ ALTER TABLE ONLY public.main_product
 --
 -- PostgreSQL database dump complete
 --
-

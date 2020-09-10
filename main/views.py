@@ -102,4 +102,10 @@ def shop(request, sub__category):
 
 def singleProduct(request):
     if request.method == "GET":
-        return render(request, 'single-product.html')
+        single_list = list()
+        oneProduct = Product.objects.filter().values('product_name', 'product_price', 'product_featureImage', 'product_description',)
+        for oneProduct in oneProduct:
+            single_list.append({"s_name": oneProduct['product_name'], "s_price": oneProduct['product_price'],
+                                 "s_image": oneProduct['product_featureImage'], "s_description": oneProduct['product_description']})
+
+        return render(request, 'single-product.html', {'single_product': single_list})
