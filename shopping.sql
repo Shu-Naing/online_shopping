@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.4 (Ubuntu 12.4-1.pgdg20.04+1)
+-- Dumped from database version 12.4 (Ubuntu 12.4-0ubuntu0.20.04.1)
 -- Dumped by pg_dump version 12.4 (Ubuntu 12.4-0ubuntu0.20.04.1)
 
 SET statement_timeout = 0;
@@ -516,8 +516,8 @@ CREATE TABLE public.main_customer (
     customer_gender character varying(9),
     customer_mobile bigint,
     customer_email character varying(254) NOT NULL,
-    customer_password character varying(150) NOT NULL,
-    customer_lastlogin timestamp without time zone NOT NULL
+    password character varying(150) NOT NULL,
+    last_login timestamp without time zone NOT NULL
 );
 
 
@@ -555,7 +555,8 @@ CREATE TABLE public.main_product (
     product_price numeric(5,2) NOT NULL,
     "product_featureImage" character varying(100) NOT NULL,
     brand_id_id integer NOT NULL,
-    category_id_id integer NOT NULL
+    category_id_id integer NOT NULL,
+    product_description character varying(100)
 );
 
 
@@ -737,7 +738,6 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 26	Can change site	7	change_site
 27	Can delete site	7	delete_site
 28	Can view site	7	view_site
-<<<<<<< HEAD
 29	Can add customer	8	add_customer
 30	Can change customer	8	change_customer
 31	Can delete customer	8	delete_customer
@@ -746,24 +746,14 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 34	Can change category	9	change_category
 35	Can delete category	9	delete_category
 36	Can view category	9	view_category
-41	Can add brand	11	add_brand
-42	Can change brand	11	change_brand
-43	Can delete brand	11	delete_brand
-44	Can view brand	11	view_brand
-45	Can add product	12	add_product
-46	Can change product	12	change_product
-47	Can delete product	12	delete_product
-48	Can view product	12	view_product
-=======
-29	Can add category	8	add_category
-30	Can change category	8	change_category
-31	Can delete category	8	delete_category
-32	Can view category	8	view_category
-33	Can add customer	9	add_customer
-34	Can change customer	9	change_customer
-35	Can delete customer	9	delete_customer
-36	Can view customer	9	view_customer
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
+37	Can add brand	10	add_brand
+38	Can change brand	10	change_brand
+39	Can delete brand	10	delete_brand
+40	Can view brand	10	view_brand
+41	Can add product	11	add_product
+42	Can change product	11	change_product
+43	Can delete product	11	delete_product
+44	Can view product	11	view_product
 \.
 
 
@@ -797,63 +787,6 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
-17	2020-09-05 14:06:22.896054+06:30	1	Brand object (1)	1	[{"added": {}}]	11	1
-18	2020-09-05 14:14:57.275379+06:30	2	Brand object (2)	1	[{"added": {}}]	11	1
-19	2020-09-05 14:15:12.654138+06:30	3	Brand object (3)	1	[{"added": {}}]	11	1
-20	2020-09-05 14:15:28.093851+06:30	4	Brand object (4)	1	[{"added": {}}]	11	1
-21	2020-09-05 14:15:40.916358+06:30	5	Brand object (5)	1	[{"added": {}}]	11	1
-22	2020-09-05 14:16:10.742325+06:30	3	Brand object (3)	3		11	1
-23	2020-09-07 10:40:26.109236+06:30	1	Product object (1)	1	[{"added": {}}]	12	1
-24	2020-09-07 10:47:31.228286+06:30	2	Product object (2)	1	[{"added": {}}]	12	1
-25	2020-09-07 10:56:14.797578+06:30	3	Product object (3)	1	[{"added": {}}]	12	1
-26	2020-09-07 11:03:46.250469+06:30	4	Product object (4)	1	[{"added": {}}]	12	1
-27	2020-09-07 16:56:11.498013+06:30	1	Product object (1)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-28	2020-09-07 16:56:18.861841+06:30	2	Product object (2)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-29	2020-09-07 16:56:27.904202+06:30	3	Product object (3)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-30	2020-09-07 16:56:34.841122+06:30	4	Product object (4)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-31	2020-09-07 17:24:55.189949+06:30	1	Product object (1)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-32	2020-09-07 17:25:09.340574+06:30	2	Product object (2)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-33	2020-09-07 17:25:27.931829+06:30	3	Product object (3)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-34	2020-09-07 17:26:11.738481+06:30	4	Product object (4)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-35	2020-09-07 17:26:16.071015+06:30	2	Product object (2)	2	[]	12	1
-36	2020-09-07 17:26:19.265028+06:30	1	Product object (1)	2	[]	12	1
-37	2020-09-07 17:28:39.444076+06:30	5	Product object (5)	1	[{"added": {}}]	12	1
-38	2020-09-07 17:39:21.408596+06:30	5	Product object (5)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-39	2020-09-08 10:14:50.991999+06:30	5	Product object (5)	3		12	1
-40	2020-09-08 10:14:56.25086+06:30	4	Product object (4)	3		12	1
-41	2020-09-08 10:14:59.459833+06:30	3	Product object (3)	3		12	1
-42	2020-09-08 10:15:04.222852+06:30	2	Product object (2)	3		12	1
-43	2020-09-08 10:15:07.234681+06:30	1	Product object (1)	3		12	1
-44	2020-09-08 10:18:43.185282+06:30	6	Product object (6)	1	[{"added": {}}]	12	1
-45	2020-09-08 10:18:59.445069+06:30	2	Brand object (2)	2	[]	11	1
-46	2020-09-08 10:19:10.511071+06:30	6	Brand object (6)	1	[{"added": {}}]	11	1
-47	2020-09-08 10:21:49.900431+06:30	7	Product object (7)	1	[{"added": {}}]	12	1
-48	2020-09-08 10:22:29.107724+06:30	8	Product object (8)	1	[{"added": {}}]	12	1
-49	2020-09-08 10:53:17.030617+06:30	6	Product object (6)	3		12	1
-50	2020-09-08 10:53:21.137007+06:30	7	Product object (7)	3		12	1
-51	2020-09-08 10:53:23.850221+06:30	8	Product object (8)	3		12	1
-52	2020-09-08 10:53:47.27156+06:30	9	Product object (9)	1	[{"added": {}}]	12	1
-53	2020-09-08 10:54:30.115244+06:30	10	Product object (10)	1	[{"added": {}}]	12	1
-54	2020-09-08 10:54:56.39277+06:30	11	Product object (11)	1	[{"added": {}}]	12	1
-55	2020-09-08 10:55:21.709378+06:30	9	Product object (9)	2	[{"changed": {"fields": ["Product name", "Product price", "Product featureImage"]}}]	12	1
-56	2020-09-08 11:17:48.099055+06:30	1	Product object (1)	1	[{"added": {}}]	12	1
-57	2020-09-08 11:18:18.494185+06:30	2	Product object (2)	1	[{"added": {}}]	12	1
-58	2020-09-08 11:18:43.287793+06:30	3	Product object (3)	1	[{"added": {}}]	12	1
-59	2020-09-08 11:28:22.805208+06:30	7	Brand object (7)	1	[{"added": {}}]	11	1
-60	2020-09-08 11:29:07.800705+06:30	4	Product object (4)	1	[{"added": {}}]	12	1
-61	2020-09-08 11:29:16.630829+06:30	8	Brand object (8)	1	[{"added": {}}]	11	1
-62	2020-09-08 11:30:14.462854+06:30	5	Product object (5)	1	[{"added": {}}]	12	1
-63	2020-09-08 11:31:36.308994+06:30	6	Product object (6)	1	[{"added": {}}]	12	1
-64	2020-09-08 11:36:22.082609+06:30	7	Product object (7)	1	[{"added": {}}]	12	1
-65	2020-09-08 11:38:51.853445+06:30	9	Brand object (9)	1	[{"added": {}}]	11	1
-66	2020-09-08 11:40:27.80839+06:30	8	Product object (8)	1	[{"added": {}}]	12	1
-67	2020-09-08 11:42:26.097161+06:30	10	Brand object (10)	1	[{"added": {}}]	11	1
-68	2020-09-08 11:44:08.471065+06:30	9	Product object (9)	1	[{"added": {}}]	12	1
-69	2020-09-08 11:44:35.057447+06:30	7	Product object (7)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-70	2020-09-08 11:45:21.741004+06:30	7	Product object (7)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-71	2020-09-08 11:46:30.119931+06:30	8	Product object (8)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-72	2020-09-08 11:47:39.032869+06:30	7	Product object (7)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
-73	2020-09-08 11:50:58.712558+06:30	7	Product object (7)	2	[{"changed": {"fields": ["Product featureImage"]}}]	12	1
 \.
 
 
@@ -869,15 +802,10 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 5	contenttypes	contenttype
 6	sessions	session
 7	sites	site
-<<<<<<< HEAD
 8	main	customer
 9	main	category
-11	main	brand
-12	main	product
-=======
-8	main	category
-9	main	customer
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
+10	main	brand
+11	main	product
 \.
 
 
@@ -886,59 +814,26 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-<<<<<<< HEAD
-1	contenttypes	0001_initial	2020-09-04 11:01:46.058836+06:30
-2	auth	0001_initial	2020-09-04 11:01:46.115902+06:30
-3	admin	0001_initial	2020-09-04 11:01:46.243787+06:30
-4	admin	0002_logentry_remove_auto_add	2020-09-04 11:01:46.28525+06:30
-5	admin	0003_logentry_add_action_flag_choices	2020-09-04 11:01:46.301304+06:30
-6	contenttypes	0002_remove_content_type_name	2020-09-04 11:01:46.319337+06:30
-7	auth	0002_alter_permission_name_max_length	2020-09-04 11:01:46.326832+06:30
-8	auth	0003_alter_user_email_max_length	2020-09-04 11:01:46.334496+06:30
-9	auth	0004_alter_user_username_opts	2020-09-04 11:01:46.34128+06:30
-10	auth	0005_alter_user_last_login_null	2020-09-04 11:01:46.349334+06:30
-11	auth	0006_require_contenttypes_0002	2020-09-04 11:01:46.35193+06:30
-12	auth	0007_alter_validators_add_error_messages	2020-09-04 11:01:46.359031+06:30
-13	auth	0008_alter_user_username_max_length	2020-09-04 11:01:46.372737+06:30
-14	auth	0009_alter_user_last_name_max_length	2020-09-04 11:01:46.388984+06:30
-15	auth	0010_alter_group_name_max_length	2020-09-04 11:01:46.398963+06:30
-16	auth	0011_update_proxy_permissions	2020-09-04 11:01:46.406932+06:30
-17	auth	0012_alter_user_first_name_max_length	2020-09-04 11:01:46.414634+06:30
-18	sessions	0001_initial	2020-09-04 11:01:46.436172+06:30
-19	sites	0001_initial	2020-09-04 11:01:46.467168+06:30
-20	sites	0002_alter_domain_unique	2020-09-04 11:01:46.483114+06:30
-21	main	0001_initial	2020-09-04 11:03:15.814753+06:30
-22	main	0002_category	2020-09-05 11:13:25.271974+06:30
-26	main	0003_brand	2020-09-05 14:01:15.296753+06:30
-27	main	0004_product	2020-09-07 10:31:31.124988+06:30
-28	main	0005_auto_20200907_1655	2020-09-07 16:55:24.82428+06:30
-29	main	0006_auto_20200907_1740	2020-09-07 17:40:59.770733+06:30
-30	main	0007_delete_product	2020-09-08 11:13:55.528269+06:30
-31	main	0008_product	2020-09-08 11:14:38.281475+06:30
-=======
-1	contenttypes	0001_initial	2020-09-07 10:50:15.915785+06:30
-2	auth	0001_initial	2020-09-07 10:50:15.986585+06:30
-3	admin	0001_initial	2020-09-07 10:50:16.097928+06:30
-4	admin	0002_logentry_remove_auto_add	2020-09-07 10:50:16.12138+06:30
-5	admin	0003_logentry_add_action_flag_choices	2020-09-07 10:50:16.135469+06:30
-6	contenttypes	0002_remove_content_type_name	2020-09-07 10:50:16.154714+06:30
-7	auth	0002_alter_permission_name_max_length	2020-09-07 10:50:16.162354+06:30
-8	auth	0003_alter_user_email_max_length	2020-09-07 10:50:16.170176+06:30
-9	auth	0004_alter_user_username_opts	2020-09-07 10:50:16.177392+06:30
-10	auth	0005_alter_user_last_login_null	2020-09-07 10:50:16.184584+06:30
-11	auth	0006_require_contenttypes_0002	2020-09-07 10:50:16.187385+06:30
-12	auth	0007_alter_validators_add_error_messages	2020-09-07 10:50:16.194463+06:30
-13	auth	0008_alter_user_username_max_length	2020-09-07 10:50:16.206129+06:30
-14	auth	0009_alter_user_last_name_max_length	2020-09-07 10:50:16.214845+06:30
-15	auth	0010_alter_group_name_max_length	2020-09-07 10:50:16.223744+06:30
-16	auth	0011_update_proxy_permissions	2020-09-07 10:50:16.23057+06:30
-17	auth	0012_alter_user_first_name_max_length	2020-09-07 10:50:16.238248+06:30
-18	main	0001_initial	2020-09-07 10:50:16.254236+06:30
-19	main	0002_auto_20200907_1048	2020-09-07 10:50:16.261295+06:30
-20	sessions	0001_initial	2020-09-07 10:50:16.271724+06:30
-21	sites	0001_initial	2020-09-07 10:50:16.285879+06:30
-22	sites	0002_alter_domain_unique	2020-09-07 10:50:16.299703+06:30
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
+1	contenttypes	0001_initial	2020-09-10 16:22:04.019164+06:30
+2	auth	0001_initial	2020-09-10 16:22:04.063064+06:30
+3	admin	0001_initial	2020-09-10 16:22:04.143273+06:30
+4	admin	0002_logentry_remove_auto_add	2020-09-10 16:22:04.19842+06:30
+5	admin	0003_logentry_add_action_flag_choices	2020-09-10 16:22:04.210278+06:30
+6	contenttypes	0002_remove_content_type_name	2020-09-10 16:22:04.239168+06:30
+7	auth	0002_alter_permission_name_max_length	2020-09-10 16:22:04.247263+06:30
+8	auth	0003_alter_user_email_max_length	2020-09-10 16:22:04.256745+06:30
+9	auth	0004_alter_user_username_opts	2020-09-10 16:22:04.266797+06:30
+10	auth	0005_alter_user_last_login_null	2020-09-10 16:22:04.275013+06:30
+11	auth	0006_require_contenttypes_0002	2020-09-10 16:22:04.277297+06:30
+12	auth	0007_alter_validators_add_error_messages	2020-09-10 16:22:04.286085+06:30
+13	auth	0008_alter_user_username_max_length	2020-09-10 16:22:04.298197+06:30
+14	auth	0009_alter_user_last_name_max_length	2020-09-10 16:22:04.306623+06:30
+15	auth	0010_alter_group_name_max_length	2020-09-10 16:22:04.324385+06:30
+16	auth	0011_update_proxy_permissions	2020-09-10 16:22:04.336345+06:30
+17	auth	0012_alter_user_first_name_max_length	2020-09-10 16:22:04.344143+06:30
+18	sessions	0001_initial	2020-09-10 16:22:04.354757+06:30
+19	sites	0001_initial	2020-09-10 16:22:04.376532+06:30
+20	sites	0002_alter_domain_unique	2020-09-10 16:22:04.397093+06:30
 \.
 
 
@@ -956,32 +851,8 @@ COPY public.django_redirect (id, site_id, old_path, new_path) FROM stdin;
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 6eymo6zeblq8wtk1jv5e85z425y1jicf	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kDlrG:ajg3K_xPyylqmWYGRB5jDStqOsfiudBNPjahZkpsEv0	2020-09-17 16:18:42.13648+06:30
-<<<<<<< HEAD
 hlv4j521bzg3qdvkc58yv72875kkkk3g	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kESkA:iL72B7V5BnEIpxmhaZcUklXj6CznFJoD4Pvs_ZPxQII	2020-09-19 14:06:14.341041+06:30
 2q0y1dwhg0dzsrcxjinozz3k3k6orev2	.eJxVjDsOgzAQBe-ydWRl_QtLmT5nQMt6HcgHSxiqKHdPkGho38y8D8hal_LWGVrbnKDjdRm6tercjQlaQDhsPctTpw2kB0_3YqRMyzz2ZlPMTqu5laSv6-4eDgauw7-mYBtSVtt4rxIyKrpATJGjw4tkFMlkKRFnb52P3GNUzw45-LMmge8PDKQ8jQ:1kF8Kx:u26INjOZMjkBpxyaCyLIkAHoUuPIoIzsxP8Cn4m4_5o	2020-09-21 10:30:59.806522+06:30
-=======
-m73z0urldtuwk8hyh9gc46tsbwlm8535	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kF9Ls:ZgIERMVI6K35bwICVMqwUoaPCsW_JQa5KB_2E6BaHhg	2020-09-07 11:51:00.164634+06:30
-04xld6iah6al73hw8rf5vnnkiryt3e92	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFBJ2:CcEK3g9g2fKrI1b6ATS7hzRpSNltq94Qnr5COsxd0BQ	2020-09-07 13:56:12.10625+06:30
-jwr33h5sfdqfn1524cbitt246qox2z6x	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFBmi:wYNmh3VkfGOzOXCQQvsKu68GtJskrh71ar7rE-hDHx8	2020-09-07 14:26:52.850855+06:30
-isbrkr9uq3jemrf4rcpwli4zv7b00ngo	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFC3A:V9J6X4pbJ7fsJem0yj56p-w-a8yJRS4xh4GoJW3qgEg	2020-09-07 14:43:52.103762+06:30
-aunrt8tt2xky51aseh6pwvaxh733p4s2	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFCbi:hLM8zpPJN-ZgnGSa-a4ggyRMRB3Hc6KQrFoYVXep4Qc	2020-09-07 15:19:34.831669+06:30
-1d3cl2l9fgvjjrwmhcujs319ag079w05	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFCqp:41OHyIdT-e3Ao03t5zToqi9Pb4tl7viVrYiBTcQqcvM	2020-09-07 15:35:11.629654+06:30
-t111w8e3kx1ee6ueokp897qnsohjns39	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFDEE:IuMAb_D0vu4Yi5txoZgceH8zsQIn5HNDklNXvObQtmo	2020-09-07 15:59:22.763698+06:30
-5cz41j5hdyzgtib1ymv3qpzo5mv7x8dt	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFDVF:OtCd_2DTqrIwsAH-6ENw-9L4SOFF0OAVx0mBhzcajHY	2020-09-07 16:16:57.181358+06:30
-igoqp9a0edlklf1q9bz9zljox3ypoeqz	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFDn2:E6e3ejXf4LyOHFWm57JslGpJg7hAAMQVsiPT-UeVwRI	2020-09-07 16:35:20.239085+06:30
-ykn6yu4rh7nx6fn8khqidoiirkzb87p1	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFE3y:WqkrWF4BxekhOBno3dix8cgOEAGIoKdGal2Q45Q1DO4	2020-09-07 16:52:50.078553+06:30
-zjycgppgeu10ecbkyw0rs3qy2h86dyo2	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFEix:NZxOFtpZDlUik8BZWGbzfTnbDSY4PqK2Otx8SfY9wes	2020-09-07 17:35:11.92306+06:30
-mj8irc6fqo5dijtd6wcff30o9z3rzzj9	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFEzD:6mhZa3vY47OQzRa0vaLQBRT_zJ4ID7IcH93pjSnoTQM	2020-09-07 17:51:59.300414+06:30
-o7qwvi6eqxmrfk4d23h0tklwvv4aro7f	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFUJv:d-Q6rx1APufEiXu6YheBkqLUNjJW_QVl77JvHVCMr1s	2020-09-08 10:14:23.758868+06:30
-ob6lpcu2errbd6ev3vehkxsh36alhlnm	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFUhJ:vzd5P8H1PcmugEJfQS2d9s7UE4svFtdT1NLPOKBNc0Y	2020-09-08 10:38:33.671553+06:30
-lqd6j46vbyv6t9hcsf9edztdpu9pmrkf	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFVNJ:9j-u8RokZ8MlJz4Yea3bfjm6-nF9QQ4EA8wgQXeV4Jk	2020-09-08 11:21:57.511258+06:30
-g4xunbhgw1azm32kpjtlalrphvx7gxeo	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFVdi:AHHG-JflfJR4pur5ZzWZuL3BHia1JQKmf5JY8gDK8sQ	2020-09-08 11:38:54.770865+06:30
-r9sj4ztxbtpwi5x49jyrfnu6uvpah5jf	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFW6M:8_gecO_L6qy4aE-3iFSRCv1itg3ll_SmpQgM_ahhYK0	2020-09-08 12:08:30.841904+06:30
-0wsldfuuell6toz8yjtrpazr9werz75u	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXML:xsR2n_skRSKeq-jB5zBq5dkJcgOYq3AAJrgWb6YJc3I	2020-09-08 13:29:05.905505+06:30
-7l4eshmjo68npdt7dsu8994movoxxhqx	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXci:JCqQpT-UNEHa8OvCBolk7Jrq66bVuqGkn_ePlK8rmNc	2020-09-08 13:46:00.806679+06:30
-9i6k9x49d7o5nygyqadblqxvl8gosmsw	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXt0:mv5Sl46R8ajUSmHWrbu4L4QnsKtsIdWjdsDTieTvEZY	2020-09-08 14:02:50.696304+06:30
-jcjdjihc255yglt73wxws5l30p4umj9a	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFY8L:XLabD9hCs9KHU6oa65DHBHs6dTURlnPE1p-lFAZYU2E	2020-09-08 14:18:41.674936+06:30
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -1008,6 +879,19 @@ COPY public.main_brand (id, brand_name) FROM stdin;
 8	Vivo
 9	Nokia
 10	LG
+11	Lenovo
+12	Asus
+13	H&M
+14	GUCCI
+15	HERMES
+16	Dell
+17	Acer
+18	Sony
+19	Microsoft XBox
+20	Nikon
+21	Canon
+22	Arlo
+23	Panasonic
 \.
 
 
@@ -1027,9 +911,9 @@ COPY public.main_category (id, category_name, sub_category) FROM stdin;
 9	Men's Fashion	Clothing
 10	Men's Fashion	Men's Bags
 11	Men's Fashion	Shoes
-12	Men's Fashion	Accessories
 13	Men's Fashion	Boy's Fashion
 14	Men's Fashion	Travel & Luggage
+12	Men's Fashion	Accessories
 \.
 
 
@@ -1037,14 +921,9 @@ COPY public.main_category (id, category_name, sub_category) FROM stdin;
 -- Data for Name: main_customer; Type: TABLE DATA; Schema: public; Owner: myprojectuser
 --
 
-<<<<<<< HEAD
-COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_email, customer_password, customer_lastlogin) FROM stdin;
-5	ach	Aye Chan	Han	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-09-05 11:19:43.810027
-28	shu	shu	naing	shu@gmail.com	pbkdf2_sha256$216000$oM5m7zVegdWy$5DUdBMxIUGL2I3kb8Z9140M0ZTgTW5xXuM3wWc/Fon4=	2020-09-05 16:49:54.22182
-=======
-COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_dob, customer_gender, customer_mobile, customer_email, customer_password, customer_lastlogin) FROM stdin;
-1	ach	Aye Chan	Han	1999-04-11	Male	\N	ach@gmail.com	pbkdf2_sha256$216000$JOii6VTZ4mww$PT4X+FuV6zgnN7Xnbgs+dCvpexzIj+WQviL5uP3gog0=	2020-09-08 14:03:41.67226
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
+COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_dob, customer_gender, customer_mobile, customer_email, password, last_login) FROM stdin;
+5	ach	Aye Chan	Han	\N	\N	\N	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-09-05 11:19:43.810027
+28	shu	shu	naing	2020-09-09	Others	\N	shu@gmail.com	pbkdf2_sha256$216000$oM5m7zVegdWy$5DUdBMxIUGL2I3kb8Z9140M0ZTgTW5xXuM3wWc/Fon4=	2020-09-05 16:49:54.22182
 \.
 
 
@@ -1052,16 +931,54 @@ COPY public.main_customer (id, customer_username, customer_firstname, customer_l
 -- Data for Name: main_product; Type: TABLE DATA; Schema: public; Owner: myprojectuser
 --
 
-COPY public.main_product (id, product_name, product_price, "product_featureImage", brand_id_id, category_id_id) FROM stdin;
-1	iPhone XS	799.00	featureImage/MTFD2_AV1_GOLD_GEO_HK.jpeg	1	1
-2	HUAWEI P40 Pro	999.00	featureImage/huawei_p40_pro_8gb_256gb.jpg	4	1
-3	Samsung Note 20 Ultra	890.00	featureImage/samsungNote20Ultra.jpg	6	1
-4	OPPO Find X	468.00	featureImage/Oppo-Find-X-0.jpg	7	1
-5	Vivo V-19	512.00	featureImage/Vivo-V19-Pro.jpg	8	1
-6	Xiaomi Redmi K30 Pro	360.00	featureImage/Xiaomi_Redmi_K30_Pro.png	5	1
-9	LG v50 ThinQ	360.00	featureImage/lg50thinq.png	10	1
-8	Nokia 9 Pure	920.00	featureImage/nokia9.jpeg	9	1
-7	Google Pixel 4a	590.00	featureImage/Google-Pixel-4a-XL-render-leak-featured.jpg	2	1
+COPY public.main_product (id, product_name, product_price, "product_featureImage", brand_id_id, category_id_id, product_description) FROM stdin;
+10	iPhone XS	880.00	featureImage/MTFD2_AV1_GOLD_GEO_HK.jpeg	1	1	\N
+8	Nokia 9 Pure	920.00	featureImage/nokia9pure.jpg	9	1	\N
+7	Google Pixel 4a	590.00	featureImage/ggpixel4a.jpg	2	1	\N
+9	LG v50 ThinQ	360.00	featureImage/lg50thinq.png	10	1	\N
+6	Xiaomi Redmi K30 Pro	360.00	featureImage/Xiaomi_Redmi_K30_Pro.png	5	1	\N
+5	Vivo V-19	512.00	featureImage/Vivo-V19-Pro.jpg	8	1	\N
+4	OPPO Find X	468.00	featureImage/Oppo-Find-X-0.jpg	7	1	\N
+3	Samsung Note 20 Ultra	890.00	featureImage/samsungNote20Ultra_vGCBWZD.jpg	6	1	\N
+11	HUAWEI MatePad	677.00	featureImage/huawei.png	4	2	\N
+12	HUAWEI MatePad T 8	874.00	featureImage/huawei1.png	4	2	\N
+13	Samsung Tab 7	798.00	featureImage/STab7.jpg	6	2	\N
+14	HUAWEI Mate D 15	999.00	featureImage/Huawei_MateBook_D_15__3_.jpg	4	3	\N
+15	Lenovo ThinkPad	899.00	featureImage/levnovo.jpg	11	3	\N
+16	Asus Zenbook	898.00	featureImage/asus.jpeg	12	3	\N
+17	Heavy Cotton	20.00	featureImage/1.jpeg	13	9	\N
+18	H&M 3-packs T shirts	32.00	featureImage/2.jpeg	13	9	\N
+19	H&M Sweatpants	18.00	featureImage/3.jpeg	13	9	\N
+20	H&M Backpack	60.00	featureImage/backpack.jpeg	13	10	\N
+21	H&M week bag	54.00	featureImage/weekenbag.jpeg	13	10	\N
+22	H&M large waist bag	33.00	featureImage/Largewaistbag.jpeg	13	10	\N
+23	H&M Canvans	55.00	featureImage/Canvas.jpeg	13	11	\N
+24	H&M Imitation	59.00	featureImage/Imitation.jpeg	13	11	\N
+25	H&M Mesh	45.00	featureImage/Mesh.jpeg	13	11	\N
+26	Gucci Scarves	220.00	featureImage/Scarves.jpg	14	12	\N
+27	Gucci	120.00	featureImage/Socks.jpg	14	12	\N
+28	Gucci Gloves	630.00	featureImage/Gloves1.jpg	14	12	\N
+29	HERMES Belt	840.00	featureImage/Belts.jpg	15	13	\N
+30	HERMES Addict sneaker	870.00	featureImage/boyshoes.jpg	15	13	\N
+31	HERMES Ete Indien	800.00	featureImage/boyTshirt1.jpg	15	13	\N
+32	HERMES Dynamoduffle Bag	580.00	featureImage/Dynamodufflebag.jpg	15	14	\N
+33	HERMES Zip retourne cabine bag	370.00	featureImage/HerbagZipretournecabinetiltbag.jpg	15	14	\N
+34	HERMES Bridleback	600.00	featureImage/HermesBridleback.jpg	15	14	\N
+35	Dell G Series	999.00	featureImage/dellGSeries.jpg	16	4	\N
+36	Acer Aspire GX	999.00	featureImage/AcerAspireGX.png	17	4	\N
+37	Asus Desktop D7	999.00	featureImage/asusDesktopD7Tower.jpeg	12	4	\N
+38	Sony Playstation 5	670.00	featureImage/playstation-5.jpg	18	5	\N
+39	XBox Series X	560.00	featureImage/xboxX.jpg	19	5	\N
+40	Sony Playstation 4	500.00	featureImage/PS4.jpg	18	5	\N
+41	Sony Camera	400.00	featureImage/sonyCamera.jpg	18	6	\N
+42	Nikon Camera	370.00	featureImage/nikonCamera.png	20	6	\N
+43	Canon Camera	410.00	featureImage/canonCamera.jpg	21	6	\N
+44	Google Security Camera	65.00	featureImage/googleSecurityCamera.jpg	2	7	\N
+45	Xiaomi Mi	30.00	featureImage/miSecurityCamera.png	5	7	\N
+46	Arlo Pro	40.00	featureImage/ArloPro3_.jpg	22	7	\N
+47	Panasonic Camera Lumix DMC-FT30	70.00	featureImage/panasonic1.jpg	23	8	\N
+48	Panasonic Camera Lumix DMC-LX-1000	68.00	featureImage/panasonic2.jpg	23	8	\N
+49	Panasonic Camera Lumix Point & Shoot	50.00	featureImage/panasonic3.png	23	8	\N
 \.
 
 
@@ -1111,7 +1028,7 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 73, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 138, true);
 
 
 --
@@ -1125,7 +1042,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 12, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 31, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 32, true);
 
 
 --
@@ -1146,7 +1063,7 @@ SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
 -- Name: main_brand_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.main_brand_id_seq', 10, true);
+SELECT pg_catalog.setval('public.main_brand_id_seq', 23, true);
 
 
 --
@@ -1160,18 +1077,14 @@ SELECT pg_catalog.setval('public.main_category_id_seq', 14, true);
 -- Name: main_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-<<<<<<< HEAD
 SELECT pg_catalog.setval('public.main_customer_id_seq', 28, true);
-=======
-SELECT pg_catalog.setval('public.main_customer_id_seq', 1, true);
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
 
 
 --
 -- Name: main_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.main_product_id_seq', 9, true);
+SELECT pg_catalog.setval('public.main_product_id_seq', 49, true);
 
 
 --

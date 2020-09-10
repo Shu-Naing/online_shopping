@@ -14,5 +14,6 @@ urlpatterns = [
                   path('shop/<sub__category>', views.shop, name="shop"),
                   path('account/manageaccount/confirm_email/', views.confirm_email, name="confirm_email"),
                   path('activate/<uidb64>/<token>/',views.activate, name='activate'),
-                  path('account/manageaccount/manage_by_email/', views.manage_by_email, name = "manage_by_email")
+                  path('account/manageaccount/manage_by_email/', views.manage_by_email, name = "manage_by_email"),
+                  path('single-product/', views.singleProduct, name="single-product"),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

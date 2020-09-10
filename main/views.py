@@ -145,3 +145,12 @@ def manage_by_email(request):
         Customer.objects.filter(pk = customer.pk).update(customer_email = request.POST.get('email')) 
         return redirect("main:manage_account")
 
+def singleProduct(request):
+    if request.method == "GET":
+        single_list = list()
+        oneProduct = Product.objects.filter().values('product_name', 'product_price', 'product_featureImage', 'product_description',)
+        for oneProduct in oneProduct:
+            single_list.append({"s_name": oneProduct['product_name'], "s_price": oneProduct['product_price'],
+                                 "s_image": oneProduct['product_featureImage'], "s_description": oneProduct['product_description']})
+
+        return render(request, 'single-product.html', {'single_product': single_list})
