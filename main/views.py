@@ -99,3 +99,7 @@ def shop(request, sub__category):
             product_list.append({"p_name": product['product_name'], "p_price": product['product_price'],
                                  "p_image": product['product_featureImage']})
     return render(request, 'shop.html', {'product': product_list, 'brand': brand_names})
+
+def singleProduct(request):
+    if request.method == "GET":
+        return render(request, 'single-product.html')

@@ -737,7 +737,6 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 26	Can change site	7	change_site
 27	Can delete site	7	delete_site
 28	Can view site	7	view_site
-<<<<<<< HEAD
 29	Can add customer	8	add_customer
 30	Can change customer	8	change_customer
 31	Can delete customer	8	delete_customer
@@ -754,7 +753,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 46	Can change product	12	change_product
 47	Can delete product	12	delete_product
 48	Can view product	12	view_product
-=======
+
 29	Can add category	8	add_category
 30	Can change category	8	change_category
 31	Can delete category	8	delete_category
@@ -763,7 +762,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 34	Can change customer	9	change_customer
 35	Can delete customer	9	delete_customer
 36	Can view customer	9	view_customer
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
+e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -869,15 +868,15 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 5	contenttypes	contenttype
 6	sessions	session
 7	sites	site
-<<<<<<< HEAD
+
 8	main	customer
 9	main	category
 11	main	brand
 12	main	product
-=======
+
 8	main	category
 9	main	customer
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
+e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -886,7 +885,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-<<<<<<< HEAD
+
 1	contenttypes	0001_initial	2020-09-04 11:01:46.058836+06:30
 2	auth	0001_initial	2020-09-04 11:01:46.115902+06:30
 3	admin	0001_initial	2020-09-04 11:01:46.243787+06:30
@@ -915,7 +914,6 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 29	main	0006_auto_20200907_1740	2020-09-07 17:40:59.770733+06:30
 30	main	0007_delete_product	2020-09-08 11:13:55.528269+06:30
 31	main	0008_product	2020-09-08 11:14:38.281475+06:30
-=======
 1	contenttypes	0001_initial	2020-09-07 10:50:15.915785+06:30
 2	auth	0001_initial	2020-09-07 10:50:15.986585+06:30
 3	admin	0001_initial	2020-09-07 10:50:16.097928+06:30
@@ -938,7 +936,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 20	sessions	0001_initial	2020-09-07 10:50:16.271724+06:30
 21	sites	0001_initial	2020-09-07 10:50:16.285879+06:30
 22	sites	0002_alter_domain_unique	2020-09-07 10:50:16.299703+06:30
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
+e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -956,10 +954,8 @@ COPY public.django_redirect (id, site_id, old_path, new_path) FROM stdin;
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 6eymo6zeblq8wtk1jv5e85z425y1jicf	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kDlrG:ajg3K_xPyylqmWYGRB5jDStqOsfiudBNPjahZkpsEv0	2020-09-17 16:18:42.13648+06:30
-<<<<<<< HEAD
 hlv4j521bzg3qdvkc58yv72875kkkk3g	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kESkA:iL72B7V5BnEIpxmhaZcUklXj6CznFJoD4Pvs_ZPxQII	2020-09-19 14:06:14.341041+06:30
 2q0y1dwhg0dzsrcxjinozz3k3k6orev2	.eJxVjDsOgzAQBe-ydWRl_QtLmT5nQMt6HcgHSxiqKHdPkGho38y8D8hal_LWGVrbnKDjdRm6tercjQlaQDhsPctTpw2kB0_3YqRMyzz2ZlPMTqu5laSv6-4eDgauw7-mYBtSVtt4rxIyKrpATJGjw4tkFMlkKRFnb52P3GNUzw45-LMmge8PDKQ8jQ:1kF8Kx:u26INjOZMjkBpxyaCyLIkAHoUuPIoIzsxP8Cn4m4_5o	2020-09-21 10:30:59.806522+06:30
-=======
 m73z0urldtuwk8hyh9gc46tsbwlm8535	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kF9Ls:ZgIERMVI6K35bwICVMqwUoaPCsW_JQa5KB_2E6BaHhg	2020-09-07 11:51:00.164634+06:30
 04xld6iah6al73hw8rf5vnnkiryt3e92	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFBJ2:CcEK3g9g2fKrI1b6ATS7hzRpSNltq94Qnr5COsxd0BQ	2020-09-07 13:56:12.10625+06:30
 jwr33h5sfdqfn1524cbitt246qox2z6x	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFBmi:wYNmh3VkfGOzOXCQQvsKu68GtJskrh71ar7rE-hDHx8	2020-09-07 14:26:52.850855+06:30
@@ -981,7 +977,7 @@ r9sj4ztxbtpwi5x49jyrfnu6uvpah5jf	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF
 7l4eshmjo68npdt7dsu8994movoxxhqx	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXci:JCqQpT-UNEHa8OvCBolk7Jrq66bVuqGkn_ePlK8rmNc	2020-09-08 13:46:00.806679+06:30
 9i6k9x49d7o5nygyqadblqxvl8gosmsw	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFXt0:mv5Sl46R8ajUSmHWrbu4L4QnsKtsIdWjdsDTieTvEZY	2020-09-08 14:02:50.696304+06:30
 jcjdjihc255yglt73wxws5l30p4umj9a	eyJfc2Vzc2lvbl9leHBpcnkiOjkwMCwiY3VzdG9tZXIiOjF9:1kFY8L:XLabD9hCs9KHU6oa65DHBHs6dTURlnPE1p-lFAZYU2E	2020-09-08 14:18:41.674936+06:30
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
+e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -1037,14 +1033,12 @@ COPY public.main_category (id, category_name, sub_category) FROM stdin;
 -- Data for Name: main_customer; Type: TABLE DATA; Schema: public; Owner: myprojectuser
 --
 
-<<<<<<< HEAD
 COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_email, customer_password, customer_lastlogin) FROM stdin;
 5	ach	Aye Chan	Han	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-09-05 11:19:43.810027
 28	shu	shu	naing	shu@gmail.com	pbkdf2_sha256$216000$oM5m7zVegdWy$5DUdBMxIUGL2I3kb8Z9140M0ZTgTW5xXuM3wWc/Fon4=	2020-09-05 16:49:54.22182
-=======
 COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_dob, customer_gender, customer_mobile, customer_email, customer_password, customer_lastlogin) FROM stdin;
 1	ach	Aye Chan	Han	1999-04-11	Male	\N	ach@gmail.com	pbkdf2_sha256$216000$JOii6VTZ4mww$PT4X+FuV6zgnN7Xnbgs+dCvpexzIj+WQviL5uP3gog0=	2020-09-08 14:03:41.67226
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
+e0a11c9ac11de06914c27965f36d508964292b89
 \.
 
 
@@ -1160,11 +1154,9 @@ SELECT pg_catalog.setval('public.main_category_id_seq', 14, true);
 -- Name: main_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-<<<<<<< HEAD
 SELECT pg_catalog.setval('public.main_customer_id_seq', 28, true);
-=======
 SELECT pg_catalog.setval('public.main_customer_id_seq', 1, true);
->>>>>>> e0a11c9ac11de06914c27965f36d508964292b89
+e0a11c9ac11de06914c27965f36d508964292b89
 
 
 --

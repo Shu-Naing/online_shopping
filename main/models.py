@@ -29,3 +29,4 @@ class Product(models.Model):
     product_price = models.DecimalField(max_digits=5, decimal_places=2)
     product_featureImage = models.ImageField(upload_to='featureImage')
 
+
