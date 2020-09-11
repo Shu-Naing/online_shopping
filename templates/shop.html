@@ -103,7 +103,6 @@
                 <div class="col-sm-6 col-xl-4">
                   <!-- Product-->
                   <article class="product">
-
                       <div class="product-figure"><img src="/{{p.p_image}}" alt="" width="195" height="173"/>
                       </div>
 
@@ -112,9 +111,8 @@
                         <div class="product-price">${{p.p_price}}</div>
                       </div>
                       <div class="product-button">
-                        <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="cart-page.html">Add to cart</a></div>
-                        <div class="button-wrap"><a class="button button-xs button-default button-winona" >View Product</a>
-                          {% comment %} onclick="location.href='/single-product/'" {% endcomment %}
+                        <div class="button-wrap">
+                          <a class="button button-xs button-default button-winona" href = "/product/{{p.p_name}}">View Product</a>
                         </div>
                       </div>
                     </article>
