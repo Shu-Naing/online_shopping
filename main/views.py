@@ -12,6 +12,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from .forms import RegistrationForm, LoginForm
 from .models import Customer, Brand, Product, Category
 from datetime import datetime
+from django.db.models import Q
 
 
 @csrf_protect
@@ -208,3 +209,22 @@ def remove_from_cart(request):
         request.session['cart'] = [i for i in request.session['cart'] if not (i['product_name'] == request.POST.get('productName'))]
         request.session.modified = True
         return HttpResponse("Successfully removed from cart")
+def search(request):
+    if request.method == 'POST':
+        srch = request.POST.get('search_result')
+        
+        if srch:
+            match = Product.objects.filter(product_name__contains=srch).values('product_name', 'product_price', 'product_featureImage',) 
+            if match:
+                match_list = []
+                for match in match:
+                    match_list.append({"name": match['product_name'], "price": match['product_price'],
+                                 "image": match['product_featureImage']})
+                    print(match_list)
+                return render(request, 'search-results.html', {'sr': match_list})
+            else:
+                messages.error(request, 'Result Not Found')
+        else:
+            return HttpResponseRedirect('/search/')
+    
+    return render(request, 'search-results.html')

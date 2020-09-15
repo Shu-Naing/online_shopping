@@ -18,4 +18,5 @@ urlpatterns = [
                   path('activate/<uidb64>/<token>/',views.activate, name='activate'),
                   path('account/manageaccount/manage_by_email/', views.manage_by_email, name = "manage_by_email"),
                   path('product/<product>', views.singleProduct, name = "single_product"),
+                  path('search/', views.search, name="search"),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
