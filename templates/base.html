@@ -10,14 +10,23 @@
     <link rel="icon" href="{% static 'images/favicon.ico'%}" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css" href='//fonts.googleapis.com/css?family=Roboto:100,300,300i,400,500,600,700,900%7CRaleway:500%7CAbril+Fatface'>
-   <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
     <link rel="stylesheet" href="{% static 'css/fonts.css'%}">
     <link rel="stylesheet" href="{% static 'css/style.css'%}" id="main-styles-link">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <!--[if lt IE 10]>
-    <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src=" {% static 'images/ie8-panel/warning_bar_0000_us.jpg' %} " border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
-    <script src=" {% static 'js/html5shiv.min.js' %} "></script>
-    <![endif]-->
+    <style>
+          .rd-nav-link-1 {
+            color: black;
+          }
+          .rd-nav-link-1 .badge {
+            position: absolute;
+            top: -13px;
+            right: -13px;
+            background-color: white;
+            color: red;
+          }
+    </style>
   </head>
   <body>
     <div class="preloader">
@@ -103,13 +112,52 @@
                           <li class="rd-dropdown-item"><a class="rd-dropdown-link" href=" {% static 'blog-post.html' %} ">Blog post</a></li>
                         </ul>
                       </li>
+                      <li class="rd-nav-item">
+                        <a class="rd-nav-link-1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="icon mdi mdi-cart-outline">
+                          {% if cart|length == 0%}
+                            <span class="badge" id = "cart_span"></span>
+                          {% else %}
+                            <span class="badge" id = "cart_span">{{ cart|length }}</span>
+                          {% endif %}
+                          </i>
+                        </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <p style="text-align: center">Cart</p>
+                              <div class="dropdown-divider"></div>
+                              <form id="form1" action="/addtocart/"></form>
+                                <table class="table table-striped" id="cartTable">
+                                  <tr>
+                                    {% csrf_token %}
+                                    <td>Name</td>
+                                    <td>Quantity</td>
+                                    <td>Price</td>
+                                    <td></td>
+                                  </tr>
+                                  {% for cart_item in cart %}
+                                    <tr id = "index" data-id={{forloop.counter0}}>
+                                    <td>{{cart_item.product_name}}</td>
+                                    <td>{{cart_item.quantity}}</td>
+                                    <td>{{cart_item.total_price}}</td>
+                                    <td><button id="delete" data-id="{{cart_item.product_name}}" onclick = "removeProduct(this)" class="delete">Remove</button></td> 
+                                    </tr>
+                                  {% endfor %}
+                                  <tr>
+                                  <td></td>
+                                  <td><button form="form1" class="button button-sm button-primary button-winona">Checkout</button></td>
+                                  <td></td>
+                                  <td></td>
+                                  </tr>
+                                </table>
+                              </div>
+                      </li>
                     </ul>
                   </div>
                 </div>
                 <div class="rd-navbar-collapse">
                   <ul class="rd-navbar-contacts-4">
-                    <li><span class="icon mdi mdi-phone"></span><span class="link-wrap"><a class="phone" href=" {% static 'tel:#' %} ">+1 718-999-3939</a></span></li>
-                    <li><span class="icon mdi mdi-email-outline"></span><span class="link-wrap"><a class="mail" href=" {% static 'mailto:#' %} ">info@demolink.org</a></span></li>
+                    <li><span class="icon mdi mdi-phone"></span><span class="link-wrap"><a class="phone" href="#">+1 718-999-3939</a></span></li>
+                    <li><span class="icon mdi mdi-email-outline"></span><span class="link-wrap"><a class="mail" href="#">info@demolink.org</a></span></li>
                     <li><span class="icon mdi mdi-map-marker"></span><span class="link-wrap"><a class="address" href="#">514 S. Magnolia St. Orlando, FL 32806</a></span></li>
                   </ul>
                 </div>
@@ -222,5 +270,32 @@
     <!-- Javascript-->
     <script src=" {% static 'js/core.min.js' %} "></script>
     <script src=" {% static 'js/script.js' %} "></script>
+    <script src="{% static 'js/cart.js' %}"></script>
+    <script type="text/javascript">
+          //$("#delete").click(removeProduct($(this)));
+          function removeProduct(i)
+            {
+              var qty = '#delete';
+              var csrf = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+              var r = i.parentNode.parentNode.rowIndex;
+              var span = '#cart_span';
+              var data = {csrfmiddlewaretoken: '{{csrf_token}}', productName: $(qty).data('id')}
+              //console.log('make ajax call to add:', $(btn));
+
+              $.post({
+                  url:'{% url 'main:removefromCart' %}', 
+                  type: 'POST',
+                  data: data, 
+                  success: function(){
+                      if ($(span).text() == ""){
+                          $(span).text(0)
+                      }
+                      no_of_cart = parseInt($(span).text(), 10) - 1
+                      $(span).text(no_of_cart);
+                      document.getElementById("cartTable").deleteRow(r);
+                  },
+              });
+            }
+    </script>
   </body>
 </html>

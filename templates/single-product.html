@@ -2,6 +2,8 @@
 {% load static %}
 {% block content %}
       <!-- Breadcrumbs -->
+      <div id='user_id' style="display: none;">{{customer.id}}</div>
+      {% csrf_token %}
       <section class="bg-gray-7">
         <div class="breadcrumbs-custom bg-image" style="background-image: url({% static 'images/bg-breadcrumbs.jpg'%});">
           <div class="container">
@@ -25,12 +27,10 @@
               <div class="slick-vertical slick-product">
                 <!-- Slick Carousel-->
                 <div class="slick-slider carousel-parent" data-swipe="true" data-items="1" data-child="#child-carousel-6" data-for="#child-carousel-6">
-                  {% for t in single_product %}
                     <div class="item">
-                      <div class="slick-product-figure"><img src="/{{t.s_image}}" alt="" width="530" height="480"/>
+                      <div class="slick-product-figure"><img src="/{{single_product.3}}" alt="" width="530" height="480"/>
                       </div>
                     </div>
-                  {% endfor %}
                 </div>
                 <div class="slick-slider child-carousel" id="child-carousel-6" data-for=".carousel-parent" data-arrows="true" data-items="3" data-sm-items="3" data-md-items="3" data-lg-items="3" data-xl-items="3" data-slide-to-scroll="1" data-md-vertical="true">
                   <div class="item">
@@ -51,13 +51,11 @@
             
               <div class="col-lg-6">
                 <div class="single-product">
-                  {% for t in single_product %}
-                    <h2>{{t.s_name}}</h2>
+                    <h2>{{single_product.1}}</h2>
                     <div class="group-md group-middle">
-                      <div class="single-product-price">${{t.s_price}}</div>
+                      <div class="single-product-price">${{single_product.2}}</div>
                     </div>
-                    <p>{{t.s_description}}</p>
-                  {% endfor %}
+                    <p>{{single_product.4}}</p>
                   <hr class="hr-gray-300">
                   <ul class="list list-description d-inline-block d-md-block">
                     <li><span>Categories:</span><span>Books</span></li>
@@ -66,9 +64,9 @@
                   </ul>
                   <div class="group-lg group-middle">
                     <div class="product-stepper">
-                      <input class="form-input" type="number" data-zeros="true" value="1" min="1" max="1000">
+                      <input id="qty_{{single_product.0}}" class="form-input" type="number" data-zeros="true" value="1" min="1" max="1000">
                     </div>
-                    <div><a class="button button-lg button-primary button-winona" href="cart-page.html">Add to cart</a></div>
+                    <div><a class="button button-primary button-winona" id = "addtocart" data-id="{{single_product.0}}" href="#">Add to cart</a></div>
                   </div>
                   <hr class="hr-gray-300">
                   <div class="group-sm group-middle"><span class="single-product-social-title">Share</span>

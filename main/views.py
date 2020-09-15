@@ -61,6 +61,8 @@ def login(request):
                     Customer.objects.filter(pk = customer.pk).update(last_login = datetime.today())
                     request.session.set_expiry(1800)
                     request.session['customer'] = cust_id
+                    if not 'cart' in request.session:
+                        request.session['cart'] = []
                     return redirect('main:home')
     return render(request, 'login.html', {'form': form})
 
@@ -148,9 +150,61 @@ def manage_by_email(request):
 def singleProduct(request, product):
     if request.method == "GET":
         single_list = []
-        oneProduct = Product.objects.filter(product_name = product).values('product_name', 'product_price', 'product_featureImage', 'product_description',)
-        for oneProduct in oneProduct:
-            single_list.append({"s_name": oneProduct['product_name'], "s_price": oneProduct['product_price'],
-                                 "s_image": oneProduct['product_featureImage'], "s_description": oneProduct['product_description']})
-
+        oneProduct = Product.objects.filter(product_name = product).values_list('id','product_name', 'product_price', 'product_featureImage', 'product_description')
+        for product in oneProduct[0]:
+            single_list.append(product)
         return render(request, 'single-product.html', {'single_product': single_list})
+
+
+def addtocart(request):
+    if request.method == "POST":
+        if not 'cart' in request.session:
+            request.session['cart'] = []
+            request.session.set_expiry(1800)
+        customer = request.POST.get('customer')
+
+        if not customer:
+            customer = None
+        product = Product.objects.filter(pk = request.POST.get('product_id')).values_list('product_name', 'product_price')
+        quantity = request.POST.get('quantity')
+
+        if any(d['product_name'] == product[0][0] for d in request.session['cart']):
+            cart_index = [i for i, d in enumerate(request.session['cart']) if product[0][0] in d.values()]
+            qty = request.session['cart'][cart_index[0]]['quantity']
+            qty += int(quantity)
+            request.session['cart'][cart_index[0]]['total_price'] = float(product[0][1]) * int(qty)
+            request.session.modified = True
+            return HttpResponse("Successfully added to cart") 
+
+        cart = {
+            "customer": customer,
+            "product_name": product[0][0],
+            "quantity": int(quantity),
+            "total_price": float(product[0][1]) * int(quantity)
+        }
+        request.session['cart'].append(cart)
+        request.session.modified = True
+        return HttpResponse("Successfully added to cart")
+    else:
+        order_products = []
+        total_cost = 0
+        for cart in request.session['cart']:
+            product = Product.objects.filter(product_name = cart['product_name']).values_list('product_name', 'product_price', 'product_featureImage')
+            quantity = cart['quantity']
+            total_price = cart['total_price']
+            total_cost += total_price
+            order_detail = {
+                "product_name": product[0][0],
+                "product_price": product[0][1],
+                "product_featureImage": product[0][2],
+                "qty": quantity,
+                "total_price": total_price,
+            }
+            order_products.append(order_detail)
+        return render(request, "checkout.html", {"order_products": order_products, "total_cost": total_cost})
+
+def remove_from_cart(request):
+    if request.method == "POST":
+        request.session['cart'] = [i for i in request.session['cart'] if not (i['product_name'] == request.POST.get('productName'))]
+        request.session.modified = True
+        return HttpResponse("Successfully removed from cart")
