@@ -10,9 +10,13 @@
     <link rel="icon" href="{% static 'images/favicon.ico'%}" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css" href='//fonts.googleapis.com/css?family=Roboto:100,300,300i,400,500,600,700,900%7CRaleway:500%7CAbril+Fatface'>
-   <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
     <link rel="stylesheet" href="{% static 'css/fonts.css'%}">
+    <link rel="stylesheet" href="{% static 'css/search.css'%}">
     <link rel="stylesheet" href="{% static 'css/style.css'%}" id="main-styles-link">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- <link rel="stylesheet" href="path/to/css/rd-navbar.css"> -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!--[if lt IE 10]>
     <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src=" {% static 'images/ie8-panel/warning_bar_0000_us.jpg' %} " border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
@@ -34,10 +38,12 @@
       </div>
     </div>
     <div class="page">
-      <header class="section page-header">
         <!-- RD Navbar-->
         <div class="rd-navbar-wrap">
           <nav class="rd-navbar rd-navbar-corporate" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="80px" data-xl-stick-up-offset="80px" data-xxl-stick-up-offset="80px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+            <div class="search-button">
+              <a href="#" class="search-toggle" data-selector="#header-2"></a>
+            </div>  
             <div class="rd-navbar-collapse-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-collapse"><span></span></div>
             <div class="rd-navbar-main-outer">
               <div class="rd-navbar-main">
@@ -46,11 +52,12 @@
                   <!-- RD Navbar Toggle-->
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a class="brand" href="/"><img class="brand-logo-dark" src="{% static 'images/logo-default-187x45.png'%}" alt="" width="187" height="45"/></a></div>
+                  <div class="rd-navbar-brand"><a class="brand" href="/"><img class="brand-logo-dark" src="{% static 'images/logo3.png'%}" alt="" width="450" height="100"/></a></div>
                 </div>
                 <div class="rd-navbar-main-element">
                   <div class="rd-navbar-nav-wrap">
                     <!-- RD Navbar Nav-->
+                    
                     <ul class="rd-navbar-nav">
                       <li class="rd-nav-item active"><a class="rd-nav-link" href="/">Home</a>
                       </li>
@@ -89,30 +96,19 @@
                           </ul>
                         </li>
                       {% endif %}
-                      <li class="rd-nav-item"><a class="rd-nav-link" href=" {% static 'projects.html' %} ">Projects</a>
-                        <!-- RD Navbar Dropdown-->
-                        <ul class="rd-menu rd-navbar-dropdown">
-                          <li class="rd-dropdown-item"><a class="rd-dropdown-link" href=" {% static 'projects.html' %} ">Projects</a></li>
-                          <li class="rd-dropdown-item"><a class="rd-dropdown-link" href=" {% static 'project-page.html' %} ">Project page</a></li>
-                        </ul>
-                      </li>
-                      <li class="rd-nav-item"><a class="rd-nav-link" href=" {% static 'grid-blog.html' %} ">News</a>
-                        <!-- RD Navbar Dropdown-->
-                        <ul class="rd-menu rd-navbar-dropdown">
-                          <li class="rd-dropdown-item"><a class="rd-dropdown-link" href=" {% static 'grid-blog.html' %} ">Grid blog</a></li>
-                          <li class="rd-dropdown-item"><a class="rd-dropdown-link" href=" {% static 'blog-post.html' %} ">Blog post</a></li>
-                        </ul>
-                      </li>
                     </ul>
                   </div>
                 </div>
-                <div class="rd-navbar-collapse">
-                  <ul class="rd-navbar-contacts-4">
-                    <li><span class="icon mdi mdi-phone"></span><span class="link-wrap"><a class="phone" href=" {% static 'tel:#' %} ">+1 718-999-3939</a></span></li>
-                    <li><span class="icon mdi mdi-email-outline"></span><span class="link-wrap"><a class="mail" href=" {% static 'mailto:#' %} ">info@demolink.org</a></span></li>
-                    <li><span class="icon mdi mdi-map-marker"></span><span class="link-wrap"><a class="address" href="#">514 S. Magnolia St. Orlando, FL 32806</a></span></li>
-                  </ul>
+                <div>
+                  <div class="uk-navbar-item uk-width-expand">
+                    <form class="uk-search uk-search-navbar uk-width-1-1" action="/search/" method="post">
+                        {% csrf_token %}
+                        <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                        <button><i class="fa fa-search"></i></button>
+                    </form>
+                  </div>
                 </div>
+                
               </div>
             </div>
           </nav>
@@ -222,5 +218,7 @@
     <!-- Javascript-->
     <script src=" {% static 'js/core.min.js' %} "></script>
     <script src=" {% static 'js/script.js' %} "></script>
+    <script src=" {% static 'js/nn.js' %} "></script>
+    <!-- <script src="{% static 'js/responsive-nav.min.js' %}"></script> -->
   </body>
 </html>
