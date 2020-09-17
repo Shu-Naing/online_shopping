@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
-    <title>Home</title>
+    <title>Magic Online Shopping</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
     <link rel="stylesheet" href="{% static 'css/fonts.css'%}">
-    <link rel="stylesheet" href="{% static 'css/search.css'%}">
     <link rel="stylesheet" href="{% static 'css/style.css'%}" id="main-styles-link">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -30,6 +29,24 @@
             background-color: white;
             color: red;
           }
+.input-container {
+display: -ms-flexbox;
+display: flex;
+/* width: 100%; */
+margin-bottom: 15px;
+}         
+.input-field {
+  /* width: 100%; */
+  /* padding: 10px; */
+  /* outline: none; */
+}
+.icon {
+  /* padding: 10px; */
+  /* background: white; */
+  /* color: black; */
+  width: 26px;
+  /* text-align: center; */
+}
     </style>
   </head>
   <body>
@@ -121,7 +138,7 @@
                       </li>
                       <li class="rd-nav-item">
                         <a class="rd-nav-link-1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="icon mdi mdi-cart-outline">
+                          <i class="mdi mdi-cart-outline">
                           {% if cart|length == 0%}
                             <span class="badge" id = "cart_span"></span>
                           {% else %}
@@ -157,20 +174,22 @@
                                   </tr>
                                 </table>
                               </div>
+                                    
                       </li>
                     </ul>
                   </div>
                 </div>
-                <div>
-                  <div class="uk-navbar-item uk-width-expand">
-                    <form class="uk-search uk-search-navbar uk-width-1-1" action="/search/" method="post">
-                        {% csrf_token %}
-                        <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
-                        <button><i class="fa fa-search"></i></button>
-                    </form>
-                  </div>
-                </div>
-                
+                <div class="uk-navbar-item">
+                  <form class="uk-search uk-search-navbar uk-width-1-1" action="/search/" method="POST" style="margin:auto;max-width:300px">
+                      {% csrf_token %}
+                      <!-- <label class="form-label" for="rd-search-form-input">Search</label> -->
+                      <div class="input-container">
+                        <input class="input-field" id="site-search" type="sear" name="search_result" autocomplete="off"  placeholder="Search...">
+                      <button><i class="fa fa-search icon" aria-hidden="true" ></i></button>
+                      </div>
+                      <!-- <button class="search-button"><i class="fa fa-search"></i></button> -->
+                  </form>
+                </div> 
               </div>
             </div>
           </nav>
