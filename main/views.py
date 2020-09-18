@@ -115,10 +115,12 @@ def shop(request, sub__category):
             brand_names.append({'brand_name': brand[0]})
         brand_names = sorted(brand_names, key = lambda i: i['brand_name'])
         brand_names = list({v['brand_name']:v for v in brand_names}.values())
+        count = product.count()
+
         for product in product:
             product_list.append({"p_name": product['product_name'], "p_price": product['product_price'],
                                  "p_image": product['product_featureImage']})
-    return render(request, 'shop.html', {'product': product_list, 'brand': brand_names})
+    return render(request, 'shop.html', {'product': product_list, 'brand': brand_names, 'proCount': count})
 
 
 def confirm_email(request):
@@ -259,7 +261,6 @@ def confirm_checkout(request, payment):
 def search(request):
     if request.method == 'POST':
         srch = request.POST.get('search_result')
-        
         if srch:
             match = Product.objects.all().order_by('brand_id').filter(product_name__icontains=srch).values('product_name', 'product_price', 'product_featureImage')
             if match:
@@ -268,8 +269,6 @@ def search(request):
                     match_list.append({"name": match['product_name'], "price": match['product_price'],
                                  "image": match['product_featureImage']})
                 return render(request, 'search-results.html', {'sr': match_list})
-            else:
-                messages.error(request, 'Result Not Found')
     
     return render(request, 'search-results.html')
 
