@@ -20,6 +20,9 @@
       </section>
       <section class="section section-lg bg-default">
         <div class="container">
+          <div class="product-top-panel group-md">
+            <h5 class="product-top-panel-title">Search Result {{sr|length}} items</h5>
+          </div>
           <div class="row row-30 row-md-40 row-xl-60">
             <!-- Product-->
             <!-- <div class="row row-30 row-md-40 row-xl-60">
@@ -40,7 +43,7 @@
                   </div>
                 {% endfor %}
             {% else %}
-              <h2>&#128543; Item wasn't found.</h2>
+              <h2>&#129300; Item wasn't found.</h2>
               <a href="/">Go back to <b>Home Page</b>?</a>
             {% endif %}
           </div>

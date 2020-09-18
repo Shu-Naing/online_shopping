@@ -89,7 +89,7 @@
             </div>
             <div class="col-lg-8 col-xl-9">
               <div class="product-top-panel group-md">
-                <h5 class="product-top-panel-title">Showing 1–12 of 28 results</h5>
+                  <h5 class="product-top-panel-title">Showing 1–{{product|length}}</h5>
                 <div class="product-top-panel-sorting">
                   <select class="form-input" data-minimum-results-for-search="Infinity" data-constraints="@Required">
                     <option value="1">Sort by newness</option>
@@ -123,5 +123,4 @@
           </div>
         </div>
       </section>
-
 {% endblock  %}
