@@ -94,7 +94,13 @@ def logout(request):
 
 def home(request):
     if request.method == "GET":
-        return render(request, 'index.html')
+        home_list = []
+        product = Product.objects.filter().values('product_name', 'product_price', 'product_featureImage')
+        for product in product:
+            home_list.append({"h_name": product['product_name'], "h_price": product['product_price'],
+                                 "h_image": product['product_featureImage']})
+    return render(request, 'index.html', {'homeProduct': home_list})
+    
 
 
 def shop(request, sub__category):
@@ -254,20 +260,19 @@ def confirm_checkout(request, payment):
 
 def search(request):
     if request.method == 'POST':
-        search = request.POST.get('search_result')
-        if search:
-            match = Product.objects.filter(product_name__search=search).values(
-                'product_name', 'product_price', 'product_featureImage',)
+        srch = request.POST.get('search_result')
+        
+        if srch:
+            match = Product.objects.all().order_by('brand_id').filter(product_name__icontains=srch).values('product_name', 'product_price', 'product_featureImage')
             if match:
                 match_list = []
                 for match in match:
                     match_list.append({"name": match['product_name'], "price": match['product_price'],
-                                       "image": match['product_featureImage']})
+                                 "image": match['product_featureImage']})
                 return render(request, 'search-results.html', {'sr': match_list})
             else:
                 messages.error(request, 'Result Not Found')
-        else:
-            return HttpResponseRedirect('/search/')
+    
     return render(request, 'search-results.html')
 
 
