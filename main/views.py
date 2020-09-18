@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
@@ -9,10 +10,10 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib import messages
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, DeliveryAddressForm
 from .models import Customer, Brand, Product, Category
 from datetime import datetime
-from django.db.models import Q
+import json
 
 
 @csrf_protect
@@ -64,7 +65,12 @@ def login(request):
                     request.session['customer'] = cust_id
                     if not 'cart' in request.session:
                         request.session['cart'] = []
-                    return redirect('main:home')
+                    else:
+                        for cart in request.session['cart']:
+                            cart.update((key, request.session['customer']) for key, value in cart.items() if value == None)
+                    if request.POST.get('next') == "":
+                        return redirect('/')
+                    return redirect("main:"+request.POST.get('next'))
     return render(request, 'login.html', {'form': form})
 
 @csrf_protect
@@ -97,6 +103,8 @@ def shop(request, sub__category):
         brand_names = []
         category = Category.objects.filter(sub_category = sub__category).values_list('id', flat = True)
         product = Product.objects.filter(category_id = category[0]).values('product_name', 'product_price', 'product_featureImage')
+        test = Product.objects.get(product_name = 'test')
+        print(test.product_featureImage.url)
         brand_list = Product.objects.filter(category_id = category[0]).values('brand_id')
         for brand_id in brand_list:
             brand = Brand.objects.filter(pk = brand_id['brand_id']).values_list('brand_name', flat = True)
@@ -117,7 +125,7 @@ def confirm_email(request):
             current_site = get_current_site(request)
             email_subject = "Verify your email"
             message = render_to_string("account_activate.html", {
-                'domain': '127.0.0.1:8000',
+                'domain': request.get_host(),
                 'uid': urlsafe_base64_encode(force_bytes(request.session['customer'])),
                 'token': PasswordResetTokenGenerator().make_token(customer),
             })
@@ -156,6 +164,24 @@ def singleProduct(request, product):
             single_list.append(product)
         return render(request, 'single-product.html', {'single_product': single_list})
 
+def get_from_cart(cart):
+    order_products = []
+    total_cost = 0
+    for cart_item in cart:
+        product = Product.objects.filter(product_name = cart_item['product_name']).values_list('product_name', 'product_price', 'product_featureImage')
+        quantity = cart_item['quantity']
+        total_price = cart_item['total_price']
+        total_cost += total_price
+        order_detail = {
+            "product_name": product[0][0],
+            "product_price": product[0][1],
+            "product_featureImage": product[0][2],
+            "qty": quantity,
+            "total_price": total_price,
+        }
+        order_products.append(order_detail)
+    return order_products, total_cost
+
 
 def addtocart(request):
     if request.method == "POST":
@@ -187,44 +213,62 @@ def addtocart(request):
         request.session.modified = True
         return HttpResponse("Successfully added to cart")
     else:
-        order_products = []
-        total_cost = 0
-        for cart in request.session['cart']:
-            product = Product.objects.filter(product_name = cart['product_name']).values_list('product_name', 'product_price', 'product_featureImage')
-            quantity = cart['quantity']
-            total_price = cart['total_price']
-            total_cost += total_price
-            order_detail = {
-                "product_name": product[0][0],
-                "product_price": product[0][1],
-                "product_featureImage": product[0][2],
-                "qty": quantity,
-                "total_price": total_price,
-            }
-            order_products.append(order_detail)
-        return render(request, "checkout.html", {"order_products": order_products, "total_cost": total_cost})
+        if not 'cart' in request.session:
+            return render(request, '404-page.html', {'error': "Session Time Out"})
+        order_products, total_cost = get_from_cart(request.session['cart'])
+        return render(request, "checkout.html", {"order_products": order_products, "total_cost": total_cost,})
+
 
 def remove_from_cart(request):
     if request.method == "POST":
         request.session['cart'] = [i for i in request.session['cart'] if not (i['product_name'] == request.POST.get('productName'))]
         request.session.modified = True
         return HttpResponse("Successfully removed from cart")
+
+@require_POST
+def checkout(request):
+    if request.method == "POST":
+        cart = request.session['cart']
+        updated_cart = request.POST.getlist('list[]')
+        if len(cart) == len(updated_cart):
+            for item in range(len(cart)):
+                load_data = json.loads(updated_cart[item])
+                updated_product_name = load_data['product_name']
+                updated_qty = load_data['quantity']
+                updated_totalprice = load_data['total_price']
+                
+                cart[item].update({'product_name': updated_product_name})
+                cart[item].update({'quantity': int(updated_qty)})
+                cart[item].update({'total_price': float(updated_totalprice)})
+        request.session.modified = True
+        return HttpResponse("Checkout Completed!")
+
+def confirm_checkout(request, payment):
+    delivery_form = DeliveryAddressForm()
+    # if payment == "credit cards":
+    #     payment_form = 
+    if not 'cart' in request.session:
+        return render(request, '404-page.html', {'error': "Session Time Out"})
+    order_products, total_cost = get_from_cart(request.session['cart'])
+    return render(request, "confirm_checkout.html", {"form": delivery_form, "cart": order_products, "total_cost": total_cost})
+
 def search(request):
     if request.method == 'POST':
-        srch = request.POST.get('search_result')
-        
-        if srch:
-            match = Product.objects.filter(product_name__contains=srch).values('product_name', 'product_price', 'product_featureImage',) 
+        search = request.POST.get('search_result')
+        if search:
+            match = Product.objects.filter(product_name__search=search).values(
+                'product_name', 'product_price', 'product_featureImage',)
             if match:
                 match_list = []
                 for match in match:
                     match_list.append({"name": match['product_name'], "price": match['product_price'],
-                                 "image": match['product_featureImage']})
-                    print(match_list)
+                                       "image": match['product_featureImage']})
                 return render(request, 'search-results.html', {'sr': match_list})
             else:
                 messages.error(request, 'Result Not Found')
         else:
             return HttpResponseRedirect('/search/')
-    
     return render(request, 'search-results.html')
+
+
+

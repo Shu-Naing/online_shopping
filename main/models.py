@@ -27,5 +27,5 @@ class Product(models.Model):
     category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=80)
     product_price = models.DecimalField(max_digits=10, decimal_places=2)
-    product_featureImage = models.ImageField(upload_to='featureImage')
+    product_featureImage = models.ImageField(upload_to = 'images')
     product_description = models.CharField(max_length=100, blank = True, null = True)

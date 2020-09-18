@@ -35,6 +35,7 @@
                         {{field}}
                       </div>
                     {% endfor %}
+                    <input type="hidden" name="next" value="{{request.GET.next}}" />
                     <label class="checkbox-inline">
                       <input name="input-checkbox-1" value="checkbox-1" type="checkbox">Remember Me
                     </label>

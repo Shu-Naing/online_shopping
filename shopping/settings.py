@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.postgres',
     'main.apps.MainConfig',
 ]
 
@@ -133,6 +134,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static', 'static_dirs'),
 )
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'featureImage')
-#
-# MEDIA_URL = '/featureImage/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'

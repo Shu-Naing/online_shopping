@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
     <link rel="stylesheet" href="{% static 'css/fonts.css'%}">
-    <link rel="stylesheet" href="{% static 'css/search.css'%}">
     <link rel="stylesheet" href="{% static 'css/style.css'%}" id="main-styles-link">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -33,6 +32,7 @@
     </style>
   </head>
   <body>
+    <div id='host' style="display: none;">{{host}}</div>
     <div class="preloader">
       <div class="bookshelf-wrapper">
         <ul class="books-list">
@@ -162,10 +162,10 @@
                   </div>
                 </div>
                 <div>
-                  <div class="uk-navbar-item uk-width-expand">
+                  <div class="rd-navbar-search-wrap">
                     <form class="uk-search uk-search-navbar uk-width-1-1" action="/search/" method="post">
                         {% csrf_token %}
-                        <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                        <input class="uk-search-input" type="search" placeholder="Search..." autofocus name = "search_result">
                         <button><i class="fa fa-search"></i></button>
                     </form>
                   </div>
@@ -281,6 +281,7 @@
     <script src=" {% static 'js/core.min.js' %} "></script>
     <script src=" {% static 'js/script.js' %} "></script>
     <script src="{% static 'js/cart.js' %}"></script>
+    <script src="{% static 'js/checkout.js' %}"></script>
     <script type="text/javascript">
           //$("#delete").click(removeProduct($(this)));
           function removeProduct(i)
