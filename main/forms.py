@@ -187,3 +187,4 @@ class DeliveryAddressForm(forms.Form):
 
 # class PaymentVerificationForm(forms.Form):
 
+

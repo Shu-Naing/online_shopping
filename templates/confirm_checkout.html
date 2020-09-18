@@ -51,7 +51,7 @@
               <tbody>
                 {% for item in cart %}
                   <tr>
-                    <td class="table-cart-figure"><img src="/{{item.product_featureImage}}" alt="" width="146" height="132"/>
+                    <td class="table-cart-figure"><img src="{% get_media_prefix %}{{item.product_featureImage}}" alt="" width="146" height="132"/>
                     <p class="table-cart">{{item.product_name}}</a></td>
                     <td>${{item.product_price}}</td>
                     <td>{{item.qty}}</td>

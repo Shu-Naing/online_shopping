@@ -266,7 +266,7 @@
                 {% for a in homeProduct %}
                   <div class="col-md-3">
                   <article class="product">
-                  <div class="product-figure"><img src="/{{a.h_image}}" alt="" width="195" height="173"/>
+                  <div class="product-figure"><img src="{% get_media_prefix %}{{a.h_image}}" alt="" width="195" height="173"/>
                   </div>
                   <div class="product-rating"><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star text-gray-13"></span>
                   </div>

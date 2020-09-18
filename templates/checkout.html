@@ -21,7 +21,7 @@
                 {% csrf_token %}
                 {% for order in order_products %}
                   <tr>
-                    <td><a class="table-cart-figure" href="/product/{{order.product_name}}"><img src="/{{order.product_featureImage}}" alt="" width="146" height="132"/></a>
+                    <td><a class="table-cart-figure" href="/product/{{order.product_name}}"><img src="{% get_media_prefix %}{{order.product_featureImage}}" alt="" width="146" height="132"/></a>
                         <a class="table-cart-link" href="/product/{{order.product_name}}">{{order.product_name}}</a></td>
                     <td id="price_{{order.product_name}}" data-id="{{order.product_price}}">${{order.product_price}}</td>
                     <td>
