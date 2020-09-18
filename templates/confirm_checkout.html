@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+      <!-- Section checkout form-->
+      <section class="section section-sm section-first bg-default text-md-left">
+        <div class="container">
+          <div class="row row-50 justify-content-center">
+            <div class="col-md-10 col-lg-6">
+              <h3 style="text-align: center;">Delivery Address</h3>
+              <form class="rd-form rd-mailform form-checkout">
+                <div class="row row-14 gutters-14">
+                  {% for field in form %}
+                    {% if field.name == "firstname" or field.name == "lastname" or field.name == "township" or field.name == "phone"%}
+                      <div class="col-sm-6">
+                        <div class="form-wrap">
+                          <label class="form-label" for="{{field.field.widget.attrs.id}}">{{field.label}}</label>
+                          {{field}}
+                        </div>
+                      </div>
+                    {% else %}
+                      <div class="col-sm-12">
+                        <div class="form-wrap">
+                          {{field}}
+                          <label class="form-label" for="{{field.field.widget.attrs.id}}">{{field.label}}</label>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shopping Cart-->
+      <section class="section section-sm bg-default text-md-left">
+        <div class="container">
+          <h4>Order Items</h4>
+          <!-- shopping-cart-->
+          <div class="table-custom-responsive">
+            <table class="table-custom table-cart">
+              <thead>
+                <tr>
+                  <th>Product name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart %}
+                  <tr>
+                    <td class="table-cart-figure"><img src="/{{item.product_featureImage}}" alt="" width="146" height="132"/>
+                    <p class="table-cart">{{item.product_name}}</a></td>
+                    <td>${{item.product_price}}</td>
+                    <td>{{item.qty}}</td>
+                    <td>${{item.total_price}}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Payment-->
+      <section class="section section-sm section-last bg-default text-md-left">
+        <div class="container">
+          <div class="row row-50 justify-content-center">
+            <div class="col-md-10 col-lg-6">
+              <h3>Payment methods</h3>
+              <div class="box-radio">
+                <div class="radio-panel">
+                  <label class="radio-inline active">
+                    <input name="input-group-radio" value="checkbox-1" type="radio" checked>Direct Bank Transfer
+                  </label>
+                  <div class="radio-panel-content">
+                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference.</p>
+                  </div>
+                </div>
+                <div class="radio-panel">
+                  <label class="radio-inline">
+                    <input name="input-group-radio" value="checkbox-1" type="radio">PayPal
+                  </label>
+                  <div class="radio-panel-content">
+                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+                  </div>
+                </div>
+                <div class="radio-panel">
+                  <label class="radio-inline">
+                    <input name="input-group-radio" value="checkbox-1" type="radio">Cheque Payment
+                  </label>
+                  <div class="radio-panel-content">
+                    <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-10 col-lg-6">
+              <h3>Cart totals</h3>
+              <div class="table-custom-responsive">
+                <table class="table-custom table-custom-primary table-checkout">
+                  <tbody>
+                    <tr>
+                      <td>Cart Subtotal</td>
+                      <td>${{total_cost}}</td>
+                    </tr>
+                    <tr>
+                      <td>Shipping</td>
+                      <td>Free</td>
+                    </tr>
+                    <tr>
+                      <td>Total</td>
+                      <td>${{total_cost}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="button-wrap text-center"><a class="button button-lg button-width-240 button-primary button-winona" href="#">Confirm</a></div>
+        </div>
+      </section>
+{% endblock %}

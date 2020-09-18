@@ -50,6 +50,7 @@ margin-bottom: 15px;
     </style>
   </head>
   <body>
+    <div id='host' style="display: none;">{{host}}</div>
     <div class="preloader">
       <div class="bookshelf-wrapper">
         <ul class="books-list">
@@ -179,6 +180,7 @@ margin-bottom: 15px;
                     </ul>
                   </div>
                 </div>
+                <div>
                 <div class="uk-navbar-item">
                   <form class="uk-search uk-search-navbar uk-width-1-1" action="/search/" method="POST" style="margin:auto;max-width:300px">
                       {% csrf_token %}
@@ -300,6 +302,7 @@ margin-bottom: 15px;
     <script src=" {% static 'js/core.min.js' %} "></script>
     <script src=" {% static 'js/script.js' %} "></script>
     <script src="{% static 'js/cart.js' %}"></script>
+    <script src="{% static 'js/checkout.js' %}"></script>
     <script type="text/javascript">
           //$("#delete").click(removeProduct($(this)));
           function removeProduct(i)

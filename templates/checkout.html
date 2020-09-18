@@ -16,18 +16,21 @@
                 </tr>
               </thead>
               <tbody>
+              
+                <div id='exist' style="display: none;">{{customer.id}}</div>
+                {% csrf_token %}
                 {% for order in order_products %}
-                <tr>
-                  <td><a class="table-cart-figure" href="/product/{{order.product_name}}"><img src="/{{order.product_featureImage}}" alt="" width="146" height="132"/></a>
-                      <a class="table-cart-link" href="/product/{{order.product_name}}">{{order.product_name}}</a></td>
-                  <td id="price_{{order.product_name}}" data-id="{{order.product_price}}">${{order.product_price}}</td>
-                  <td>
-                    <div class="table-cart-stepper">
-                      <input id="qty_{{order.product_name}}" data-id="{{order.product_name}}" class="form-input" type="number" data-zeros="true" value="{{order.qty}}" min="1" max="1000" onchange="updateInput(this)">
-                    </div>
-                  </td>
-                  <td class = "total_price" id="total_price_{{order.product_name}}" data-id="{{order.total_price}}">${{order.total_price}}</td>
-                </tr>
+                  <tr>
+                    <td><a class="table-cart-figure" href="/product/{{order.product_name}}"><img src="/{{order.product_featureImage}}" alt="" width="146" height="132"/></a>
+                        <a class="table-cart-link" href="/product/{{order.product_name}}">{{order.product_name}}</a></td>
+                    <td id="price_{{order.product_name}}" data-id="{{order.product_price}}">${{order.product_price}}</td>
+                    <td>
+                      <div class="table-cart-stepper">
+                        <input id="qty_{{order.product_name}}" data-id="{{order.product_name}}" class="form-input" type="number" data-zeros="true" value="{{order.qty}}" min="1" max="1000" onchange="updateInput(this)">
+                      </div>
+                    </td>
+                    <td class = "total_price" id="total_price_{{order.product_name}}" data-id="{{order.total_price}}">${{order.total_price}}</td>
+                  </tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -44,7 +47,7 @@
               <div class="box-radio">
                 <div class="radio-panel">
                   <label class="radio-inline active">
-                    <input name="input-group-radio" value="checkbox-1" type="radio" checked>Cash on Delivery
+                    <input name="input-group-radio" value="cash on delivery" type="radio" checked>Cash on Delivery
                   </label>
                   <div class="radio-panel-content">
                     <p>Make your payment on devliery. Please use your Voucher ID for payment</p>
@@ -52,7 +55,7 @@
                 </div>
                 <div class="radio-panel">
                   <label class="radio-inline">
-                    <input name="input-group-radio" value="checkbox-1" type="radio">Visa/Master
+                    <input name="input-group-radio" value="credit cards" type="radio">Visa/Master
                   </label>
                   <div class="radio-panel-content">
                     <p>Pay via Visa or Master cards. You must fill the credit card information correctly!</p>
@@ -82,26 +85,25 @@
               </div>
             </div>
           </div>
-          <div class="button-wrap text-center"><a class="button button-lg button-width-240 button-primary button-winona" href="#">Checkout</a></div>
+          <div class="button-wrap text-center"><a id="checkout" class="button button-lg button-width-240 button-primary button-winona" href="#">Checkout</a></div>
         </div>
       </section>
-<script type="text/javascript">
-    function updateInput(product_name){
-      var sum = 0;
-      var qty = $(document.getElementById("qty_"+product_name.dataset.id)).val();
-      var original_price = $(document.getElementById("price_"+product_name.dataset.id)).data('id');
-      var total_price = $(document.getElementById("total_price_"+product_name.dataset.id)).data('id');
-      changed_price = parseFloat(original_price) * parseInt(qty, 10)
-      document.getElementById("total_price_"+product_name.dataset.id).innerHTML = "$"+changed_price
-      $(".total_price").each(function() {
-          var value = $(this).text().slice(1);
-          // add only if the value is number
-          if(!isNaN(value) && value.length != 0) {
-              sum += parseFloat(value);
+      <script type="text/javascript">
+          function updateInput(product_name){
+            var sum = 0;
+            var qty = $(document.getElementById("qty_"+product_name.dataset.id)).val();
+            var original_price = $(document.getElementById("price_"+product_name.dataset.id)).data('id');
+            var total_price = $(document.getElementById("total_price_"+product_name.dataset.id)).data('id');
+            changed_price = parseFloat(original_price) * parseInt(qty, 10)
+            document.getElementById("total_price_"+product_name.dataset.id).innerHTML = "$"+changed_price
+            $(".total_price").each(function() {
+                var value = $(this).text().slice(1);
+                if(!isNaN(value) && value.length != 0) {
+                    sum += parseFloat(value);
+                }
+              document.getElementById("sub_total_1").innerHTML = "$"+sum
+              document.getElementById("sub_total_2").innerHTML = "$"+sum
+            })
           }
-        document.getElementById("sub_total_1").innerHTML = "$"+sum
-        document.getElementById("sub_total_2").innerHTML = "$"+sum
-      })
-    }
-</script>
+      </script>
 {% endblock %}
