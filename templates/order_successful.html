@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+      <!-- Section Mailchimp-->
+      <section class="section section-sm bg-default text-center">
+        <div class="container">
+            <h6>Order Successful!</h6>
+            <img src = "{% static 'images/order_success.png'%}" style = "width: 200px; height: 200px">
+        </div>
+        <div><br></div>
+          <form class = "order_success" action = "{% url 'main:home' %}" method="get">
+              <button class="button button-sm button-primary button-winona">View your Orders</button>
+          </form>
+      </section>
+
+{% endblock %}

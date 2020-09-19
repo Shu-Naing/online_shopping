@@ -35,3 +35,23 @@ class Product(models.Model):
 class Image(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     image_path = models.ImageField(upload_to='sub_images')
+class Address(models.Model):
+    street_1 = models.CharField(max_length = 150)
+    street_2 = models.CharField(max_length = 150, null = True, blank = True)
+    township = models.CharField(max_length = 30)
+    customer_id = models.ForeignKey(Customer, on_delete = models.CASCADE)
+
+class OrderDetail(models.Model):
+    customer_id = models.ForeignKey(Customer, on_delete = models.CASCADE)
+    payment_method = models.CharField(max_length = 50)
+    number_of_products = models.IntegerField()
+    sub_total = models.FloatField()
+    order_date = models.DateField()
+    order_time = models.TimeField()
+
+class Cart(models.Model):
+    orderDetail_id = models.ForeignKey(OrderDetail, on_delete = models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete = models.CASCADE)
+    quantity = models.IntegerField()
+    total_price = models.FloatField()
+    

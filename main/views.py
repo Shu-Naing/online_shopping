@@ -10,8 +10,8 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib import messages
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from .forms import RegistrationForm, LoginForm, DeliveryAddressForm
-from .models import Customer, Brand, Product, Category, Image
+from .forms import RegistrationForm, LoginForm, DeliveryAddressForm, PaymentVerificationForm
+from .models import Customer, Brand, Product, Category, OrderDetail, Address, Cart, Image
 from datetime import datetime
 import json
 
@@ -70,7 +70,7 @@ def login(request):
                             cart.update((key, request.session['customer']) for key, value in cart.items() if value == None)
                     if request.POST.get('next') == "":
                         return redirect('/')
-                    return redirect("main:"+request.POST.get('next'))
+                    return redirect("/"+request.POST.get('next'))
     return render(request, 'login.html', {'form': form})
 
 @csrf_protect
@@ -257,13 +257,50 @@ def checkout(request):
         return HttpResponse("Checkout Completed!")
 
 def confirm_checkout(request, payment):
-    delivery_form = DeliveryAddressForm()
-    # if payment == "credit cards":
-    #     payment_form = 
     if not 'cart' in request.session:
         return render(request, '404-page.html', {'error': "Session Time Out"})
     order_products, total_cost = get_from_cart(request.session['cart'])
-    return render(request, "confirm_checkout.html", {"form": delivery_form, "cart": order_products, "total_cost": total_cost})
+    customer = get_object_or_404(Customer, pk = request.session['customer'])
+
+    if request.method == "POST":
+        orderDetail = OrderDetail(
+            customer_id = customer,
+            payment_method = payment,
+            number_of_products = len(order_products),
+            sub_total = total_cost,
+            order_date = datetime.now().date(),
+            order_time = datetime.now().time(),
+        )
+        orderDetail.save()
+        for item in order_products:
+            product = Product.objects.get(product_name = item['product_name'])
+            quantity = item['qty']
+            total_price = item['total_price']
+            cart = Cart(
+                orderDetail_id = orderDetail,
+                product_id = product,
+                quantity = quantity,
+                total_price = total_price
+            )
+            cart.save()
+        address = Address(
+            street_1 = request.POST.get('street_1'),
+            street_2 = request.POST.get('street_2'),
+            township = request.POST.get('township'),
+            customer_id = customer
+        )
+        address.save()
+        del request.session['cart']
+        return redirect("main:order_success")
+    else:
+        delivery_form = DeliveryAddressForm(initial={'firstname': customer.customer_firstname, 'lastname': customer.customer_lastname})
+        payment_form = None
+        if payment == "credit cards":
+            payment_form = PaymentVerificationForm()
+        return render(request, "confirm_checkout.html", {"delivery": delivery_form, "payment": payment_form ,"cart": order_products, "total_cost": total_cost, "method": payment})
+
+def order_success(request):
+    return render(request, "order_successful.html")
 
 def search(request):
     if request.method == 'POST':

@@ -22,17 +22,18 @@ $(function () {
       payment_method: payment_method,
     };
     console.log(data);
-    if ($("#exist").text() == "") {
-      window.location = "//"+ host +"/login/?next=addtocart";
-    } else {
       $.post({
         url: "/checkout/",
         type: "POST",
         data: data,
         success: function () {
+          if ($("#exist").text() == "") {
+            window.location = "//"+ host +"/login/?next=checkout/"+payment_method;
+          }
+          else{
             window.location = "//"+ host +"/checkout/"+payment_method
+          }
         },
       });
-    }
   });
 });
