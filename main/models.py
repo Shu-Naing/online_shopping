@@ -18,6 +18,7 @@ class Category(models.Model):
     sub_category = models.CharField(max_length=80)
 
 
+
 class Brand(models.Model):
     brand_name = models.CharField(max_length=30)
 
@@ -29,3 +30,8 @@ class Product(models.Model):
     product_price = models.DecimalField(max_digits=10, decimal_places=2)
     product_featureImage = models.ImageField(upload_to='images')
     product_description = models.CharField(max_length=100, blank = True, null = True)
+
+
+class Image(models.Model):
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image_path = models.ImageField(upload_to='sub_images')
