@@ -185,6 +185,92 @@ class DeliveryAddressForm(forms.Form):
         )
     )
 
-# class PaymentVerificationForm(forms.Form):
 
+class PaymentVerificationForm(forms.Form):
+    payments = (
+        ("1", "Master"), ("2", "Visa")
+    )
+
+    card_type = forms.ChoiceField(
+        choices = payments,
+        widget = forms.RadioSelect(
+        )
+    )
+
+    card_number = forms.CharField(
+        max_length = 20,
+        label = "Card Number",
+        required = True,
+        widget = forms.TextInput(
+            attrs = {
+                'class': 'form-input',
+                'id': 'payment_cardnumber',
+                'data-constraints': "@Required",
+            }
+        )
+    )
+
+    card_expire_month = forms.CharField(
+        max_length = 2,
+        label = "MM",
+        required = True,
+        widget = forms.TextInput(
+            attrs = {
+                'class': 'form-input',
+                'id': 'payment-cardExpMonth',
+                'data-constraints': "@Numeric",
+            }
+        )
+    )
+
+    card_expire_year = forms.CharField(
+        max_length = 2,
+        label = "YY",
+        required = True,
+        widget = forms.TextInput(
+            attrs = {
+                'class': 'form-input',
+                'id': 'payment-cardExpYear',
+                'data-constraints': "@Numeric",
+            }
+        )
+    )
+
+    card_cvv = forms.CharField(
+        max_length = 3,
+        label = "CVV",
+        required = True,
+        widget = forms.PasswordInput(
+            attrs = {
+                'class': 'form-input',
+                'id': 'payment-cardCvv',
+                'data-constraints': "@Numeric",
+            }
+        )
+    )
+
+    card_holder_name = forms.CharField(
+        max_length = 50,
+        label = "Card Holder Name",
+        required = True,
+        widget = forms.TextInput(
+            attrs = {
+                'class': 'form-input',
+                'id': 'payment-cardHolder',
+                'data-constraints': "@Required",
+            }
+        )
+    )
+
+    card_billing_address = forms.CharField(
+        max_length = 150,
+        label = "Billing Address (Optional)",
+        required = False,
+        widget = forms.Textarea(
+            attrs = {
+                'class': 'form-input',
+                'id': 'payment-billingAddr',
+            }
+        )
+    )
 

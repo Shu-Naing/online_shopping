@@ -29,3 +29,24 @@ class Product(models.Model):
     product_price = models.DecimalField(max_digits=10, decimal_places=2)
     product_featureImage = models.ImageField(upload_to='images')
     product_description = models.CharField(max_length=100, blank = True, null = True)
+
+class Address(models.Model):
+    street_1 = models.CharField(max_length = 150)
+    street_2 = models.CharField(max_length = 150, null = True, blank = True)
+    township = models.CharField(max_length = 30)
+    customer_id = models.ForeignKey(Customer, on_delete = models.CASCADE)
+
+class OrderDetail(models.Model):
+    customer_id = models.ForeignKey(Customer, on_delete = models.CASCADE)
+    payment_method = models.CharField(max_length = 50)
+    number_of_products = models.IntegerField()
+    sub_total = models.FloatField()
+    order_date = models.DateField()
+    order_time = models.TimeField()
+
+class Cart(models.Model):
+    orderDetail_id = models.ForeignKey(OrderDetail, on_delete = models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete = models.CASCADE)
+    quantity = models.IntegerField()
+    total_price = models.FloatField()
+    

@@ -435,6 +435,43 @@ ALTER SEQUENCE public.django_site_id_seq OWNED BY public.django_site.id;
 
 
 --
+-- Name: main_address; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_address (
+    id integer NOT NULL,
+    street_1 character varying(150) NOT NULL,
+    street_2 character varying(150),
+    township character varying(30) NOT NULL,
+    customer_id_id integer NOT NULL
+);
+
+
+ALTER TABLE public.main_address OWNER TO myprojectuser;
+
+--
+-- Name: main_address_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_address_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_address_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_address_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_address_id_seq OWNED BY public.main_address.id;
+
+
+--
 -- Name: main_brand; Type: TABLE; Schema: public; Owner: myprojectuser
 --
 
@@ -466,6 +503,43 @@ ALTER TABLE public.main_brand_id_seq OWNER TO myprojectuser;
 --
 
 ALTER SEQUENCE public.main_brand_id_seq OWNED BY public.main_brand.id;
+
+
+--
+-- Name: main_cart; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_cart (
+    id integer NOT NULL,
+    quantity integer NOT NULL,
+    total_price double precision NOT NULL,
+    "orderDetail_id_id" integer NOT NULL,
+    product_id_id integer NOT NULL
+);
+
+
+ALTER TABLE public.main_cart OWNER TO myprojectuser;
+
+--
+-- Name: main_cart_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_cart_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_cart_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_cart_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_cart_id_seq OWNED BY public.main_cart.id;
 
 
 --
@@ -543,6 +617,45 @@ ALTER TABLE public.main_customer_id_seq OWNER TO myprojectuser;
 --
 
 ALTER SEQUENCE public.main_customer_id_seq OWNED BY public.main_customer.id;
+
+
+--
+-- Name: main_orderdetail; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_orderdetail (
+    id integer NOT NULL,
+    payment_method character varying(50) NOT NULL,
+    number_of_products integer NOT NULL,
+    sub_total double precision NOT NULL,
+    order_date date NOT NULL,
+    order_time time without time zone NOT NULL,
+    customer_id_id integer NOT NULL
+);
+
+
+ALTER TABLE public.main_orderdetail OWNER TO myprojectuser;
+
+--
+-- Name: main_orderdetail_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_orderdetail_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_orderdetail_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_orderdetail_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_orderdetail_id_seq OWNED BY public.main_orderdetail.id;
 
 
 --
@@ -662,10 +775,24 @@ ALTER TABLE ONLY public.django_site ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: main_address id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_address ALTER COLUMN id SET DEFAULT nextval('public.main_address_id_seq'::regclass);
+
+
+--
 -- Name: main_brand id; Type: DEFAULT; Schema: public; Owner: myprojectuser
 --
 
 ALTER TABLE ONLY public.main_brand ALTER COLUMN id SET DEFAULT nextval('public.main_brand_id_seq'::regclass);
+
+
+--
+-- Name: main_cart id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_cart ALTER COLUMN id SET DEFAULT nextval('public.main_cart_id_seq'::regclass);
 
 
 --
@@ -680,6 +807,13 @@ ALTER TABLE ONLY public.main_category ALTER COLUMN id SET DEFAULT nextval('publi
 --
 
 ALTER TABLE ONLY public.main_customer ALTER COLUMN id SET DEFAULT nextval('public.main_customer_id_seq'::regclass);
+
+
+--
+-- Name: main_orderdetail id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_orderdetail ALTER COLUMN id SET DEFAULT nextval('public.main_orderdetail_id_seq'::regclass);
 
 
 --
@@ -754,6 +888,18 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 42	Can change product	11	change_product
 43	Can delete product	11	delete_product
 44	Can view product	11	view_product
+49	Can add address	13	add_address
+50	Can change address	13	change_address
+51	Can delete address	13	delete_address
+52	Can view address	13	view_address
+53	Can add order detail	14	add_orderdetail
+54	Can change order detail	14	change_orderdetail
+55	Can delete order detail	14	delete_orderdetail
+56	Can view order detail	14	view_orderdetail
+57	Can add cart	15	add_cart
+58	Can change cart	15	change_cart
+59	Can delete cart	15	delete_cart
+60	Can view cart	15	view_cart
 \.
 
 
@@ -871,6 +1017,9 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 9	main	category
 10	main	customer
 11	main	product
+13	main	address
+14	main	orderdetail
+15	main	cart
 \.
 
 
@@ -900,6 +1049,9 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 19	sessions	0001_initial	2020-09-10 16:32:09.624466+06:30
 20	sites	0001_initial	2020-09-10 16:32:09.646376+06:30
 21	sites	0002_alter_domain_unique	2020-09-10 16:32:09.663756+06:30
+33	main	0002_auto_20200919_1425	2020-09-19 14:26:07.997802+06:30
+34	main	0003_cart_orderdetail	2020-09-19 15:11:23.78129+06:30
+35	main	0004_remove_orderdetail_order_number	2020-09-19 15:24:46.915107+06:30
 \.
 
 
@@ -921,7 +1073,6 @@ hlv4j521bzg3qdvkc58yv72875kkkk3g	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpB
 2q0y1dwhg0dzsrcxjinozz3k3k6orev2	.eJxVjDsOgzAQBe-ydWRl_QtLmT5nQMt6HcgHSxiqKHdPkGho38y8D8hal_LWGVrbnKDjdRm6tercjQlaQDhsPctTpw2kB0_3YqRMyzz2ZlPMTqu5laSv6-4eDgauw7-mYBtSVtt4rxIyKrpATJGjw4tkFMlkKRFnb52P3GNUzw45-LMmge8PDKQ8jQ:1kF8Kx:u26INjOZMjkBpxyaCyLIkAHoUuPIoIzsxP8Cn4m4_5o	2020-09-21 10:30:59.806522+06:30
 k4rmlyz1bsy24znojfe4vdt29d896v9g	.eJwVykEKwjAQBdCrlL8OEkFBcwG37kVCiIMMTDMxmUBL6d3Vt34bcmqG8NiQRzedqSGUIeJQm75GtljSTAi4qb6FpjsvJNMpweEzUjG2FeHoYGpJYm2cf_l89Qe_Px1ip95ZS6SlcvvPi_f7F2RwKAs:1kI3nb:K7GqKnGc8uoLqnBzPdauxVLtITC8U8yjUm5rV4yxM3o	2020-09-15 12:46:39.580297+06:30
 r74i7dk2vlxt6f6xasci4s95pjhp8gti	.eJyFzLEKwjAUBdBfKXcOEp1CVhdHwUWQEkJ8YCDNi8mLWEr_XfsDuh_OguCrwN4WhN6EJ6qwuaekUCrfexCX_USwOJF_zcORRThD4dl9ligz7F5BWHxypcbwlQe906v6-8XzgzMN18vPzJhtGxVco9YiZ0fvEusmjdbrB_w7QbM:1kI50r:xlvmO7mZ6JNsbBR87L1uBAo-WYfVtk4zXKKM1UglYAg	2020-09-15 14:04:25.758538+06:30
-9npm7fl50qb3wssdbnxs9qrgkn33vmdp	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kJB7d:NBlyuxhpGYM47iqP-VigiclUXYNGq9OeQC6GE05O2eo	2020-10-02 14:17:57.902061+06:30
 bgegztw7gdcz1fzvuqwd8e06zn6lpfdz	.eJwVysEKAiEQBuBXif8sYTfxKRa6BBEiNrAD7ozpCMWy7159529Hyd0Q7zvKHKYbdUSZtTq0rs9ZLEneCBG8rCp0ul3h8JpZjO2DeHEwtVxT61x-LQR_9sfDIQ0ag1USvRv3_wzeH1924yYH:1kI6CF:TDPkEUq-4J5N0OauFF23ON4CF-n10P7EknN8ckGMxPc	2020-09-15 15:20:15.045487+06:30
 gbz1f5dlb7qw58zvxd646pq548nr2631	.eJyFzEEKwjAQBdCrlL8OEkVBs3Why-5FQoiDBNJMTCbSUnp37QV0_3gzvCsCc5vhWxUeqMCkFqNCLvxoXmxyA8HgSu49dWcW4QSFV3NJgkwwWwVhcdHmEvxX7vRGL-rvd2F-Rur6MFLs9u5neTit513BVqo1cLI05lBWedR6-QCP30O3:1kI6ye:MNygRdk9XdUkag5VQKeBHKH1671k4wTjnYLhqtaEY4g	2020-09-15 16:10:16.248314+06:30
 f3fj6wkrpwwf5aea8ungm9fwlsugukfb	.eJyNzTELwjAUBOC_Et7gFCSFFkpHoeBSELsIIiHGhwbTpCYvqJT-dzMWHHS84_huAq0CQXOcQKdIfsAAjUvWchiDvyRN0qkBoQGzu3mH7NADh0dSjgy9c13kSJ6UlWMwOg_rWqzFzJceVPDFbdt91_Zsg5Z-geV_4KpjT8Q7O6vrD7EqM3jiICPGaLyT-BpNyNOiFoIvfqr5A7dBXk0:1kGgkR:VU5IRrKkziizop3iQwNTg0VkH42iyIJrA6U1gxswtX8	2020-09-11 17:57:43.068925+06:30
@@ -945,6 +1096,7 @@ avbda5mslvkv1k4oqr5b5x6yt8mreyy7	.eJyFzEEKAiEYBtCryLeWcBaBugsKahEEEQURIiYkODrpLx
 9lduoj37hoht22xki1t9ixilp9kx0bxc	.eJyFzMEKAiEQANBfkTlLGBS43jp17VyEmA0huY45I2ws--9tP1D3x5shhibgLjPEzkIjNnCl56yhNrr3KL6EEcHBkeiRUZ3ShFntAmh49VAkyRvcVoOQhOxrS3HF-8FszKL_ngfurM5YbkTPn6Ed7BpeNXhG5kTF41RT-0przPIBqGlD_g:1kIRDP:xgzr2Lwt7ia6ACh5pYFNWehdU3MzxgqHzPf7b_6cO_g	2020-09-16 13:46:51.812507+06:30
 b3gjfngfwsq2bq59puhrahv3qqutos65	.eJyFzLEKwjAQgOFXCTc4BYmgohld7CK4i4QjHhJMczG5QKX03W1fQId_-_lG8FgE7G0E36pwTwVsajFqyIUfzYtL2BNYODM_I6lrGCiqLYKGd8MkQT5gNxqEBaPLJfh53h3N2kz6r9mtLuqE_pXnfoL7xbtrcJVqDZwcDTmUZTwYM30BOUhDEg:1kIRiN:vBeOP3mTSgHvP2xLIHYnLdERB_1dXKD3vA9AnEVXHNM	2020-09-16 14:18:51.712571+06:30
 m1urttode5edznp60vrsd6r679xrr7y0	.eJyFzEEKwjAQBdCrlL8OEkVBs3Why-5FQoiDBNJMTCbSUnp37QV0_3gzvCsCc5vhWxUeqMCkFqNCLvxoXmxyA8HgwvyM1PVhpNjtHRRezSUJMsFsFYTFRZtL8F98OOmNXtTf80ruPXVnFuH0M9yt313BVqo1cLI05lBWeNR6-QBl70O3:1kISCJ:_-qXaJYTQxAcanmOvtKWxoZZ01JWgK2J1vBUZILxhGo	2020-09-16 14:49:47.78556+06:30
+zra29nwufv71yj73ylho0dl2h1smfvo1	.eJx9zbEKwjAQgOFXCTcHidVSm00ouLqLhBAPCba9mLtApfTd7agO7j_fP0PwWcBeZgiFhQbMYGsNKdOtBHGjHxAsnIjuPapznLBXew8ansWPEuUFttIgJL53KcewxnVrNmbR_8EjF1Yd8kMoqa75Anc_YNW2zSpeNThG5kijwynFvKbbgzH6c7S8AfJmRhU:1kJVTr:5SMSuXBLDP9_1evobjU2CllPcwBqeCoMz2zQA6ahQHM	2020-09-19 12:32:15.859175+06:30
 qxwkv9quxr9vg6w7ozhs6kmleke7g8fk	.eJyFzMEKAiEQgOFXkTlL2KEQrx26BnsJIkRsKMF1bByhWPbdsxeo68_Pt0AMLOAuC8TehGZkcKXnrKEy3XoUX8KM4CCdHlRQnSfQ8OyhSJI3uK0GIQnZV05xbNaajVn1X-1IdM-oJoydB6QOI3P4Se93Q75q8A1bS1Q8vmri72iNWT-Qo0Vm:1kITR7:Pi5L0SCYoanbNgoSXlaPvWBXS4QFd7dCLp63bsWNtlE	2020-09-16 16:09:09.430798+06:30
 pbvy437b53pddwr1yg1qarxmd8711loh	.eJwVysEKAiEQBuBXif8sYTfxKRa6BBEiNrAD7ozpCMWy7159529Hyd0Q7zvKHKYbdUSZtTq0rs9ZLEneCBG8rCp0ul3h8JpZjO2DeHEwtVxT61x-LQR_9sfDIQ0ag1USvRv3_wzeH1924yYH:1kIUDa:KNnC4HYec28iQ9UF2Wsn4bMy3DeM6LoDZqFQOtZJbQQ	2020-09-16 16:59:14.065983+06:30
 9yzyl0wwfsjo4umyvtvqq5tjc3sww3ht	.eJwVysEKAiEQBuBXif8sYTfxKRa6BBEiNrAD7ozpCMWy7159529Hyd0Q7zvKHKYbdUSZtTq0rs9ZLEneCBG8rCp0ul3h8JpZjO2DeHEwtVxT61x-LQR_9sfDIQ0ag1USvRv3_wzeH1924yYH:1kIUq6:oNgPFwh4ccjKyd9jCn8sC3vPPNE1oN636NWuXRd09cU	2020-09-16 17:39:02.715204+06:30
@@ -955,8 +1107,15 @@ gvbcfyhu69r28jrajtrplbawhxfp64kx	.eJyFzUEKwjAQQNGrlFkHSQW15gwuCroQREJIBxq0MzGZiF
 8jot1fo55anas6thg29x87jxz1255qeb	.eJyFzbEKwjAURuFXKf98kVRUSkal4OKio0gI8Q6BNonJrVhK3926Oel--M4EZ7NAXye4oUjsOUNvCSnH--DEBNszNI5sn2N1iCIxgPAYbBAvI_SaIFFsZ1L2bik3aqVm-oO151N7qfbcyU-r3jUf7UYwhUvxMRh-JZ-XtG6Uou_J_Abl7kNo:1kIqRw:W9ueNvrqO8uc6Mf4fj0pV858oLrZQEhKu2E_Cz12jH0	2020-09-17 16:43:32.027206+06:30
 as7sx6mp6cedt241hgl1jamxg9c3egx0	.eJx9zbEKwjAQgOFXCTcHiWChyQu4OHRwEwkhPTSY5trkIpXSd7duTt1_vn8B7zKDuS3ga2EaMINpJIyZ-urZJjcgGDgTPSKKLswYxcmBhKm6xIE_YI4SmNhFO-bgt7jR6qBWuQ9eMNGbxPUZ0qtz_S7Yar2Bdwm2YCmBksV5DPlXtkrJ_8_6BdSWRlY:1kJ7cc:JczOy3A2NX5ORgojZZ3S0KWFZ6tnyBwaFpgLejJcc6A	2020-09-18 11:03:42.642841+06:30
 q2e85c9isqj8nxusn6vcjsq8aepzopm6	.eJxVjs1OhDAUhV_FdE0IhYKUpW7c-ATGNJfbi3RkWmxvjZPJvLslmYVuz_nOz1UYyLyanCgaZ8UkpKj-ajPgJ_nDsCfwH6HG4Dm6uT6Q-u6m-jVY2p7u7L-CFdJa0rpvR01A7agUYb9Ikl2vQQ8wdPIRF4m46FZbDYtqOzXALAdS0EnoVUMWSylCZDG9XQXmxOFMUUw-b1sl9hhsRjYezlSmXgi-Lw_PgTn4EvvK4NnxRUyyEhwYNrNHh4Vsm7q5vZe3iVJywRv62V08wLFpbr_n-15p:1kJ8m1:H_0yGn7c7kAxh1bUW1C8vvPBJRgoqWIF6iRKxBqxDKY	2020-09-18 12:17:29.376938+06:30
+ha179j1myg7ob0102azkkd6v0mshhnkb	.eJx9jb0KwjAQgF8l3BwkFYU2W6eujoJICPGQQJqrlwtUSt_djE7dv58NgmcB-9gg1CI0I4O9aliYXjWIy35GsDARvROqW1wxqYsHDZ_qs0T5gj1rEBKf3MIxNLjrenMyuz4ujgFZjWWJjGq6HweHoW_BpwZXsJRI2eHaxIa2ldH_n_0H0yxFzQ:1kJXyf:WuU04R-mmm5QEwYi37DSmdrA_gRCUV0WVFrXdBZPkeU	2020-09-19 15:12:13.253004+06:30
 hach3c030nigsrhnl53xoq9e43iys5vk	.eJxVjktLxDAUhf-K3HUJTZt2mi7dC4IbQSTc3tza6ExS8wBlmP9uBmYxbs_5zuMMBkveTEkcjbMwg4TmXluQvthfDfuJ_iMICj5Ht4grIm5uEk_B8vHxxv4r2DBtNa2HbtKM3E1KMQ2rZNkPGvWIYy8PtEqiVXfaalxV16sRFzmywl7ioFq2VEsJY4b57QxUUg4njjAPDewx2ELZeDxx3XHPW_D88PpSA98FfXb5F-augRwyHs0eHVVMHsZWtJf3-jRxSi54wz-7ixWVU9s29xOXP-3yYDs:1kJAZa:-0cmWlZRT-UKyKrieZ6J7yRfszcsHLa74qFomfqRW68	2020-09-18 14:12:46.615529+06:30
+x0irfdabf8w2qvvqb43eb5xkhht1eckm	.eJx9zbEKwjAQgOFXCTcHSYpCyeqgo3uREOIhgTQXk4u0lL67dlMH95_vX8C7wmCGBXyrTCMWMAcJudCtebbJjQgGTkT3iOISJoxi70DCo7nEgWcwnQQmdtHmEvw71rpXO7XK_-IZ3XMWR2Km9MXpH67bsKsEW7HWQMnilEPZwl4p-flYX-tcRSk:1kJYha:yp9vvrWtpkNC0NDZDbYyqpS3iZpOr58Oi2NhrQ5BmCk	2020-09-19 15:58:38.517067+06:30
+9npm7fl50qb3wssdbnxs9qrgkn33vmdp	.eJx9kLFqwzAQhl_FaDbGsmXX8pZCaTsEspQOpYjL6RyrdSRXkiEl5N0rQ4Z0yXr_d99_3JkpWOKolkBeGc16xll-O9sDfpNdA_0F9uAKdDZ6sy9WpLimodg6TdPjlf0nGCGMaVs2VScJqOqEIGwGTrxuJMgW2po_4MARB1lJLWEQVS1a2POWBNQcGlGSxiRF8JH1H2eGS4juSJ71Tc5m7_SCUVk4Uup5edu8P71mW4i0g_WUnwVsNPGX9VXOooswqdkbTGw6QBTlJb8vfHbuMFG2MyeaMgH3jbwrk_EzPSBQCMZZRafZ-ISmpMxviy5_XL58ug:1kJCAX:X4EG9oU1C5wbaBOVzVZfjNkdDFxtImFUigZed1ChDRg	2020-09-18 15:55:01.683648+06:30
 ddyfy58qeii8b76dcwhs77t53kxxn9aw	.eJx9zUEKwjAQheGrhFkHSaoFyQXcFlwWCUMMEkgzMZlCS-ndjTt14f5_39vAYWEw4wZurkyTL2B6CbnQfXZsE04eDFyIHtGLISw-ihOChOeMiQOvYDoJTIzR5hJci7U-q4Pa5X_xSmkVQ8S1MnKgJPov9PiDdkq_0ZsEW32tbWD9kkNpabtT8vNrfwEhLUeu:1kImNJ:EDr9t740WxKYi5lFKPTPGc5GHcE1_lYLjPCk0HGJ9zc	2020-09-17 12:22:29.47478+06:30
+0zcrh3dbycol00one83hy6q2q1e1ugwc	.eJx9zbEKwjAUQNFfCW8O0oiFNpugVAfBRRxEQogPCaRJTF6gUvrvZnTqfjl3BqMTgXzMYEqmMGIC2XKIKbyKIeX1iCBhCOHtkF3thI7tNHD4FO3J0hfklgMF0k7FZE2NheiaTbPwdfF029-PZ3bRhOzARLtO9n1XyScHlTFnG7zCKdpU0zpr-P9p-QEI3EVj:1kJCy2:RuFv61SMqsjrqtY8JGiZeVFBo5XyCmZ8rm5WfYg0khM	2020-09-18 16:46:10.584235+06:30
+t8hznks4ljoftq8731kbjliqcdxdngb5	.eJx9zbEKwjAQgOFXKTcHSaWCZHXQ0b1IOOIhgTQXk4u0lL67cXPq_vP9KzjMAmZcwdUiPFEGc1KQMj-rExtxIjBwZX4F6u5-ptANCAreFaN4WcAcFQgLBpuydy3u-7M-6E3tizfCz9JdWITjLjf8sIcCW6gUz9HSnHxuYdto9f_YvuvtRSw:1kJDSD:EXWt77xuU8u9xssAJKsSWfOTzxjAmqElbg6WT9sCzVI	2020-09-18 17:17:21.826892+06:30
+xsp7jq5i2os85ann8uo8tuooninddg49	eyJfc2Vzc2lvbl9leHBpcnkiOjE4MDAsImN1c3RvbWVyIjo1fQ:1kJZPq:SqRu-kuK5V83T7pA_NEB362pbgavi8IwwMwL5QCIhYw	2020-09-19 16:44:22.528081+06:30
+flboxfp51gvr4w70fsvz53dfyqhzon2q	.eJyFjTELwjAQRv9KuTlIKxZiNydXZ0VCjIcE01zNXaBS-t-90UnH7_F43wKOkTlSdjhPsbxh6GzbGgiVhUYsMPQ6fBEYLssXhR4MTIXuNYjLfkRFR6JHwuYUZ0zNzqvwqj5LFK1uDQiJT24qMajc6c2mXc2_5oErN2fMN6Lnz6DdW-1d1w8Ck0X5:1kJUHJ:OmUQ2np5NlrHJJqAhYRgwjhRe3M1oVXksTOVmyMoMsQ	2020-09-19 11:15:13.517748+06:30
 \.
 
 
@@ -966,6 +1125,14 @@ ddyfy58qeii8b76dcwhs77t53kxxn9aw	.eJx9zUEKwjAQheGrhFkHSaoFyQXcFlwWCUMMEkgzMZlCS-
 
 COPY public.django_site (id, domain, name) FROM stdin;
 1	example.com	example.com
+\.
+
+
+--
+-- Data for Name: main_address; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_address (id, street_1, street_2, township, customer_id_id) FROM stdin;
 \.
 
 
@@ -1000,6 +1167,14 @@ COPY public.main_brand (id, brand_name) FROM stdin;
 
 
 --
+-- Data for Name: main_cart; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_cart (id, quantity, total_price, "orderDetail_id_id", product_id_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: main_category; Type: TABLE DATA; Schema: public; Owner: myprojectuser
 --
 
@@ -1027,7 +1202,15 @@ COPY public.main_category (id, category_name, sub_category) FROM stdin;
 
 COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_dob, customer_gender, customer_mobile, customer_email, password, last_login) FROM stdin;
 28	shu	shu	naing	2020-09-09	Others	\N	shu@gmail.com	pbkdf2_sha256$216000$oM5m7zVegdWy$5DUdBMxIUGL2I3kb8Z9140M0ZTgTW5xXuM3wWc/Fon4=	2020-09-05 16:49:54.22182+06:30
-5	ach	Aye Chan	Han	\N	\N	\N	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-09-18 13:42:44.543156+06:30
+5	ach	Aye Chan	Han	1999-04-11	Male	\N	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-09-19 16:10:28.566952+06:30
+\.
+
+
+--
+-- Data for Name: main_orderdetail; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_orderdetail (id, payment_method, number_of_products, sub_total, order_date, order_time, customer_id_id) FROM stdin;
 \.
 
 
@@ -1104,7 +1287,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 48, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 60, true);
 
 
 --
@@ -1139,14 +1322,14 @@ SELECT pg_catalog.setval('public.django_admin_log_id_seq', 203, true);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 12, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 15, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 32, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 35, true);
 
 
 --
@@ -1164,10 +1347,24 @@ SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
 
 
 --
+-- Name: main_address_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_address_id_seq', 3, true);
+
+
+--
 -- Name: main_brand_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
 SELECT pg_catalog.setval('public.main_brand_id_seq', 23, true);
+
+
+--
+-- Name: main_cart_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_cart_id_seq', 6, true);
 
 
 --
@@ -1182,6 +1379,13 @@ SELECT pg_catalog.setval('public.main_category_id_seq', 14, true);
 --
 
 SELECT pg_catalog.setval('public.main_customer_id_seq', 28, true);
+
+
+--
+-- Name: main_orderdetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_orderdetail_id_seq', 3, true);
 
 
 --
@@ -1360,11 +1564,27 @@ ALTER TABLE ONLY public.django_site
 
 
 --
+-- Name: main_address main_address_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_address
+    ADD CONSTRAINT main_address_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: main_brand main_brand_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
 --
 
 ALTER TABLE ONLY public.main_brand
     ADD CONSTRAINT main_brand_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: main_cart main_cart_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_cart
+    ADD CONSTRAINT main_cart_pkey PRIMARY KEY (id);
 
 
 --
@@ -1381,6 +1601,14 @@ ALTER TABLE ONLY public.main_category
 
 ALTER TABLE ONLY public.main_customer
     ADD CONSTRAINT main_customer_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: main_orderdetail main_orderdetail_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_orderdetail
+    ADD CONSTRAINT main_orderdetail_pkey PRIMARY KEY (id);
 
 
 --
@@ -1511,6 +1739,34 @@ CREATE INDEX django_site_domain_a2e37b91_like ON public.django_site USING btree 
 
 
 --
+-- Name: main_address_customer_id_id_51a285b8; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX main_address_customer_id_id_51a285b8 ON public.main_address USING btree (customer_id_id);
+
+
+--
+-- Name: main_cart_orderDetail_id_id_4799220d; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX "main_cart_orderDetail_id_id_4799220d" ON public.main_cart USING btree ("orderDetail_id_id");
+
+
+--
+-- Name: main_cart_product_id_id_6a730531; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX main_cart_product_id_id_6a730531 ON public.main_cart USING btree (product_id_id);
+
+
+--
+-- Name: main_orderdetail_customer_id_id_4b1276e6; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX main_orderdetail_customer_id_id_4b1276e6 ON public.main_orderdetail USING btree (customer_id_id);
+
+
+--
 -- Name: main_product_brand_id_id_c56d84e2; Type: INDEX; Schema: public; Owner: myprojectuser
 --
 
@@ -1602,6 +1858,38 @@ ALTER TABLE ONLY public.django_admin_log
 
 ALTER TABLE ONLY public.django_redirect
     ADD CONSTRAINT django_redirect_site_id_c3e37341_fk_django_site_id FOREIGN KEY (site_id) REFERENCES public.django_site(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_address main_address_customer_id_id_51a285b8_fk_main_customer_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_address
+    ADD CONSTRAINT main_address_customer_id_id_51a285b8_fk_main_customer_id FOREIGN KEY (customer_id_id) REFERENCES public.main_customer(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_cart main_cart_orderDetail_id_id_4799220d_fk_main_orderdetail_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_cart
+    ADD CONSTRAINT "main_cart_orderDetail_id_id_4799220d_fk_main_orderdetail_id" FOREIGN KEY ("orderDetail_id_id") REFERENCES public.main_orderdetail(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_cart main_cart_product_id_id_6a730531_fk_main_product_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_cart
+    ADD CONSTRAINT main_cart_product_id_id_6a730531_fk_main_product_id FOREIGN KEY (product_id_id) REFERENCES public.main_product(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_orderdetail main_orderdetail_customer_id_id_4b1276e6_fk_main_customer_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_orderdetail
+    ADD CONSTRAINT main_orderdetail_customer_id_id_4b1276e6_fk_main_customer_id FOREIGN KEY (customer_id_id) REFERENCES public.main_customer(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
