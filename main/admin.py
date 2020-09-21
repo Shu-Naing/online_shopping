@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Customer, Category, Brand, Product
+from .models import Customer, Category, Brand, Product, Image
 from django.db import models
 
 
@@ -23,8 +23,12 @@ class ProductAdminView(admin.ModelAdmin):
     model = Product
     list_display = ('product_name', 'product_price', 'product_featureImage',)
 
+class ImageAdminView(admin.ModelAdmin):
+    model = Image
+    list_display = ('image_path',)
 
 admin.site.register(Customer, CustomerAdminView)
 admin.site.register(Category, CategoryAdminView)
 admin.site.register(Brand, BrandAdminView)
 admin.site.register(Product, ProductAdminView)
+admin.site.register(Image, ImageAdminView)

@@ -32,20 +32,15 @@
                       </div>
                     </div>
                 </div>
-                <div class="slick-slider child-carousel" id="child-carousel-6" data-for=".carousel-parent" data-arrows="true" data-items="3" data-sm-items="3" data-md-items="3" data-lg-items="3" data-xl-items="3" data-slide-to-scroll="1" data-md-vertical="true">
-                  <div class="item">
-                    <div class="slick-product-figure"><img src="{% static 'images/single-product-1-530x480.png'%}" alt="" width="530" height="480"/>
+                  <div class="slick-slider child-carousel" id="child-carousel-6" data-for=".carousel-parent" data-arrows="true" data-items="3" data-sm-items="3" data-md-items="3" data-lg-items="3" data-xl-items="3" data-slide-to-scroll="1" data-md-vertical="true">
+                  {% for img in result_images %}
+                    <div class="item">
+                      <div class="slick-product-figure"><img src="{% get_media_prefix %}{{img.s_image}}" alt="" width="530" height="480"/>
+                      </div>
                     </div>
+                  {% endfor %}
                   </div>
-                  <div class="item">
-                    <div class="slick-product-figure"><img src="{% static 'images/single-product-2-530x480.png'%}" alt="" width="530" height="480"/>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <div class="slick-product-figure"><img src="{% static 'images/single-product-3-530x480.png'%}" alt="" width="530" height="480"/>
-                    </div>
-                  </div>
-                </div>
+
               </div>
             </div>
             
@@ -58,9 +53,9 @@
                     <p>{{single_product.4}}</p>
                   <hr class="hr-gray-300">
                   <ul class="list list-description d-inline-block d-md-block">
-                    <li><span>Categories:</span><span>Books</span></li>
-                    <li><span>Weight:</span><span>15 kg</span></li>
-                    <li><span>Dimensions:</span><span>60 x 60 x 90 cm</span></li>
+                      <li><span>Categories:</span><span>{{categoryName}}</span></li>
+                    <!-- <li><span>Weight:</span><span>15 kg</span></li>
+                    <li><span>Dimensions:</span><span>60 x 60 x 90 cm</span></li> -->
                   </ul>
                   <div class="group-lg group-middle">
                     <div class="product-stepper">
@@ -81,8 +76,6 @@
                   </div>
                 </div>
               </div>
-            
-
           </div>
           <!-- Bootstrap tabs-->
           <div class="tabs-custom tabs-horizontal tabs-corporate" id="tabs-3">
@@ -93,7 +86,7 @@
               <li class="nav-item" role="presentation"><a class="nav-link" href="#tabs-3-3" data-toggle="tab">Delivery and payment</a></li>
             </ul>
             <!-- Tab panes-->
-            <div class="tab-content">
+            <!-- <div class="tab-content">
               <div class="tab-pane fade show active" id="tabs-3-1">
                 <div class="box-comment-wrap">
                   <div class="box-comment box-comment-product">
@@ -115,7 +108,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <h5>Your Comment</h5>
                 <form class="rd-form rd-mailform">
                   <div class="row row-14 gutters-14">
@@ -173,74 +166,22 @@
         <div class="container">
           <h2>Related Products</h2>
           <div class="row row-lg row-30">
-            <div class="col-sm-6 col-lg-4 col-xl-3">
-              <!-- Product-->
-              <article class="product">
-                <div class="product-figure"><img src="{% static 'images/product-1-195x173.png'%}" alt="" width="195" height="173"/>
-                </div>
-                <div class="product-rating"><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star text-gray-13"></span>
-                </div>
-                <h5 class="product-title">The Peter Rabbit</h5>
-                <div class="product-price-wrap">
-                  <div class="product-price">$45.00</div>
-                </div>
-                <div class="product-button">
-                  <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="cart-page.html">Add to cart</a></div>
-                  <div class="button-wrap"><a class="button button-xs button-default button-winona" href="single-product.html">View Product</a></div>
-                </div>
-              </article>
-            </div>
-            <div class="col-sm-6 col-lg-4 col-xl-3">
-              <!-- Product-->
-              <article class="product">
-                <div class="product-figure"><img src="{% static 'images/product-2-195x173.png'%}" alt="" width="195" height="173"/>
-                </div>
-                <div class="product-rating"><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span>
-                </div>
-                <h5 class="product-title">C.Dickens Major Works</h5>
-                <div class="product-price-wrap">
-                  <div class="product-price">$36.00</div>
-                </div>
-                <div class="product-button">
-                  <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="cart-page.html">Add to cart</a></div>
-                  <div class="button-wrap"><a class="button button-xs button-default button-winona" href="single-product.html">View Product</a></div>
-                </div><span class="product-badge product-badge-new">New</span>
-              </article>
-            </div>
-            <div class="col-sm-6 col-lg-4 col-xl-3">
-              <!-- Product-->
-              <article class="product">
-                <div class="product-figure"><img src="{% static 'images/product-3-195x173.png'%}" alt="" width="195" height="173"/>
-                </div>
-                <div class="product-rating"><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span>
-                </div>
-                <h5 class="product-title">Nancy Drew Starter Set</h5>
-                <div class="product-price-wrap">
-                  <div class="product-price">$28.00</div>
-                </div>
-                <div class="product-button">
-                  <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="cart-page.html">Add to cart</a></div>
-                  <div class="button-wrap"><a class="button button-xs button-default button-winona" href="single-product.html">View Product</a></div>
-                </div>
-              </article>
-            </div>
-            <div class="col-sm-6 col-lg-4 col-xl-3">
-              <!-- Product-->
-              <article class="product">
-                <div class="product-figure"><img src="{% static 'images/product-4-195x173.png'%}" alt="" width="195" height="173"/>
-                </div>
-                <div class="product-rating"><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star text-gray-13"></span>
-                </div>
-                <h5 class="product-title">The Bungalow Mystery</h5>
-                <div class="product-price-wrap">
-                  <div class="product-price">$55.00</div>
-                </div>
-                <div class="product-button">
-                  <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="cart-page.html">Add to cart</a></div>
-                  <div class="button-wrap"><a class="button button-xs button-default button-winona" href="single-product.html">View Product</a></div>
-                </div>
-              </article>
-            </div>
+            {% for r in relatedProduct %}
+              <div class="col-sm-6 col-lg-4 col-xl-3">
+                <!-- Product-->
+                <article class="product">
+                  <div class="product-figure"><img src="{% get_media_prefix %}{{r.h_image}}" alt="" width="195" height="173"/>
+                  </div>
+                  <h5 class="product-title">{{r.h_name}}</h5>
+                  <div class="product-price-wrap">
+                    <div class="product-price">${{r.h_price}}</div>
+                  </div>
+                  <div class="product-button">
+                    <div class="button-wrap"><a class="button button-xs button-default button-winona" href="/product/{{r.h_name}}">View Product</a></div>
+                  </div>
+                </article>
+              </div>
+            {% endfor %}
           </div>
         </div>
       </section>

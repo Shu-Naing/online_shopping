@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib import messages
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from .forms import RegistrationForm, LoginForm, DeliveryAddressForm, PaymentVerificationForm
-from .models import Customer, Brand, Product, Category, OrderDetail, Address, Cart
+from .models import Customer, Brand, Product, Category, OrderDetail, Address, Cart, Image
 from datetime import datetime
 import json
 
@@ -101,7 +101,24 @@ def home(request):
                                  "h_image": product['product_featureImage']})
     return render(request, 'index.html', {'homeProduct': home_list})
     
-
+def singleProduct(request, product):
+    if request.method == "GET":
+        single_list = []
+        subImages_list = []
+        cat_list = []
+        related_list = []
+        oneProduct = Product.objects.filter(product_name = product).values_list('id','product_name', 'product_price', 'product_featureImage', 'product_description', 'category_id')
+        for product in oneProduct[0]:
+            single_list.append(product)
+        imagesView = Image.objects.filter(product_id = single_list[0]).values('image_path')
+        for allimage in imagesView:
+            subImages_list.append({"s_image": allimage['image_path']})
+        oneCat = Category.objects.get(pk = single_list[-1])
+        relateProduct = Product.objects.filter().values('category_id','product_name', 'product_price', 'product_featureImage')
+        for repro in relateProduct:
+            related_list.append({"h_name": repro['product_name'], "h_price": repro['product_price'],
+                                 "h_image": repro['product_featureImage']})
+    return render(request, 'single-product.html', {'single_product': single_list, 'result_images': subImages_list, 'categoryName': oneCat.sub_category, 'relatedProduct': related_list})
 
 def shop(request, sub__category):
     if request.method == "GET":
@@ -115,12 +132,10 @@ def shop(request, sub__category):
             brand_names.append({'brand_name': brand[0]})
         brand_names = sorted(brand_names, key = lambda i: i['brand_name'])
         brand_names = list({v['brand_name']:v for v in brand_names}.values())
-        count = product.count()
-
         for product in product:
             product_list.append({"p_name": product['product_name'], "p_price": product['product_price'],
                                  "p_image": product['product_featureImage']})
-    return render(request, 'shop.html', {'product': product_list, 'brand': brand_names, 'proCount': count})
+    return render(request, 'shop.html', {'product': product_list, 'brand': brand_names})
 
 
 def confirm_email(request):
@@ -161,14 +176,6 @@ def manage_by_email(request):
         customer.save(update_fields = ['customer_email'])
         Customer.objects.filter(pk = customer.pk).update(customer_email = request.POST.get('email')) 
         return redirect("main:manage_account")
-
-def singleProduct(request, product):
-    if request.method == "GET":
-        single_list = []
-        oneProduct = Product.objects.filter(product_name = product).values_list('id','product_name', 'product_price', 'product_featureImage', 'product_description')
-        for product in oneProduct[0]:
-            single_list.append(product)
-        return render(request, 'single-product.html', {'single_product': single_list})
 
 def get_from_cart(cart):
     order_products = []
