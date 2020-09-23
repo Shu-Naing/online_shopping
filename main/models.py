@@ -17,20 +17,28 @@ class Category(models.Model):
     category_name = models.CharField(max_length=80)
     sub_category = models.CharField(max_length=80)
 
+    def __str__(self):
+        return self.category_name
+
 
 
 class Brand(models.Model):
     brand_name = models.CharField(max_length=30)
+    
+    def __str__(self):
+        return self.brand_name
 
 
 class Product(models.Model):
-    brand_id = models.ForeignKey(Brand, on_delete=models.CASCADE)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    brand_id = models.ForeignKey("Brand", on_delete=models.CASCADE)
+    category_id = models.ForeignKey("Category", on_delete=models.CASCADE)
     product_name = models.CharField(max_length=80)
     product_price = models.DecimalField(max_digits=10, decimal_places=2)
     product_featureImage = models.ImageField(upload_to='images')
     product_description = models.CharField(max_length=100, blank = True, null = True)
 
+    def __unicode__(self):
+        return self.product_name
 
 class Image(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)

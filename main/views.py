@@ -95,7 +95,7 @@ def logout(request):
 def home(request):
     if request.method == "GET":
         home_list = []
-        product = Product.objects.filter().values('product_name', 'product_price', 'product_featureImage')
+        product = Product.objects.filter().values('product_name', 'product_price', 'product_featureImage').order_by('?')
         for product in product:
             home_list.append({"h_name": product['product_name'], "h_price": product['product_price'],
                                  "h_image": product['product_featureImage']})
@@ -114,11 +114,11 @@ def singleProduct(request, product):
         for allimage in imagesView:
             subImages_list.append({"s_image": allimage['image_path']})
         oneCat = Category.objects.get(pk = single_list[-1])
-        relateProduct = Product.objects.filter().values('category_id','product_name', 'product_price', 'product_featureImage')
+        relateProduct = Product.objects.filter(category_id = oneCat.id).values('category_id','product_name', 'product_price', 'product_featureImage').order_by()
         for repro in relateProduct:
             related_list.append({"h_name": repro['product_name'], "h_price": repro['product_price'],
                                  "h_image": repro['product_featureImage']})
-    return render(request, 'single-product.html', {'single_product': single_list, 'result_images': subImages_list, 'categoryName': oneCat.sub_category, 'relatedProduct': related_list})
+    return render(request, 'single-product.html', {'single_product': single_list, 'result_images': subImages_list, 'categoryName': oneCat.sub_category, 'relatedProduct': related_list[:4]})
 
 def shop(request, sub__category):
     if request.method == "GET":

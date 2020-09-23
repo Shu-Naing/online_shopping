@@ -21,7 +21,7 @@ class BrandAdminView(admin.ModelAdmin):
 
 class ProductAdminView(admin.ModelAdmin):
     model = Product
-    list_display = ('product_name', 'product_price', 'product_featureImage',)
+    list_display = ('product_name', 'product_price', 'product_featureImage', 'brand_id', 'category_id')
 
 class ImageAdminView(admin.ModelAdmin):
     model = Image
@@ -32,3 +32,4 @@ admin.site.register(Category, CategoryAdminView)
 admin.site.register(Brand, BrandAdminView)
 admin.site.register(Product, ProductAdminView)
 admin.site.register(Image, ImageAdminView)
+admin.site.empty_value_display = '(None)'
