@@ -10,6 +10,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib import messages
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.contrib.postgres.search import SearchVector
 from .forms import RegistrationForm, LoginForm, DeliveryAddressForm, PaymentVerificationForm
 from .models import Customer, Brand, Product, Category, OrderDetail, Address, Cart, Image
 from datetime import datetime
@@ -305,6 +306,7 @@ def order_success(request):
 
 def search(request):
     if request.method == 'POST':
+<<<<<<< HEAD
         srch = request.POST.get('search_result')
         if srch:
             # match = Product.objects.annotate(search=SearchVector()).filter(product_name__icontains=srch).values('product_name', 'product_price', 'product_featureImage')
@@ -315,6 +317,19 @@ def search(request):
                     match_list.append({"name": match['product_name'], "price": match['product_price'],
                                  "image": match['product_featureImage']})
                 return render(request, 'search-results.html', {'sr': match_list})
+=======
+        search_query = request.POST.get('search_result')
+        if search_query:
+            search_result = Product.objects.annotate(
+                search = SearchVector('product_name', 'category_id__category_name', 'category_id__sub_category' ,'brand_id__brand_name')
+                ).filter(search=search_query).values('product_name', 'product_price', 'product_featureImage')
+            if search_result:
+                search_result_list = []
+                for search_result in search_result:
+                    search_result_list.append({"name": search_result['product_name'], "price": search_result['product_price'],
+                                 "image": search_result['product_featureImage']})
+                return render(request, 'search-results.html', {'search': search_result_list})
+>>>>>>> c4bf5826684d5eeb92e522c9829defa9a6c093d4
     
     return render(request, 'search-results.html')
 
