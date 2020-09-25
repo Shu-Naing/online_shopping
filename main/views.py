@@ -16,6 +16,7 @@ from datetime import datetime
 import json
 
 
+
 @csrf_protect
 def registration(request):
     if request.method == "GET":
@@ -306,7 +307,8 @@ def search(request):
     if request.method == 'POST':
         srch = request.POST.get('search_result')
         if srch:
-            match = Product.objects.all().order_by('brand_id').filter(product_name__icontains=srch).values('product_name', 'product_price', 'product_featureImage')
+            # match = Product.objects.annotate(search=SearchVector()).filter(product_name__icontains=srch).values('product_name', 'product_price', 'product_featureImage')
+            match = Product.objects.all().order_by('brand_id', 'category_id').filter(product_name__icontains=srch).values('product_name', 'product_price', 'product_featureImage')
             if match:
                 match_list = []
                 for match in match:
