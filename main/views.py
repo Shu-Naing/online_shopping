@@ -306,18 +306,6 @@ def order_success(request):
 
 def search(request):
     if request.method == 'POST':
-<<<<<<< HEAD
-        srch = request.POST.get('search_result')
-        if srch:
-            # match = Product.objects.annotate(search=SearchVector()).filter(product_name__icontains=srch).values('product_name', 'product_price', 'product_featureImage')
-            match = Product.objects.all().order_by('brand_id', 'category_id').filter(product_name__icontains=srch).values('product_name', 'product_price', 'product_featureImage')
-            if match:
-                match_list = []
-                for match in match:
-                    match_list.append({"name": match['product_name'], "price": match['product_price'],
-                                 "image": match['product_featureImage']})
-                return render(request, 'search-results.html', {'sr': match_list})
-=======
         search_query = request.POST.get('search_result')
         if search_query:
             search_result = Product.objects.annotate(
@@ -329,7 +317,6 @@ def search(request):
                     search_result_list.append({"name": search_result['product_name'], "price": search_result['product_price'],
                                  "image": search_result['product_featureImage']})
                 return render(request, 'search-results.html', {'search': search_result_list})
->>>>>>> c4bf5826684d5eeb92e522c9829defa9a6c093d4
     
     return render(request, 'search-results.html')
 
