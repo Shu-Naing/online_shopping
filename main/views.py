@@ -17,7 +17,6 @@ from datetime import datetime
 import json
 
 
-
 @csrf_protect
 def registration(request):
     if request.method == "GET":
@@ -304,6 +303,7 @@ def confirm_checkout(request, payment):
 def order_success(request):
     return render(request, "order_successful.html")
 
+#search Product
 def search(request):
     if request.method == 'POST':
         search_query = request.POST.get('search_result')
@@ -319,6 +319,4 @@ def search(request):
                 return render(request, 'search-results.html', {'search': search_result_list})
     
     return render(request, 'search-results.html')
-
-
 
