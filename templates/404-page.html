@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <div class="page">
-      <section class="section section-single bg-image novi-background novi-background" style="background-image: url(images/bg-404.jpg);">
+      <section class="section section-single bg-image novi-background novi-background">
         <div class="section-single-inner">
           <header class="section-single-header page-header">
             <div class="page-head-inner"><a href="./"><img src="images/logo-default-187x45.png" alt="" width="187" height="45"/></a></div>
@@ -10,7 +10,7 @@
 
           <div class="section-single-main">
             <div class="container">
-              <div class="title-modern">404</div>
+              <div class="title-modern">{{status}}</div>
               {% if error %}
                 <h2>{{error}}</h2>
                 <a class="button button-lg button-primary button-winona" href="{% url 'main:home' %}">Go to home page</a>
