@@ -49,7 +49,7 @@ To import the database to the Postgres, you'll need to create the database named
 psql -U postgres shopping < shopping.sql
 ```
 
-> :warning: **If you clone the database**: You will need to update the database by above command!
+> :warning: **Everytime you clone the project**: You will need to update the database by above command!
 
 After you import the `shopping.sql` to shopping database, you can now runserver by:
 ```
