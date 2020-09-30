@@ -12,12 +12,12 @@ This is Vidya Media's Online Shopping website with Django Framework
 - [x] Guests can create account.
 
 ## Functions still in Development
-- [x] API development.
-- [x] Customer account verification on registration.
-- [x] Changing password in customer manage account.
-- [x] Customer adding mobile phone number and sms verification (Optional).
-- [x] Checkout with Credit Cards.
-- [x] Some Frontend site functionalities. \
+- [] API development.
+- [] Customer account verification on registration.
+- [] Changing password in customer manage account.
+- [] Customer adding mobile phone number and sms verification (Optional).
+- [] Checkout with Credit Cards.
+- [] Some Frontend site functionalities. \
 **Further development functions will be updated**
 
 ## To Run This Project
