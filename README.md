@@ -17,7 +17,8 @@ This is Vidya Media's Online Shopping website with Django Framework
 - [ ] Changing password in customer manage account.
 - [ ] Customer adding mobile phone number and sms verification (Optional).
 - [ ] Checkout with Credit Cards.
-- [ ] Some Frontend site functionalities. \
+- [ ] Content functions (to show aboutus,Faq,etc.. and News Feature) Admin/Frontend. New table field (id,heading,seo_url,place_key,summery,body,approved)
+- [ ] Some Frontend site functionalities. 
 **Further development functions will be updated**
 
 ## To Run This Project
