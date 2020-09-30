@@ -305,6 +305,7 @@ def confirm_checkout(request, payment):
 def order_success(request):
     return render(request, "order_successful.html")
 
+#search Product
 def search(request):
     if request.method == 'POST':
         search_query = request.POST.get('search_result')

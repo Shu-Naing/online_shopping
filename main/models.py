@@ -37,7 +37,7 @@ class Product(models.Model):
     product_featureImage = models.ImageField(upload_to='images')
     product_description = models.CharField(max_length=100, blank = True, null = True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.product_name
 
 class Image(models.Model):
