@@ -16,7 +16,6 @@ from .models import Customer, Brand, Product, Category, OrderDetail, Address, Ca
 from datetime import datetime
 import json
 
-
 @csrf_protect
 def registration(request):
     if request.method == "GET":
@@ -321,3 +320,6 @@ def search(request):
                 return render(request, 'search-results.html', {'search': search_result_list})
     
     return render(request, 'search-results.html')
+
+def error404(request, exception):
+    return render(request, '404-page.html', {'error': "Page Not Found", 'status': '404'})
