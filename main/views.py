@@ -319,4 +319,3 @@ def search(request):
                 return render(request, 'search-results.html', {'search': search_result_list})
     
     return render(request, 'search-results.html')
-
