@@ -228,7 +228,7 @@ def addtocart(request):
         return HttpResponse("Successfully added to cart")
     else:
         if not 'cart' in request.session:
-            return render(request, '404-page.html', {'error': "Session Time Out"})
+            return render(request, '404-page.html', {'error': "Session Time Out", 'status': '404'})
         order_products, total_cost = get_from_cart(request.session['cart'])
         return render(request, "checkout.html", {"order_products": order_products, "total_cost": total_cost,})
 
@@ -258,8 +258,10 @@ def checkout(request):
         return HttpResponse("Checkout Completed!")
 
 def confirm_checkout(request, payment):
+    if not payment == "cash on delivery" or not payment == "credit cards":
+        return render(request, '404-page.html', {'error': "Page Not Found", 'status': '404'})
     if not 'cart' in request.session:
-        return render(request, '404-page.html', {'error': "Session Time Out"})
+        return render(request, '404-page.html', {'error': "Session Time Out", 'status': '404'})
     order_products, total_cost = get_from_cart(request.session['cart'])
     customer = get_object_or_404(Customer, pk = request.session['customer'])
 
