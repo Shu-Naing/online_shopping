@@ -257,10 +257,12 @@ def checkout(request):
         return HttpResponse("Checkout Completed!")
 
 def confirm_checkout(request, payment):
-    if not payment == "cash on delivery" or not payment == "credit cards":
+    if payment  != "cash on delivery" and payment != "credit cards":
         return render(request, '404-page.html', {'error': "Page Not Found", 'status': '404'})
     if not 'cart' in request.session:
         return render(request, '404-page.html', {'error': "Session Time Out", 'status': '404'})
+    if payment == "credit cards":
+        return render(request, '404-page.html', {'error': "The function will be available soon!", 'status': 'Coming Soon!'})
     order_products, total_cost = get_from_cart(request.session['cart'])
     customer = get_object_or_404(Customer, pk = request.session['customer'])
 
