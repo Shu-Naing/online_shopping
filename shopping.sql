@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.4 (Ubuntu 12.4-1.pgdg20.04+1)
+-- Dumped from database version 12.4 (Ubuntu 12.4-0ubuntu0.20.04.1)
 -- Dumped by pg_dump version 12.4 (Ubuntu 12.4-0ubuntu0.20.04.1)
 
 SET statement_timeout = 0;
@@ -435,6 +435,43 @@ ALTER SEQUENCE public.django_site_id_seq OWNED BY public.django_site.id;
 
 
 --
+-- Name: main_address; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_address (
+    id integer NOT NULL,
+    street_1 character varying(150) NOT NULL,
+    street_2 character varying(150),
+    township character varying(30) NOT NULL,
+    customer_id_id integer NOT NULL
+);
+
+
+ALTER TABLE public.main_address OWNER TO myprojectuser;
+
+--
+-- Name: main_address_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_address_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_address_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_address_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_address_id_seq OWNED BY public.main_address.id;
+
+
+--
 -- Name: main_brand; Type: TABLE; Schema: public; Owner: myprojectuser
 --
 
@@ -466,6 +503,43 @@ ALTER TABLE public.main_brand_id_seq OWNER TO myprojectuser;
 --
 
 ALTER SEQUENCE public.main_brand_id_seq OWNED BY public.main_brand.id;
+
+
+--
+-- Name: main_cart; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_cart (
+    id integer NOT NULL,
+    quantity integer NOT NULL,
+    total_price double precision NOT NULL,
+    "orderDetail_id_id" integer NOT NULL,
+    product_id_id integer NOT NULL
+);
+
+
+ALTER TABLE public.main_cart OWNER TO myprojectuser;
+
+--
+-- Name: main_cart_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_cart_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_cart_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_cart_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_cart_id_seq OWNED BY public.main_cart.id;
 
 
 --
@@ -578,6 +652,45 @@ ALTER TABLE public.main_image_id_seq OWNER TO myprojectuser;
 --
 
 ALTER SEQUENCE public.main_image_id_seq OWNED BY public.main_image.id;
+
+
+--
+-- Name: main_orderdetail; Type: TABLE; Schema: public; Owner: myprojectuser
+--
+
+CREATE TABLE public.main_orderdetail (
+    id integer NOT NULL,
+    payment_method character varying(50) NOT NULL,
+    number_of_products integer NOT NULL,
+    sub_total double precision NOT NULL,
+    order_date date NOT NULL,
+    order_time time without time zone NOT NULL,
+    customer_id_id integer NOT NULL
+);
+
+
+ALTER TABLE public.main_orderdetail OWNER TO myprojectuser;
+
+--
+-- Name: main_orderdetail_id_seq; Type: SEQUENCE; Schema: public; Owner: myprojectuser
+--
+
+CREATE SEQUENCE public.main_orderdetail_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.main_orderdetail_id_seq OWNER TO myprojectuser;
+
+--
+-- Name: main_orderdetail_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: myprojectuser
+--
+
+ALTER SEQUENCE public.main_orderdetail_id_seq OWNED BY public.main_orderdetail.id;
 
 
 --
@@ -697,10 +810,24 @@ ALTER TABLE ONLY public.django_site ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: main_address id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_address ALTER COLUMN id SET DEFAULT nextval('public.main_address_id_seq'::regclass);
+
+
+--
 -- Name: main_brand id; Type: DEFAULT; Schema: public; Owner: myprojectuser
 --
 
 ALTER TABLE ONLY public.main_brand ALTER COLUMN id SET DEFAULT nextval('public.main_brand_id_seq'::regclass);
+
+
+--
+-- Name: main_cart id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_cart ALTER COLUMN id SET DEFAULT nextval('public.main_cart_id_seq'::regclass);
 
 
 --
@@ -722,6 +849,13 @@ ALTER TABLE ONLY public.main_customer ALTER COLUMN id SET DEFAULT nextval('publi
 --
 
 ALTER TABLE ONLY public.main_image ALTER COLUMN id SET DEFAULT nextval('public.main_image_id_seq'::regclass);
+
+
+--
+-- Name: main_orderdetail id; Type: DEFAULT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_orderdetail ALTER COLUMN id SET DEFAULT nextval('public.main_orderdetail_id_seq'::regclass);
 
 
 --
@@ -780,26 +914,38 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 26	Can change site	7	change_site
 27	Can delete site	7	delete_site
 28	Can view site	7	view_site
-29	Can add brand	8	add_brand
-30	Can change brand	8	change_brand
-31	Can delete brand	8	delete_brand
-32	Can view brand	8	view_brand
+29	Can add customer	8	add_customer
+30	Can change customer	8	change_customer
+31	Can delete customer	8	delete_customer
+32	Can view customer	8	view_customer
 33	Can add category	9	add_category
 34	Can change category	9	change_category
 35	Can delete category	9	delete_category
 36	Can view category	9	view_category
-37	Can add customer	10	add_customer
-38	Can change customer	10	change_customer
-39	Can delete customer	10	delete_customer
-40	Can view customer	10	view_customer
+37	Can add brand	10	add_brand
+38	Can change brand	10	change_brand
+39	Can delete brand	10	delete_brand
+40	Can view brand	10	view_brand
 41	Can add product	11	add_product
 42	Can change product	11	change_product
 43	Can delete product	11	delete_product
 44	Can view product	11	view_product
-49	Can add image	13	add_image
-50	Can change image	13	change_image
-51	Can delete image	13	delete_image
-52	Can view image	13	view_image
+45	Can add image	12	add_image
+46	Can change image	12	change_image
+47	Can delete image	12	delete_image
+48	Can view image	12	view_image
+49	Can add address	13	add_address
+50	Can change address	13	change_address
+51	Can delete address	13	delete_address
+52	Can view address	13	view_address
+53	Can add order detail	14	add_orderdetail
+54	Can change order detail	14	change_orderdetail
+55	Can delete order detail	14	delete_orderdetail
+56	Can view order detail	14	view_orderdetail
+57	Can add cart	15	add_cart
+58	Can change cart	15	change_cart
+59	Can delete cart	15	delete_cart
+60	Can view cart	15	view_cart
 \.
 
 
@@ -921,11 +1067,14 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 5	contenttypes	contenttype
 6	sessions	session
 7	sites	site
-8	main	brand
+8	main	customer
 9	main	category
-10	main	customer
+10	main	brand
 11	main	product
-13	main	image
+12	main	image
+13	main	address
+14	main	orderdetail
+15	main	cart
 \.
 
 
@@ -934,28 +1083,27 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2020-09-10 16:32:09.227164+06:30
-2	auth	0001_initial	2020-09-10 16:32:09.294947+06:30
-3	admin	0001_initial	2020-09-10 16:32:09.41332+06:30
-4	admin	0002_logentry_remove_auto_add	2020-09-10 16:32:09.447639+06:30
-5	admin	0003_logentry_add_action_flag_choices	2020-09-10 16:32:09.466925+06:30
-6	contenttypes	0002_remove_content_type_name	2020-09-10 16:32:09.491217+06:30
-7	auth	0002_alter_permission_name_max_length	2020-09-10 16:32:09.49953+06:30
-8	auth	0003_alter_user_email_max_length	2020-09-10 16:32:09.507599+06:30
-9	auth	0004_alter_user_username_opts	2020-09-10 16:32:09.515924+06:30
-10	auth	0005_alter_user_last_login_null	2020-09-10 16:32:09.524511+06:30
-11	auth	0006_require_contenttypes_0002	2020-09-10 16:32:09.527172+06:30
-12	auth	0007_alter_validators_add_error_messages	2020-09-10 16:32:09.534581+06:30
-13	auth	0008_alter_user_username_max_length	2020-09-10 16:32:09.546002+06:30
-14	auth	0009_alter_user_last_name_max_length	2020-09-10 16:32:09.553479+06:30
-15	auth	0010_alter_group_name_max_length	2020-09-10 16:32:09.56183+06:30
-16	auth	0011_update_proxy_permissions	2020-09-10 16:32:09.56894+06:30
-17	auth	0012_alter_user_first_name_max_length	2020-09-10 16:32:09.576694+06:30
-18	main	0001_initial	2020-09-10 16:32:09.604794+06:30
-19	sessions	0001_initial	2020-09-10 16:32:09.624466+06:30
-20	sites	0001_initial	2020-09-10 16:32:09.646376+06:30
-21	sites	0002_alter_domain_unique	2020-09-10 16:32:09.663756+06:30
-33	main	0002_auto_20200918_1502	2020-09-18 15:02:20.013395+06:30
+1	contenttypes	0001_initial	2020-10-03 16:39:14.406788+06:30
+2	auth	0001_initial	2020-10-03 16:39:14.478467+06:30
+3	admin	0001_initial	2020-10-03 16:39:14.612084+06:30
+4	admin	0002_logentry_remove_auto_add	2020-10-03 16:39:14.653185+06:30
+5	admin	0003_logentry_add_action_flag_choices	2020-10-03 16:39:14.667311+06:30
+6	contenttypes	0002_remove_content_type_name	2020-10-03 16:39:14.689285+06:30
+7	auth	0002_alter_permission_name_max_length	2020-10-03 16:39:14.700941+06:30
+8	auth	0003_alter_user_email_max_length	2020-10-03 16:39:14.713045+06:30
+9	auth	0004_alter_user_username_opts	2020-10-03 16:39:14.723895+06:30
+10	auth	0005_alter_user_last_login_null	2020-10-03 16:39:14.74297+06:30
+11	auth	0006_require_contenttypes_0002	2020-10-03 16:39:14.745853+06:30
+12	auth	0007_alter_validators_add_error_messages	2020-10-03 16:39:14.754764+06:30
+13	auth	0008_alter_user_username_max_length	2020-10-03 16:39:14.767197+06:30
+14	auth	0009_alter_user_last_name_max_length	2020-10-03 16:39:14.775667+06:30
+15	auth	0010_alter_group_name_max_length	2020-10-03 16:39:14.793824+06:30
+16	auth	0011_update_proxy_permissions	2020-10-03 16:39:14.809374+06:30
+17	auth	0012_alter_user_first_name_max_length	2020-10-03 16:39:14.817167+06:30
+18	sessions	0001_initial	2020-10-03 16:39:14.828265+06:30
+19	sites	0001_initial	2020-10-03 16:39:14.844012+06:30
+20	sites	0002_alter_domain_unique	2020-10-03 16:39:14.855103+06:30
+21	main	0001_initial	2020-10-03 16:39:24.469578+06:30
 \.
 
 
@@ -1015,6 +1163,7 @@ hach3c030nigsrhnl53xoq9e43iys5vk	.eJxVjktLxDAUhf-K3HUJTZt2mi7dC4IbQSTc3tza6ExS8w
 ddyfy58qeii8b76dcwhs77t53kxxn9aw	.eJx9zUEKwjAQheGrhFkHSaoFyQXcFlwWCUMMEkgzMZlCS-ndjTt14f5_39vAYWEw4wZurkyTL2B6CbnQfXZsE04eDFyIHtGLISw-ihOChOeMiQOvYDoJTIzR5hJci7U-q4Pa5X_xSmkVQ8S1MnKgJPov9PiDdkq_0ZsEW32tbWD9kkNpabtT8vNrfwEhLUeu:1kImNJ:EDr9t740WxKYi5lFKPTPGc5GHcE1_lYLjPCk0HGJ9zc	2020-09-17 12:22:29.47478+06:30
 ziq51eq79mfgzabl100kmmamyj1dv4dm	.eJxVjMEOwiAQBf-FsyGFApYevfsFxpDtsljUgIE20Rj_3TbpQa9v5s2bOZin0c2Vioue9Uyw3e82AN4orcBfIV0yx5ymEge-KnyjlR-zp_thc_8CI9RxeVstO0tAslOKUAdBotUWrAHTij0GgRistN5CULJVBgZhSEErQKuGPC5RhDKx_nRe8pVqjTk5ej5iebFedE3z-QLM6ULp:1kJDEI:08wbDvcD81gkORgSWLPm6wOzJQnersJxreW536AMdrs	2020-09-18 17:02:58.576294+06:30
 6fvb9iz77uob597uw9ygb1nwr3ps5l90	.eJxVjDsOwjAQBe_iGlmsf2Qp6TlDtF6vcQDZUpxUiLtDpBTQvpl5LzXSupRx7TKPU1JnBerwu0Xih9QNpDvVW9Pc6jJPUW-K3mnX15bkedndv4NCvXxr9GZAITGDc8I-g4D1SBgoWDhxBuaMBhNSdsa6QBGCOLJA3h0lsXp_AN9KOAc:1kJDpL:GSBmmtOfGA7BKqNRmb-eEeep7StsofFVe_wCYqrJX4U	2020-10-02 17:11:15.183337+06:30
+je9qanijeco791g8512j6vrbv2d2rah2	eyJfc2Vzc2lvbl9leHBpcnkiOjE4MDAsImN1c3RvbWVyIjo1fQ:1kOeVn:HJn3cz_e0A-qGVgh7D4WMY_oLiYxPue8MOC_88um9xA	2020-10-03 17:11:31.443466+06:30
 \.
 
 
@@ -1024,6 +1173,15 @@ ziq51eq79mfgzabl100kmmamyj1dv4dm	.eJxVjMEOwiAQBf-FsyGFApYevfsFxpDtsljUgIE20Rj_3T
 
 COPY public.django_site (id, domain, name) FROM stdin;
 1	example.com	example.com
+\.
+
+
+--
+-- Data for Name: main_address; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_address (id, street_1, street_2, township, customer_id_id) FROM stdin;
+1	aa	aa	5	5
 \.
 
 
@@ -1058,6 +1216,14 @@ COPY public.main_brand (id, brand_name) FROM stdin;
 
 
 --
+-- Data for Name: main_cart; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_cart (id, quantity, total_price, "orderDetail_id_id", product_id_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: main_category; Type: TABLE DATA; Schema: public; Owner: myprojectuser
 --
 
@@ -1085,7 +1251,7 @@ COPY public.main_category (id, category_name, sub_category) FROM stdin;
 
 COPY public.main_customer (id, customer_username, customer_firstname, customer_lastname, customer_dob, customer_gender, customer_mobile, customer_email, password, last_login) FROM stdin;
 28	shu	shu	naing	2020-09-09	Others	\N	shu@gmail.com	pbkdf2_sha256$216000$oM5m7zVegdWy$5DUdBMxIUGL2I3kb8Z9140M0ZTgTW5xXuM3wWc/Fon4=	2020-09-05 16:49:54.22182+06:30
-5	ach	Aye Chan	Han	\N	\N	\N	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-09-18 13:42:44.543156+06:30
+5	ach	Aye Chan	Han	\N	\N	\N	ach@gmail.com	pbkdf2_sha256$216000$zB4cCx4xaIX4$Ij6GvHQ+EA56wWDhMY5c1A6Pzhlg7QKu8SX5+AI6t2o=	2020-10-03 16:41:22.320172+06:30
 \.
 
 
@@ -1094,12 +1260,14 @@ COPY public.main_customer (id, customer_username, customer_firstname, customer_l
 --
 
 COPY public.main_image (id, image_path, product_id_id) FROM stdin;
-1	sub_images/xs1.jpeg	10
-2	sub_images/xs2.jpeg	10
-3	sub_images/xs3.jpeg	10
-4	sub_images/redmi9i2.jpg	58
-5	sub_images/Redmi9i3.jpg	58
-6	sub_images/redmi9i.jpg	58
+\.
+
+
+--
+-- Data for Name: main_orderdetail; Type: TABLE DATA; Schema: public; Owner: myprojectuser
+--
+
+COPY public.main_orderdetail (id, payment_method, number_of_products, sub_total, order_date, order_time, customer_id_id) FROM stdin;
 \.
 
 
@@ -1237,10 +1405,24 @@ SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
 
 
 --
+-- Name: main_address_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_address_id_seq', 1, true);
+
+
+--
 -- Name: main_brand_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
 --
 
 SELECT pg_catalog.setval('public.main_brand_id_seq', 23, true);
+
+
+--
+-- Name: main_cart_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_cart_id_seq', 1, true);
 
 
 --
@@ -1262,6 +1444,13 @@ SELECT pg_catalog.setval('public.main_customer_id_seq', 28, true);
 --
 
 SELECT pg_catalog.setval('public.main_image_id_seq', 6, true);
+
+
+--
+-- Name: main_orderdetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: myprojectuser
+--
+
+SELECT pg_catalog.setval('public.main_orderdetail_id_seq', 1, true);
 
 
 --
@@ -1440,11 +1629,27 @@ ALTER TABLE ONLY public.django_site
 
 
 --
+-- Name: main_address main_address_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_address
+    ADD CONSTRAINT main_address_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: main_brand main_brand_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
 --
 
 ALTER TABLE ONLY public.main_brand
     ADD CONSTRAINT main_brand_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: main_cart main_cart_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_cart
+    ADD CONSTRAINT main_cart_pkey PRIMARY KEY (id);
 
 
 --
@@ -1469,6 +1674,14 @@ ALTER TABLE ONLY public.main_customer
 
 ALTER TABLE ONLY public.main_image
     ADD CONSTRAINT main_image_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: main_orderdetail main_orderdetail_pkey; Type: CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_orderdetail
+    ADD CONSTRAINT main_orderdetail_pkey PRIMARY KEY (id);
 
 
 --
@@ -1599,10 +1812,38 @@ CREATE INDEX django_site_domain_a2e37b91_like ON public.django_site USING btree 
 
 
 --
+-- Name: main_address_customer_id_id_51a285b8; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX main_address_customer_id_id_51a285b8 ON public.main_address USING btree (customer_id_id);
+
+
+--
+-- Name: main_cart_orderDetail_id_id_4799220d; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX "main_cart_orderDetail_id_id_4799220d" ON public.main_cart USING btree ("orderDetail_id_id");
+
+
+--
+-- Name: main_cart_product_id_id_6a730531; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX main_cart_product_id_id_6a730531 ON public.main_cart USING btree (product_id_id);
+
+
+--
 -- Name: main_image_product_id_id_50419c03; Type: INDEX; Schema: public; Owner: myprojectuser
 --
 
 CREATE INDEX main_image_product_id_id_50419c03 ON public.main_image USING btree (product_id_id);
+
+
+--
+-- Name: main_orderdetail_customer_id_id_4b1276e6; Type: INDEX; Schema: public; Owner: myprojectuser
+--
+
+CREATE INDEX main_orderdetail_customer_id_id_4b1276e6 ON public.main_orderdetail USING btree (customer_id_id);
 
 
 --
@@ -1700,11 +1941,43 @@ ALTER TABLE ONLY public.django_redirect
 
 
 --
+-- Name: main_address main_address_customer_id_id_51a285b8_fk_main_customer_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_address
+    ADD CONSTRAINT main_address_customer_id_id_51a285b8_fk_main_customer_id FOREIGN KEY (customer_id_id) REFERENCES public.main_customer(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_cart main_cart_orderDetail_id_id_4799220d_fk_main_orderdetail_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_cart
+    ADD CONSTRAINT "main_cart_orderDetail_id_id_4799220d_fk_main_orderdetail_id" FOREIGN KEY ("orderDetail_id_id") REFERENCES public.main_orderdetail(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_cart main_cart_product_id_id_6a730531_fk_main_product_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_cart
+    ADD CONSTRAINT main_cart_product_id_id_6a730531_fk_main_product_id FOREIGN KEY (product_id_id) REFERENCES public.main_product(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: main_image main_image_product_id_id_50419c03_fk_main_product_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
 --
 
 ALTER TABLE ONLY public.main_image
     ADD CONSTRAINT main_image_product_id_id_50419c03_fk_main_product_id FOREIGN KEY (product_id_id) REFERENCES public.main_product(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: main_orderdetail main_orderdetail_customer_id_id_4b1276e6_fk_main_customer_id; Type: FK CONSTRAINT; Schema: public; Owner: myprojectuser
+--
+
+ALTER TABLE ONLY public.main_orderdetail
+    ADD CONSTRAINT main_orderdetail_customer_id_id_4b1276e6_fk_main_customer_id FOREIGN KEY (customer_id_id) REFERENCES public.main_customer(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
