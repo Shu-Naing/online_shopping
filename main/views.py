@@ -325,3 +325,9 @@ def search(request):
 
 def error404(request, exception):
     return render(request, '404-page.html', {'error': "Page Not Found", 'status': '404'})
+
+def about_us(request):
+    return render(request, "about-us.html")
+
+def faqs(request):
+    return render(request, "faqs.html")
