@@ -120,11 +120,11 @@ def singleProduct(request, product):
                                  "h_image": repro['product_featureImage']})
     return render(request, 'single-product.html', {'single_product': single_list, 'result_images': subImages_list, 'categoryName': oneCat.sub_category, 'relatedProduct': related_list[:4]})
 
-def shop(request, sub__category):
+def shop(request, category, sub__category):
     if request.method == "GET":
         product_list = []
         brand_names = []
-        category = Category.objects.filter(sub_category = sub__category).values_list('id', flat = True)
+        category = Category.objects.filter(category_name = category, sub_category = sub__category).values_list('id', flat = True)
         product = Product.objects.filter(category_id = category[0]).values('product_name', 'product_price', 'product_featureImage')
         brand_list = Product.objects.filter(category_id = category[0]).values('brand_id')
         for brand_id in brand_list:
